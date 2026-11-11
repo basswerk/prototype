@@ -452,6 +452,248 @@ svg.i{display:block;flex:none}
 .up-field input{height:44px;padding:0 14px;border-radius:10px;border:1px solid var(--line-strong);background:var(--bg);font-size:16px;text-transform:uppercase}
 .up-go:disabled{opacity:.4;cursor:default}
 @media (max-width:700px){.up{place-items:end center;padding:0}.up-box{border-radius:20px 20px 0 0;padding-bottom:calc(20px + env(safe-area-inset-bottom))}}
+
+/* ---------- меню профиля ---------- */
+.d-head{position:relative;z-index:50}
+.pm-wrap{position:relative}
+.pm-btn{height:44px;padding:0 8px 0 0;border-radius:999px;display:inline-flex;align-items:center;gap:6px;color:var(--muted)}
+.pm-btn:hover,.pm-btn[aria-expanded=true]{color:var(--text);background:var(--surface)}
+.pm-scrim{position:fixed;inset:0;z-index:1;cursor:default}
+.pm{position:absolute;right:0;top:calc(100% + 8px);z-index:2;width:304px;padding:8px;background:var(--raised-2);border:1px solid var(--line);border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.55);display:flex;flex-direction:column}
+.pm-me{display:flex;align-items:center;gap:12px;padding:8px;border-radius:10px;text-align:left;width:100%}
+.pm-me:hover{background:var(--raised)}
+.pm-me b{display:block;font-weight:700;font-size:16px;line-height:22px}
+.pm-me small{display:block;font-size:13px;line-height:18px;color:var(--muted)}
+.pm-up{margin:6px 0 4px;height:44px;border-radius:10px;background:var(--text);color:var(--bg);display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:14px;width:100%}
+.pm-up:hover{opacity:.92}
+.pm-i{height:44px;padding:0 10px;border-radius:10px;display:flex;align-items:center;gap:12px;font-size:15px;font-weight:500;width:100%;text-align:left;color:var(--text)}
+.pm-i:hover{background:var(--raised)}
+.pm-i svg{color:var(--muted)}
+.pm-i .n{margin-left:auto;font-size:13px;color:var(--muted)}
+.pm-sep{height:1px;margin:6px 4px;background:var(--line)}
+.pm-sheet-scrim{position:absolute;inset:0;z-index:40;background:rgba(11,7,8,.62)}
+.pm-sheet{position:absolute;left:0;right:0;bottom:0;z-index:41;padding:8px 12px calc(12px + env(safe-area-inset-bottom));background:var(--raised-2);border-radius:22px 22px 0 0;box-shadow:0 -12px 40px rgba(0,0,0,.5);animation:plIn .25s cubic-bezier(.2,.8,.2,1)}
+.pm-sheet::before{content:"";display:block;width:40px;height:5px;margin:2px auto 8px;border-radius:999px;background:var(--line-strong)}
+.pm-sheet .pm-i{height:52px;font-size:17px}
+.pm-sheet .pm-up{height:52px;font-size:16px;border-radius:12px}
+.pm-sheet .pm-me b{font-size:18px}
+.toast{position:fixed;left:50%;bottom:110px;z-index:200;max-width:calc(100% - 32px);padding:12px 16px;border-radius:12px;background:var(--text);color:var(--bg);font-size:15px;line-height:20px;font-weight:600;opacity:0;transform:translate(-50%,12px);pointer-events:none;transition:opacity .2s,transform .2s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.pv-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:12px 16px;border:1px dashed var(--line-strong);border-radius:14px;font-size:15px;line-height:20px}
+.pv-bar svg{color:var(--muted)}
+.pv-bar .btn{margin-left:auto}
+
+/* ---------- студия: каркас ---------- */
+.st-shell{display:flex}
+.st-nav{width:240px;flex:none;border-right:1px solid var(--line);overflow-y:auto}
+.st-nav-in{padding:20px 12px;display:flex;flex-direction:column;gap:4px}
+.st-me{display:flex;align-items:center;gap:12px;padding:4px 12px 16px;margin-bottom:8px;border-bottom:1px solid var(--line)}
+.st-me b{display:block;font-weight:600;font-size:15px;line-height:20px}
+.st-me small{display:block;font-family:var(--fd);font-weight:700;font-size:10px;line-height:14px;letter-spacing:.06em;color:var(--muted)}
+.st-link{height:44px;padding:0 12px;border-radius:10px;display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600;color:var(--muted);white-space:nowrap;width:100%;text-align:left}
+.st-link:hover{color:var(--text);background:var(--surface)}
+.st-link.on{color:var(--text);background:var(--raised-2)}
+.st-link .n{margin-left:auto;font-size:13px;font-weight:500;color:var(--muted)}
+.st-sep{height:1px;margin:8px 0;background:var(--line)}
+.st-top{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.st-back{width:44px;height:44px;flex:none;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line-strong)}
+.st-back:hover{border-color:var(--text)}
+.st-h{margin:0;font-family:var(--fd);font-weight:700;font-size:22px;line-height:28px}
+.st-crumb{display:block;font-size:13px;line-height:18px;color:var(--muted)}
+.st-acts{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.st-note{display:inline-flex;align-items:center;gap:8px;margin-right:8px;font-size:14px;line-height:20px;color:var(--muted)}
+.st-note.ok svg{color:var(--ok)}
+.btn[aria-disabled=true]{opacity:.38;cursor:default}
+.btn[aria-disabled=true]:hover{border-color:var(--line-strong)}
+.btn-fill[aria-disabled=true]:hover{border-color:var(--text);opacity:.38}
+
+/* ---------- студия: шапка бита в режиме правки (общая для десктопа и телефона) ---------- */
+.h-play[disabled]{background:rgba(245,242,242,.1);color:rgba(245,242,242,.38);cursor:default;transform:none}
+.t-row{margin-top:6px;display:flex;align-items:flex-end;gap:14px}
+.t-in{flex:1;min-width:0;width:100%;margin:0;padding:0 0 6px;border:0;border-bottom:2px dashed rgba(245,242,242,.26);border-radius:0;background:none;color:#F5F2F2;font-family:var(--fd);font-weight:900;font-size:56px;line-height:60px;letter-spacing:-.015em;text-transform:uppercase;outline:0}
+.t-in::placeholder{color:rgba(245,242,242,.3)}
+.t-in:hover{border-bottom-color:rgba(245,242,242,.5)}
+.t-in:focus{border-bottom-style:solid;border-bottom-color:#F5F2F2}
+.t-cnt{flex:none;padding-bottom:10px;display:inline-flex;align-items:center;gap:6px;font-size:13px;line-height:18px;color:rgba(245,242,242,.55)}
+.h-tags{display:inline-flex;gap:6px;flex-wrap:wrap}
+button.h-tag{gap:4px;cursor:pointer}
+button.h-tag:hover{border-color:#F5F2F2}
+.h-tag.add{border-style:dashed;color:rgba(245,242,242,.6)}
+.h-tag.add:hover{color:#F5F2F2}
+.sh .js-swave{display:block;padding:0;text-align:left}
+.sh .drop{cursor:pointer}
+.sh .drop::after{content:"";position:absolute;inset:-12px -14px;border:1.5px dashed transparent;border-radius:14px;transition:border-color .15s,background .15s;pointer-events:none}
+.sh .drop:hover::after,.sh.is-drag .drop::after{border-color:rgba(245,242,242,.4);background:rgba(245,242,242,.04)}
+.sh .st-line{opacity:1;width:2px;margin-left:-1px;background:#F5F2F2;border-radius:2px}
+.h-hint{font-size:14px;line-height:20px;color:rgba(245,242,242,.62)}
+.h-buy.ph{background:none;border:1.5px dashed rgba(245,242,242,.3);color:rgba(245,242,242,.5);cursor:default}
+.file-chip{height:44px;max-width:100%;padding:0 16px 0 12px;border-radius:999px;display:inline-flex;align-items:center;gap:10px;background:rgba(0,0,0,.22);border:1px solid rgba(245,242,242,.2);font-size:14px;line-height:1;white-space:nowrap;min-width:0}
+.file-chip b{font-weight:600;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.file-chip span{color:rgba(245,242,242,.62)}
+.file-chip .ok{color:#7BE0A8}
+.up-bar{width:120px;height:4px;flex:none;border-radius:999px;background:rgba(245,242,242,.2);overflow:hidden}
+.up-bar i{display:block;height:100%;width:0;background:#F5F2F2;border-radius:999px}
+.cv-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;width:100%;aspect-ratio:1;border-radius:12px;background:rgba(245,242,242,.06);border:1.5px dashed rgba(245,242,242,.24);color:rgba(245,242,242,.8);cursor:pointer;text-align:center;padding:24px}
+.cv-ph:hover,.sh.is-drag .cv-ph{background:rgba(245,242,242,.1);border-color:rgba(245,242,242,.55)}
+.cv-ic{position:relative;width:104px;height:104px;border-radius:50%;display:grid;place-items:center;background:rgba(245,242,242,.08);color:rgba(245,242,242,.7)}
+.cv-plus{position:absolute;right:0;bottom:2px;width:36px;height:36px;border-radius:50%;background:#F5F2F2;color:#0B0708;display:grid;place-items:center;box-shadow:0 0 0 4px #2A2325}
+.cv-ph b{display:block;font-size:16px;line-height:22px;font-weight:600;color:#F5F2F2}
+.cv-ph small{display:block;margin-top:2px;font-size:13px;line-height:18px;color:rgba(245,242,242,.55)}
+.cv-wrap{position:relative;align-self:start}
+.cv-wrap img{display:block;width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;box-shadow:0 20px 56px rgba(0,0,0,.4)}
+.cv-tools{position:absolute;left:12px;right:12px;bottom:12px;display:flex;justify-content:space-between;gap:8px}
+.gl-btn{height:40px;padding:0 14px;border-radius:999px;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#F5F2F2;background:rgba(11,7,8,.58);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(245,242,242,.18);white-space:nowrap}
+button.gl-btn:hover{background:rgba(11,7,8,.78)}
+.swatch{width:16px;height:16px;border-radius:50%;box-shadow:0 0 0 1.5px rgba(245,242,242,.85)}
+.cv-err{position:absolute;inset:0;border-radius:12px;background:rgba(58,6,11,.74);border:1.5px dashed rgba(255,91,82,.6);display:grid;place-items:center}
+
+/* ошибка загрузки: всё серое становится красным */
+.sh.err .t-in{border-bottom-color:rgba(255,214,211,.3)}
+.sh.err .t-in::placeholder{color:rgba(255,214,211,.32)}
+.sh.err .h-play[disabled]{background:rgba(255,91,82,.14);color:rgba(255,160,154,.55)}
+.sh.err .h-tag.add{border-color:rgba(255,190,186,.4);color:rgba(255,214,211,.7)}
+.sh.err .w-now{color:#FFB3AE}.sh.err .w-dur{color:rgba(255,214,211,.6)}
+.err-msg{display:flex;align-items:center;gap:12px;min-width:0}
+.err-msg>svg{color:#FF7A72}
+.err-msg b{display:block;font-weight:600;font-size:15px;line-height:20px;color:#fff;overflow-wrap:anywhere}
+.err-msg span{display:block;font-size:14px;line-height:20px;color:rgba(255,226,224,.8)}
+.h-btn.on.err{background:#fff;border-color:#fff}
+.cv-ph.err{background:rgba(255,91,82,.1);border-color:rgba(255,91,82,.55)}
+.cv-ph.err small{color:rgba(255,214,211,.7)}
+.cv-ic.err{background:rgba(255,91,82,.18);color:#FF6B62}
+.h-note{display:flex;align-items:center;gap:8px;font-size:14px;line-height:20px;color:rgba(245,242,242,.78)}
+.h-actions .h-note{order:10;flex-basis:100%}
+.h-note svg{color:#FF7A72}
+
+/* ---------- студия: поля ниже шапки ---------- */
+.ab{padding:20px;display:flex;flex-direction:column;gap:12px}
+.ab-head{display:flex;align-items:center;gap:10px}
+.ab-head b{font-weight:600;font-size:15px}
+.ab-head .h-badge{color:var(--muted)}
+.ta{display:block;width:100%;min-height:132px;resize:vertical;padding:12px 14px;border-radius:10px;border:1px solid var(--line-strong);background:var(--bg);color:var(--text);font:inherit;font-size:16px;line-height:26px;outline:0}
+.ta::placeholder{color:var(--muted)}
+.ta:focus{border-color:var(--text)}
+.ta-foot{display:flex;justify-content:space-between;gap:12px;font-size:13px;line-height:18px;color:var(--muted)}
+.fx-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:16px}
+.fx{min-width:0;padding:14px 0 16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.fx.w2{grid-column:span 2}
+.fx-l{display:flex;align-items:center;gap:8px;font-size:14px;line-height:18px;color:var(--muted)}
+.auto{height:18px;padding:0 5px;display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:4px;font-family:var(--fd);font-weight:700;font-size:9px;letter-spacing:.06em;color:var(--text)}
+.ctl{position:relative;display:flex;align-items:center;height:44px;border:1px solid var(--line-strong);border-radius:10px;background:var(--surface)}
+.ctl:focus-within{border-color:var(--text)}
+.ctl input,.ctl select{appearance:none;-webkit-appearance:none;flex:1;min-width:0;height:100%;padding:0 12px;border:0;border-radius:10px;background:none;color:var(--text);font:inherit;font-size:16px;font-weight:600;outline:0}
+.ctl select{cursor:pointer;padding-right:36px}
+.ctl input::placeholder{color:var(--muted);font-weight:400}
+.ctl select.ph{color:var(--muted);font-weight:400}
+.ctl option{background:var(--raised-2);color:var(--text)}
+.ctl .suf{padding-right:12px;color:var(--muted);font-size:14px}
+.ctl>svg{position:absolute;right:12px;color:var(--muted);pointer-events:none}
+.ctl.ro{background:none;border-style:dashed;border-color:var(--line)}
+.ctl.ro span{padding:0 12px;font-size:16px;font-weight:600}
+.ctl.ro span.muted{font-weight:400;font-size:15px}
+.chips-ed{display:flex;flex-wrap:wrap;align-items:center;gap:6px;min-height:44px}
+.chip-ed{height:36px;padding:0 4px 0 10px;border:1px solid var(--line-strong);border-radius:4px;display:inline-flex;align-items:center;gap:2px;font-size:14px;font-weight:500}
+.chip-ed button{width:28px;height:28px;display:grid;place-items:center;border-radius:4px;color:var(--muted)}
+.chip-ed button:hover{color:var(--text);background:var(--raised-2)}
+.chip-add{height:36px;padding:0 12px 0 8px;border:1px dashed var(--line-strong);border-radius:4px;display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--muted)}
+.chip-add:hover{color:var(--text);border-color:var(--text)}
+.chip-in{height:36px;width:150px;padding:0 10px;border:1px solid var(--text);border-radius:4px;background:var(--surface);color:var(--text);font:inherit;font-size:14px;outline:0}
+.fx-note{margin:0;padding-top:12px;border-top:1px solid var(--line);display:flex;gap:8px;font-size:14px;line-height:20px;color:var(--muted)}
+.lic-ed{padding:20px}
+.lic-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.lic-top a{font-size:14px;font-weight:500;color:var(--muted)}
+.lic-top a:hover{color:var(--text)}
+.lic-sub{margin:6px 0 0;font-size:14px;line-height:20px;color:var(--muted)}
+.lrows{list-style:none;margin:14px 0 0;padding:0}
+.lrow{display:grid;grid-template-columns:auto minmax(0,1fr) 132px;align-items:center;column-gap:12px;row-gap:10px;padding:14px 0;border-top:1px solid var(--line)}
+.lrow b{display:block;font-family:var(--fd);font-weight:700;font-size:12px;line-height:16px;letter-spacing:.04em}
+.lrow small{display:block;margin-top:3px;font-size:13px;line-height:18px;color:var(--muted)}
+.lrow.off b,.lrow.off .pr-in{opacity:.45}
+.lr-x{grid-column:2 / 4}
+.lrow.plain{grid-template-columns:auto minmax(0,1fr)}
+.pr-in{display:flex;align-items:center;height:44px;border:1px solid var(--line-strong);border-radius:10px;background:var(--bg)}
+.pr-in:focus-within{border-color:var(--text)}
+.pr-in input{width:100%;min-width:0;height:100%;padding:0 4px 0 12px;border:0;background:none;color:var(--text);font:inherit;font-size:16px;font-weight:700;text-align:right;outline:0}
+.pr-in input::placeholder{color:var(--muted);font-weight:400}
+.pr-in span{padding-right:12px;color:var(--muted);font-weight:600}
+.tgl{width:44px;height:26px;flex:none;border-radius:999px;background:var(--raised-2);border:1px solid var(--line-strong);position:relative;transition:background .2s,border-color .2s}
+.tgl i{position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:var(--muted);transition:left .2s,background .2s}
+.tgl.on{background:var(--text);border-color:var(--text)}
+.tgl.on i{left:21px;background:var(--bg)}
+.chk{display:inline-flex;align-items:center;gap:10px;min-height:36px;font-size:14px;line-height:20px;text-align:left}
+.cbox{width:22px;height:22px;flex:none;border-radius:6px;border:1.5px solid var(--line-strong);display:grid;place-items:center;color:var(--bg)}
+.cbox.on{background:var(--text);border-color:var(--text)}
+.zip{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font-size:14px;line-height:20px;min-width:0}
+.zip b{font-family:var(--fs);font-size:14px;font-weight:600;letter-spacing:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.zip span{color:var(--muted);white-space:nowrap}
+.zip .okc{margin-left:auto;color:var(--ok)}
+.btn.sm{height:36px;padding:0 12px;font-size:13px;border-radius:8px;justify-self:start}
+.pub{padding:20px;display:flex;flex-direction:column;gap:14px}
+.seg-r{display:grid;grid-template-columns:1fr 1fr;padding:3px;gap:2px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.seg-r button{height:38px;border-radius:9px;font-size:14px;font-weight:600;color:var(--muted)}
+.seg-r button.on{background:var(--raised-2);color:var(--text)}
+.pub-row{display:flex;align-items:center;gap:12px;text-align:left}
+.pub-row b{display:block;font-weight:600;font-size:15px;line-height:20px}
+.pub-row small{display:block;font-size:13px;line-height:18px;color:var(--muted)}
+.st-cols .side{min-width:0;display:flex;flex-direction:column;gap:16px}
+@container (max-width:1460px){.st-page .t-in{font-size:44px;line-height:48px}}
+@container (max-width:1020px){.st-page .t-in{font-size:36px;line-height:40px}.fx-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.st-cols .side{order:0}}
+@container (max-width:720px){.st-page .hero-grid{grid-template-columns:minmax(0,1fr)}.st-page .cv-col{order:-1;max-width:320px}}
+
+/* ---------- студия на телефоне ---------- */
+.ms-top{height:60px;padding:0 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+.ms-top .back{margin-right:0}
+.ms-top h1{flex:1;min-width:0;margin:0;font-family:var(--fd);font-weight:700;font-size:18px;line-height:24px}
+.ms-pub{height:44px;padding:0 16px;border-radius:999px;font-size:15px}
+.ms-page{padding:12px 12px 0}
+.ms-hero{border-radius:20px;color:#F5F2F2;background:linear-gradient(160deg,var(--band2,#1B1718) 0%,var(--band,#2A2325) 72%);padding:16px;display:flex;flex-direction:column;gap:14px;transition:background .5s ease}
+.ms-head{display:flex;gap:14px;align-items:flex-start}
+.ms-cv{width:124px;flex:none}
+.ms-cv .cv-ph{padding:8px;gap:8px}
+.ms-cv .cv-ic{width:60px;height:60px}
+.ms-cv .cv-ic svg{width:28px;height:28px}
+.ms-cv .cv-plus{width:24px;height:24px;right:-4px;bottom:-2px;box-shadow:0 0 0 3px #2A2325}
+.ms-cv .cv-plus svg{width:14px;height:14px}
+.ms-cv .cv-ph b{font-size:14px;line-height:18px}
+.ms-cv .cv-ph small{display:none}
+.ms-cv .cv-wrap img{border-radius:10px}
+.ms-cv .cv-tools{left:6px;right:6px;bottom:6px}
+.ms-cv .gl-btn{height:34px;padding:0 10px;font-size:12px}
+.ms-cv .cv-err .cv-ic{width:60px;height:60px}
+.ms-head .t-row{margin-top:8px;gap:8px}
+.ms-head .t-in{font-size:21px;line-height:28px;border-bottom-width:2px;padding-bottom:4px}
+.ms-head .t-cnt{display:none}
+.ms-meta{margin-top:8px;font-size:15px;line-height:20px;color:rgba(245,242,242,.75)}
+.ms-meta a{color:#F5F2F2;font-weight:600}
+.ms-hero .h-tags .h-tag{height:30px;font-size:14px;padding:0 10px}
+.ms-hero .wave{height:117px;margin:0}
+.ms-hero .w-now,.ms-hero .w-dur,.ms-hero .w-tip{display:none}
+.ms-time{display:flex;justify-content:space-between;margin-top:-6px;font-size:13px;line-height:18px;color:rgba(245,242,242,.62)}
+.ms-time b{color:#fff;font-weight:700}
+.ms-acts{display:flex;flex-direction:column;gap:10px}
+.ms-acts .h-btn{height:52px;justify-content:center;font-size:16px}
+.ms-acts .file-chip{height:48px}
+.ms-acts .h-hint,.ms-acts .h-note{font-size:14px}
+.ms-acts .ms-buy{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px;color:rgba(245,242,242,.7)}
+.ms-acts .ms-buy .h-buy{margin-left:0;height:44px;font-size:15px}
+.ms-play{width:52px;height:52px;flex:none;border-radius:50%;background:#F5F2F2;color:#0B0708;display:grid;place-items:center}
+.ms-play[disabled]{background:rgba(245,242,242,.1);color:rgba(245,242,242,.38)}
+.sh.err .ms-play[disabled]{background:rgba(255,91,82,.14);color:rgba(255,160,154,.55)}
+.ms-sec{padding:28px 4px 0;display:flex;flex-direction:column;gap:14px}
+.m .ab{padding:16px}
+.m .fx-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.m .fx-l{font-size:14px}
+.m .lic-ed,.m .pub{padding:16px}
+.m .lrow{grid-template-columns:auto minmax(0,1fr) 116px}
+.m .lrow b{font-size:13px}
+.m .lrow small{font-size:14px}
+.m .chip-ed,.m .chip-add{height:40px;font-size:15px}
+.m .seg-r button{height:44px;font-size:15px}
+.ms-final{padding:24px 4px 120px;display:flex;flex-direction:column;gap:10px}
+.ms-final .btn{height:56px;border-radius:999px;font-size:17px;font-weight:700}
+.ms-final p{margin:0;text-align:center;font-size:14px;line-height:20px;color:var(--muted)}
+.m-nav button{height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;line-height:14px;font-weight:600;color:var(--muted)}
+.m-nav button.on,.m-nav a.on{color:var(--text)}
 </style>
 </head>
 <body>
@@ -574,9 +816,9 @@ function licenses(b) {
     { key: 'wav', tab: 'WAV', rub: r90(3490 * k), sum: 'Чистый звук для релиза на площадках', terms: [['Файлы', 'WAV 24 бит, без тега'], ['Стриминг', 'без лимита'], ['Клипы', 'без лимита'], ['Выступления', 'можно'], ['Права на бит', 'остаются у автора']] },
     { key: 'trk', tab: 'TRACK OUT', rub: r90(6990 * k), sum: 'Каждая дорожка отдельно, чтобы свести под себя', terms: [['Файлы', 'WAV и дорожки (стемы)'], ['Стриминг', 'без лимита'], ['Клипы', 'без лимита'], ['Выступления', 'можно'], ['Права на бит', 'остаются у автора']] },
     { key: 'exc', tab: 'ЭКСКЛЮЗИВ', rub: Math.round(29900 * k / 1000) * 1000 - 100, sum: 'Бит только твой, его снимут с продажи', terms: [['Файлы', 'WAV и дорожки (стемы)'], ['Стриминг', 'без лимита'], ['Клипы', 'без лимита'], ['Выступления', 'можно'], ['Права на бит', 'переходят тебе по договору']] }
-  ];
+  ].filter(function (l) { return !b.prices || b.prices[l.key]; }).map(function (l) { if (b.prices) l.rub = b.prices[l.key]; return l; });
 }
-function licPrice(b, k) { return licenses(b).filter(function (l) { return l.key === k; })[0].rub; }
+function licPrice(b, k) { var l = licenses(b).filter(function (x) { return x.key === k; })[0]; return l ? l.rub : b.rub; }
 function licName(k) { return { mp3: 'MP3-лицензию', wav: 'WAV-лицензию', trk: 'TRACK OUT', exc: 'эксклюзив' }[k]; }
 
 /* ===== состояние ===== */
@@ -882,10 +1124,11 @@ function tickerHTML() {
   return '<div class="ticker"><span class="ticker-l"><i></i>СЕЙЧАС</span><div class="ticker-run">' + items + items + '</div></div>';
 }
 function licHTML(b, mobile) {
-  var L = licenses(b), sel = L.filter(function (l) { return l.key === st.lic; })[0] || L[1];
+  var L = licenses(b), sel = L.filter(function (l) { return l.key === st.lic; })[0] || L[1] || L[0];
+  if (!sel) return '<section class="lic' + (mobile ? '' : ' card') + '" id="' + (mobile ? 'm-buy' : 'buy') + '"><h2 class="sec-h" style="font-size:17px">Лицензия</h2><p class="muted" style="margin:8px 0 0">Цены пока не указаны.</p></section>';
   var h = '<section class="lic' + (mobile ? '' : ' card') + '" id="' + (mobile ? 'm-buy' : 'buy') + '" aria-labelledby="lic-h">';
   h += '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px"><h2 id="lic-h" class="sec-h" style="font-size:' + (mobile ? 20 : 17) + 'px">Лицензия</h2><a href="#" class="muted" style="font-size:14px;font-weight:500">Сравнить все</a></div>';
-  h += '<div class="seg4" role="group" aria-label="Лицензия" style="margin-top:14px">' + L.map(function (l) { return '<button type="button" data-act="lic" data-v="' + l.key + '" aria-pressed="' + (l.key === sel.key) + '" class="' + (l.key === sel.key ? 'on' : '') + '">' + l.tab + '</button>'; }).join('') + '</div>';
+  h += '<div class="seg4" role="group" aria-label="Лицензия" style="margin-top:14px;grid-template-columns:repeat(' + L.length + ',minmax(0,1fr))">' + L.map(function (l) { return '<button type="button" data-act="lic" data-v="' + l.key + '" aria-pressed="' + (l.key === sel.key) + '" class="' + (l.key === sel.key ? 'on' : '') + '">' + l.tab + '</button>'; }).join('') + '</div>';
   h += '<p class="lic-price">' + money(sel.rub) + '</p><p style="margin:4px 0 0;font-size:' + (mobile ? 16 : 15) + 'px;line-height:22px">' + esc(sel.sum) + '</p>';
   h += '<button type="button" class="ghost" data-act="terms" aria-expanded="' + st.terms + '" style="margin:10px 0 0 -8px;align-self:flex-start;height:' + (mobile ? 40 : 30) + 'px;padding:0 8px;display:inline-flex;align-items:center;gap:4px;font-size:' + (mobile ? 15 : 14) + 'px;font-weight:600;color:var(--text)">Что входит' + ic(st.terms ? 'up' : 'down', 16) + '</button>';
   if (st.terms) h += '<dl class="terms">' + sel.terms.map(function (t) { return '<div><dt>' + t[0] + '</dt><dd>' + t[1] + '</dd></div>'; }).join('') + '</dl>';
@@ -907,7 +1150,11 @@ function desktopHTML() {
   var h = '<div class="d">';
   h += '<header class="d-head"><div class="d-head-in"><a href="#/" class="d-logo" data-act="home" aria-label="basswerk, на главную"><img src="' + LOGO + '" alt="basswerk"></a>' +
     '<form class="d-search" role="search" data-form="search"><label class="sr" for="q">Поиск</label>' + ic('search', 18) + '<input id="q" type="search" autocomplete="off" value="' + esc(st.q) + '" placeholder="Биты, продюсеры, жанры, BPM"></form>' +
-    '<div class="d-tools"><button type="button" class="btn" data-act="upload">' + ic('upload', 18) + 'Проверить свой бит</button><button type="button" class="icon44" aria-label="Настройки">' + ic('gear', 20) + '</button><span class="av" style="width:44px;height:44px;font-size:16px">' + initial(ME) + '</span></div></div></header>';
+    '<div class="d-tools"><button type="button" class="btn" data-act="upload">' + ic('upload', 18) + 'Проверить свой бит</button><button type="button" class="icon44" aria-label="Настройки" data-act="soon">' + ic('gear', 20) + '</button>' + menuDeskHTML() + '</div></div></header>';
+  if (st.view === 'studio') {
+    h += '<div class="d-shell st-shell">' + studioNavHTML() + '<main class="d-main">' + studioHTML() + '</main></div>';
+    return h + playerBarHTML() + '</div>';
+  }
   h += tickerHTML();
   h += '<div class="d-shell' + (dock ? ' is-dock' : st.feed ? ' is-feed' : '') + '">';
   if (dock) h += '<aside class="dock fscroll" aria-label="Лента">' + feedPanelHTML('dock') + '</aside>';
@@ -1108,10 +1355,11 @@ function updGrid() { var g = document.getElementById('gwrap'); if (!g) return; g
 function beatHTML(b) {
   var liked = !!st.liked[b.id], rep = !!st.reposted[b.id], rk = rankOf(b.id), p = person(b.producer);
   var h = '<div class="page">';
+  if (b.draft) h += previewBarHTML();
   h += '<section class="hero" data-band="' + b.id + '" style="--band:' + b.band + ';--band2:' + b.band2 + '" aria-labelledby="bt"><div class="hero-grid"><div class="hero-l">';
   h += '<div class="hero-top"><button type="button" class="h-play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="28" aria-label="' + (isOn(b.id) ? 'Пауза' : 'Слушать') + '">' + pp(isOn(b.id), 28) + '</button><div style="min-width:0;flex:1">' +
     (rk ? '<span class="h-badge"><b>№' + (rk.i + 1) + '</b>В ГОРЯЧИХ ' + PERIOD_UP[rk.p] + '</span>' : '') +
-    '<h1 class="h-title' + (b.title.length > 30 ? ' xl' : b.title.length > 18 ? ' l' : '') + '" id="bt">' + esc(b.title) + '</h1><div class="h-meta"><span>prod. by <a href="#">' + esc(b.producer) + '</a></span><span style="display:inline-flex;gap:6px">' + tagsHTML(tagList(b), 'h-tag') + '</span><span style="font-size:14px">выложен ' + b.ago + '</span></div></div></div>';
+    '<h1 class="h-title' + (b.title.length > 30 ? ' xl' : b.title.length > 18 ? ' l' : '') + '" id="bt">' + esc(b.title) + '</h1><div class="h-meta"><span>prod. by <a href="#">' + esc(b.producer) + '</a></span><span style="display:inline-flex;gap:6px">' + tagsHTML(tagList(b), 'h-tag') + '</span><span style="font-size:14px">' + (b.draft ? 'ещё не выложен' : 'выложен ' + b.ago) + '</span></div></div></div>';
   h += heroWave(b);
   h += '<div class="h-actions"><button type="button" class="h-btn' + (liked ? ' on' : '') + '" data-act="like" data-id="' + b.id + '" aria-pressed="' + liked + '">' + ic('heart', 18, liked) + '<span class="sr">Нравится, </span>' + num(b.likes + (liked ? 1 : 0)) + '</button>' +
     '<button type="button" class="h-btn' + (rep ? ' on' : '') + '" data-act="repost" data-id="' + b.id + '" aria-pressed="' + rep + '">' + ic('repost', 18) + '<span class="sr">Репост, </span>' + (b.reposts + (rep ? 1 : 0)) + '</button>' +
@@ -1157,21 +1405,16 @@ function mqx(text, cls, tag, attrs) {
   return '<' + tag + ' class="mq' + (cls ? ' ' + cls : '') + '"' + (attrs || '') + '><span>' + esc(text) + '</span></' + tag + '>';
 }
 function mobileHTML() {
+  if (st.view === 'studio') return mobileStudioHTML();
   var h = '<div class="m">';
-  h += '<div class="m-top"><div class="m-head"><a href="#" class="d-logo" aria-label="basswerk, на главную"><img src="' + LOGO + '" alt="basswerk"></a><button type="button" class="icon44" aria-label="Поиск">' + ic('search', 24) + '</button><button type="button" class="icon44" aria-label="Настройки">' + ic('gear', 24) + '</button></div>' + tickerHTML() +
+  h += '<div class="m-top"><div class="m-head"><a href="#" class="d-logo" aria-label="basswerk, на главную"><img src="' + LOGO + '" alt="basswerk"></a><button type="button" class="icon44" aria-label="Поиск" data-act="soon">' + ic('search', 24) + '</button><button type="button" class="icon44" aria-label="Настройки" data-act="soon">' + ic('gear', 24) + '</button></div>' + tickerHTML() +
     '<div class="tabs" role="group" aria-label="Что показывать"><button type="button" data-act="mTab" data-v="feed" class="' + (st.mTab === 'feed' ? 'on' : '') + '" aria-pressed="' + (st.mTab === 'feed') + '">Лента</button><button type="button" data-act="mTab" data-v="beats" class="' + (st.mTab === 'beats' ? 'on' : '') + '" aria-pressed="' + (st.mTab === 'beats') + '">Биты</button></div></div>';
   h += '<div class="m-body">';
   if (st.mTab === 'feed') h += mFeedHTML();
   else if (st.mView === 'page') h += beatPageHTML(BY[st.page]);
   else h += catalogHTML();
   h += '</div>';
-  if (st.started) {
-    var c = cur();
-    h += '<div class="mini" role="region" aria-label="Плеер"><button type="button" class="ring" data-act="play" data-id="' + c.id + '" data-pp="" aria-label="' + (isOn(c.id) ? 'Пауза' : 'Слушать') + '">' + ringHTML(isOn(c.id)) + '</button>' +
-      '<button type="button" data-act="openPlayer" data-id="' + c.id + '" aria-label="Открыть плеер: ' + esc(c.title) + '" style="flex:1;min-width:0;text-align:left">' + mqx(c.title, 'mini-t') + '<span class="muted" style="display:block;font-size:14px;line-height:18px">' + esc(c.producer) + '</span></button>' +
-      '<button type="button" class="icon44" data-act="like" data-id="' + c.id + '" aria-label="Нравится" aria-pressed="' + !!st.liked[c.id] + '" style="border-radius:50%">' + ic('heart', 24, st.liked[c.id]) + '</button><button type="button" class="icon44" data-act="buyM" data-id="' + c.id + '" aria-label="Купить" style="border-radius:50%;margin-right:4px">' + ic('bag', 22) + '</button></div>';
-  }
-  h += '<nav class="m-nav" aria-label="Навигация">' + [['home', 'Главная', 1], ['trend', 'Тренды'], ['upload', 'Загрузить'], ['badge', 'Лицензии']].map(function (x) { return '<a href="#" class="' + (x[2] ? 'on' : '') + '"' + (x[0] === 'upload' ? ' data-act="upload"' : '') + '>' + ic(x[0], 26) + x[1] + '</a>'; }).join('') + '<a href="#"><span class="av" style="width:26px;height:26px;font-size:11px">' + initial(ME) + '</span>Профиль</a></nav>';
+  h += miniHTML() + mNavHTML('home') + menuSheetHTML();
   if (st.player) h += playerHTML(cur());
   return h + '</div>';
 }
@@ -1219,6 +1462,7 @@ function playerHTML(b) {
 function beatPageHTML(b) {
   var liked = !!st.liked[b.id], rep = !!st.reposted[b.id];
   var h = '<div class="m-scroll" id="mscroll"><div class="mp-bar"><button type="button" class="back" data-act="mBack" aria-label="' + (st.pageFrom === 'player' ? 'Назад к плееру' : 'Назад к битам') + '">' + ic('back', 24) + '</button><button type="button" class="icon44" aria-label="Скопировать ссылку">' + ic('link', 22) + '</button><button type="button" class="icon44" aria-label="Ещё">' + ic('more', 22) + '</button></div>';
+  if (b.draft) h += '<div style="padding:12px 16px 0">' + previewBarHTML() + '</div>';
   h += '<div class="mp-head"><button type="button" class="mp-cover" data-act="openPlayer" data-id="' + b.id + '" aria-label="Открыть плеер"><img src="' + b.cover + '" alt="Обложка бита ' + esc(b.title) + '"></button><div style="min-width:0;flex:1">' + mqx(b.title, 'mp-t', 'h1') + '<a href="#" style="display:inline-block;margin-top:4px;font-weight:600;font-size:18px;line-height:24px">' + esc(b.producer) + '</a><p class="muted" style="margin:8px 0 0;font-size:14px;line-height:20px">' + b.plays + ' прослушиваний<br>' + fmt(b.dur) + ' ' + b.date + '</p></div></div>';
   h += '<div class="mp-acts"><button type="button" data-act="like" data-id="' + b.id + '" aria-pressed="' + liked + '" aria-label="Нравится">' + ic('heart', 26, liked) + num(b.likes + (liked ? 1 : 0)) + '</button><a href="#m-com" data-act="toCom">' + ic('msg', 25) + b.comments + '</a><button type="button" data-act="repost" data-id="' + b.id + '" aria-pressed="' + rep + '" aria-label="Репост"' + (rep ? ' style="color:var(--text);background:var(--raised-2)"' : '') + '>' + ic('repost', 25) + (b.reposts + (rep ? 1 : 0)) + '</button><button type="button" aria-label="Поделиться">' + ic('share', 24) + '</button><button type="button" class="play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="24" aria-label="' + (isOn(b.id) ? 'Пауза' : 'Слушать') + '">' + pp(isOn(b.id), 24) + '</button></div>';
   h += '<div style="padding:14px 16px 0;display:flex;flex-wrap:wrap;gap:6px">' + tagList(b).concat(b.genres.slice(1)).map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') + '</div>';
@@ -1247,6 +1491,7 @@ function render() {
   st.plAnim = false;
   fitDesk();
   mountWaves();
+  mountStudio();
   tickUI();
   setupMarquee();
   watchGrid();
@@ -1259,16 +1504,18 @@ var rT, wasWide = wide();
 window.addEventListener('resize', function () {
   fitDesk();
   if (!mq.matches && wide() !== wasWide) { wasWide = wide(); rerenderKeep(); return; }
-  clearTimeout(rT); rT = setTimeout(function () { waves.forEach(function (w) { w.paint(); }); tickUI(); setupMarquee(); }, 80);
+  clearTimeout(rT); rT = setTimeout(function () { waves.forEach(function (w) { w.paint(); }); paintSW(); tickUI(); setupMarquee(); }, 80);
 });
 
 /* ===== адреса: #/ главная, #/beat/id страница бита ===== */
 function parseRoute() {
+  if (/^#\/studio/.test(location.hash)) return { view: 'studio' };
   var m = /^#\/beat\/([\w-]+)/.exec(location.hash);
   return m && BY[m[1]] ? { view: 'beat', page: m[1] } : { view: 'home' };
 }
 function applyRoute(opts) {
   opts = opts || {};
+  st.menu = false;
   var r = parseRoute(), changed = r.view !== st.view || (r.view === 'beat' && r.page !== st.page);
   if (mq.matches) {
     if (r.view === 'beat') { st.page = r.page; st.mTab = 'beats'; st.mView = 'page'; st.player = false; }
@@ -1287,7 +1534,7 @@ function applyRoute(opts) {
   if (opts.scroll) { var t = document.getElementById(opts.scroll); if (t) t.scrollIntoView({ behavior: changed ? 'auto' : 'smooth', block: 'start' }); }
 }
 function go(view, id, opts) {
-  var url = view === 'beat' ? '#/beat/' + id : '#/';
+  var url = view === 'beat' ? '#/beat/' + id : view === 'studio' ? '#/studio' : '#/';
   if (location.hash !== url) { try { history.pushState(null, '', url); } catch (e) { location.hash = url; return; } }
   applyRoute(opts);
 }
@@ -1490,7 +1737,7 @@ upEl.addEventListener('dragleave', function (e) { if (!upEl.contains(e.relatedTa
 upEl.addEventListener('drop', function (e) { e.preventDefault(); upBox.classList.remove('is-drag'); if (e.dataTransfer && e.dataTransfer.files) takeFiles(e.dataTransfer.files); });
 document.addEventListener('dragover', function (e) {
   var types = e.dataTransfer && e.dataTransfer.types;
-  if (upEl.hidden && types && Array.prototype.indexOf.call(types, 'Files') >= 0) { e.preventDefault(); openUp(); }
+  if (st.view !== 'studio' && upEl.hidden && types && Array.prototype.indexOf.call(types, 'Files') >= 0) { e.preventDefault(); openUp(); }
 });
 document.getElementById('up-go').addEventListener('click', function () {
   var old = BY.custom, hasAudio = !!up.peaks;
@@ -1515,6 +1762,727 @@ document.getElementById('up-go').addEventListener('click', function () {
   closeUp();
   if (mq.matches) { st.page = 'custom'; st.mTab = 'beats'; st.mView = 'catalog'; st.player = true; st.plAnim = true; fresh(); }
   else go('beat', 'custom', { force: true });
+});
+
+
+/* ===== меню профиля, подсказка и студия ===== */
+ICON.studio = '<path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/>';
+ICON.dash = '<rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/>';
+ICON.receipt = '<path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 17.5v-11"/>';
+ICON.wallet = '<path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/>';
+ICON.alert = '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/>';
+ICON.plus = '<path d="M5 12h14"/><path d="M12 5v14"/>';
+ICON.pencil = '<path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/>';
+ICON.eye = '<path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/>';
+ICON.x = '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>';
+ICON.info = '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>';
+ICON.file = '<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/>';
+ICON.ext = '<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3"/>';
+ICON.logout = '<path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>';
+
+/* подсказка внизу экрана */
+var toastEl = document.createElement('div'), toastT = 0;
+toastEl.className = 'toast'; toastEl.setAttribute('role', 'status'); toastEl.setAttribute('aria-live', 'polite');
+document.body.appendChild(toastEl);
+function toast(t) {
+  toastEl.textContent = t; toastEl.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove('show'); }, 2400);
+}
+
+/* меню профиля: на десктопе выпадает из аватара, на телефоне выезжает снизу */
+function menuItems(sheet) {
+  var sz = sheet ? 22 : 18, liked = Object.keys(st.liked).filter(function (k) { return st.liked[k]; }).length, me = person(ME);
+  var soon = function (icon, label, n) { return '<button type="button" class="pm-i" role="menuitem" data-act="soon">' + ic(icon, sz) + label + (n ? '<span class="n">' + n + '</span>' : '') + '</button>'; };
+  return '<button type="button" class="pm-me" role="menuitem" data-act="soon"><span class="av" style="width:44px;height:44px;font-size:16px">' + initial(ME) + '</span><span><b>' + esc(ME) + '</b><small>Открыть профиль</small></span></button>' +
+    '<button type="button" class="pm-up" role="menuitem" data-act="toStudio">' + ic('upload', 18) + 'Загрузить бит</button>' +
+    '<button type="button" class="pm-i" role="menuitem" data-act="toStudio">' + ic('studio', sz) + 'Студия<span class="n">' + me.beats + ' ' + plural(me.beats, ['бит', 'бита', 'битов']) + '</span></button>' +
+    soon('heart', 'Понравившиеся', liked) + soon('bag', 'Покупки') + soon('msg', 'Сообщения') + soon('wallet', 'Баланс') +
+    '<div class="pm-sep" role="separator"></div>' + soon('gear', 'Настройки') + soon('logout', 'Выйти');
+}
+function menuDeskHTML() {
+  return '<div class="pm-wrap"><button type="button" class="pm-btn" data-act="menu" aria-haspopup="menu" aria-expanded="' + !!st.menu + '" aria-label="Меню профиля"><span class="av" style="width:44px;height:44px;font-size:16px">' + initial(ME) + '</span>' + ic(st.menu ? 'up' : 'down', 16) + '</button>' +
+    (st.menu ? '<button type="button" class="pm-scrim" data-act="menu" aria-label="Закрыть меню" tabindex="-1"></button><div class="pm" role="menu" aria-label="Профиль">' + menuItems(false) + '</div>' : '') + '</div>';
+}
+function menuSheetHTML() {
+  return st.menu ? '<button type="button" class="pm-sheet-scrim" data-act="menu" aria-label="Закрыть меню" tabindex="-1"></button><div class="pm-sheet" role="menu" aria-label="Профиль">' + menuItems(true) + '</div>' : '';
+}
+function mNavHTML(on) {
+  return '<nav class="m-nav" aria-label="Навигация">' +
+    '<a href="#/" data-act="home" class="' + (on === 'home' ? 'on' : '') + '">' + ic('home', 26) + 'Главная</a>' +
+    '<a href="#" data-act="soon">' + ic('trend', 26) + 'Тренды</a>' +
+    '<a href="#/studio" data-act="toStudio" class="' + (on === 'studio' ? 'on' : '') + '"' + (on === 'studio' ? ' aria-current="page"' : '') + '>' + ic('upload', 26) + 'Загрузить</a>' +
+    '<a href="#" data-act="soon">' + ic('badge', 26) + 'Лицензии</a>' +
+    '<button type="button" data-act="menu" aria-haspopup="menu" aria-expanded="' + !!st.menu + '" class="' + (st.menu ? 'on' : '') + '"><span class="av" style="width:26px;height:26px;font-size:11px">' + initial(ME) + '</span>Профиль</button></nav>';
+}
+function miniHTML() {
+  if (!st.started) return '';
+  var c = cur();
+  return '<div class="mini" role="region" aria-label="Плеер"><button type="button" class="ring" data-act="play" data-id="' + c.id + '" data-pp="" aria-label="' + (isOn(c.id) ? 'Пауза' : 'Слушать') + '">' + ringHTML(isOn(c.id)) + '</button>' +
+    '<button type="button" data-act="openPlayer" data-id="' + c.id + '" aria-label="Открыть плеер: ' + esc(c.title) + '" style="flex:1;min-width:0;text-align:left">' + mqx(c.title, 'mini-t') + '<span class="muted" style="display:block;font-size:14px;line-height:18px">' + esc(c.producer) + '</span></button>' +
+    '<button type="button" class="icon44" data-act="like" data-id="' + c.id + '" aria-label="Нравится" aria-pressed="' + !!st.liked[c.id] + '" style="border-radius:50%">' + ic('heart', 24, st.liked[c.id]) + '</button><button type="button" class="icon44" data-act="buyM" data-id="' + c.id + '" aria-label="Купить" style="border-radius:50%;margin-right:4px">' + ic('bag', 22) + '</button></div>';
+}
+function previewBarHTML() {
+  return '<div class="pv-bar">' + ic('eye', 18) + '<span>Предпросмотр: так бит увидят покупатели. Пока он виден только тебе.</span><button type="button" class="btn" data-act="toStudio">Вернуться в студию</button></div>';
+}
+
+/* ===== студия: состояние ===== */
+var MAXMB = 300;
+var KEYS = ['Cm', 'C#m', 'Dm', 'Ebm', 'Em', 'Fm', 'F#m', 'Gm', 'G#m', 'Am', 'Bbm', 'Bm', 'C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'];
+var LIC_ROWS = [['mp3', 'MP3', 'сделаем из твоего WAV'], ['wav', 'WAV', 'основной файл бита'], ['trk', 'TRACK OUT', 'стемы одним ZIP'], ['exc', 'ЭКСКЛЮЗИВ', 'после покупки бит уходит с продажи']];
+function stuNew() {
+  return {
+    phase: 'empty', file: null, prog: 0, decoded: false, morphT: 0, peaks: null, dur: 0, audio: null, ver: 0, prev: null, err: null, note: '', errT: 0,
+    cover: null, band: null, title: '', about: '', key: '', bpm: '', autoKey: false, autoBpm: false, genres: [], moods: [], adding: '',
+    lic: { mp3: { on: true, rub: '' }, wav: { on: true, rub: '' }, trk: { on: false, rub: '', zip: null }, exc: { on: false, rub: '', offers: true } },
+    free: false, vis: 'all', feed: true
+  };
+}
+var STU = stuNew(), stuTok = 0, stuRAF = 0;
+function mbText(bytes) { var mb = bytes / 1048576; return (mb < 10 ? mb.toFixed(1).replace('.', ',') : num(Math.round(mb))) + ' МБ'; }
+function titleFrom(name) {
+  return name.replace(/\.[^.]+$/, '').replace(/[_\-.]+/g, ' ').replace(/\b(master|final|mix|v\d+)\b/gi, '').replace(/\s+/g, ' ').trim().toUpperCase().slice(0, 40);
+}
+function stuBand() { var s = STU; if (s.phase === 'error') return ['hsl(356 70% 25%)', 'hsl(356 70% 13%)']; return s.band || ['#2A2325', '#1B1718']; }
+function swatchOf(b) { return /17%\)$/.test(b[0]) ? b[0].replace(/17%\)$/, '36%)') : '#5A5254'; }
+function stuPriced() { return LIC_ROWS.filter(function (r) { var l = STU.lic[r[0]]; return l.on && +l.rub > 0; }); }
+function stuMin() { var p = stuPriced().map(function (r) { return +STU.lic[r[0]].rub; }); return p.length ? Math.min.apply(null, p) : 0; }
+function stuMissing() {
+  var s = STU, m = [];
+  if (s.phase !== 'ready') m.push('файл');
+  if (!s.cover) m.push('обложка');
+  if (!s.title.trim()) m.push('название');
+  if (!stuPriced().length) m.push('цена');
+  if (s.lic.trk.on && !s.lic.trk.zip) m.push('ZIP для Track Out');
+  return m;
+}
+function stuCanPreview() { return STU.phase === 'ready' && stuPriced().length > 0; }
+function stuNote() {
+  var s = STU, m = stuMissing();
+  if (s.phase === 'uploading' || s.phase === 'morph') return { ok: false, html: 'Файл грузится, пока заполни остальное' };
+  if (!m.length) return { ok: true, html: ic('check', 16) + 'Всё готово, можно публиковать' };
+  return { ok: false, html: 'Осталось: ' + m.join(', ') };
+}
+/* черновик живёт как обычный бит с id draft: его можно слушать, а предпросмотр открывает обычную страницу бита */
+function stuDraft() {
+  var s = STU, d = BY.draft || {}, pr = {};
+  LIC_ROWS.forEach(function (r) { var l = s.lic[r[0]]; if (l.on && +l.rub > 0) pr[r[0]] = +l.rub; });
+  d.id = 'draft'; d.draft = true; d.title = (s.title.trim() || 'Твой бит').toUpperCase(); d.producer = ME;
+  d.peaks = s.peaks; d.dur = s.dur || 150; d.audio = s.audio; d.ver = s.ver; d.seed = 7;
+  d.cover = s.cover || PH; d.band = s.band ? s.band[0] : '#262022'; d.band2 = s.band ? s.band[1] : '#171314';
+  d.bpm = +s.bpm || 0; d.key = s.key; d.genres = s.genres.length ? s.genres.slice() : ['без жанра']; d.genre = d.genres[0];
+  d.moods = s.moods.length ? s.moods.slice() : ['не указано']; d.desc = s.about.trim() || 'Автор пока ничего не написал.';
+  d.prices = pr; d.rub = stuMin() || 0; d.offers = s.lic.exc.offers;
+  d.ago = 'ещё не выложен'; d.date = 'после публикации'; d.hrs = 0; d.likes = 0; d.comments = 0; d.reposts = 0; d.plays = '0'; d.bought = '0 раз';
+  BY.draft = d;
+  return d;
+}
+function ensureAud() {
+  if (aud) return;
+  aud = new Audio(); aud.preload = 'auto';
+  aud.addEventListener('ended', function () { st.paused = true; st.pos = 0; syncPlayButtons(); tickUI(); });
+}
+
+/* ===== студия: разметка ===== */
+function stuTagsHTML() {
+  var s = STU, h = '';
+  h += s.genres.length ? '<button type="button" class="h-tag" data-act="stFocus" data-v="genres">' + esc(s.genres[0]) + '</button>' : '<button type="button" class="h-tag add" data-act="stFocus" data-v="genres">' + ic('plus', 13) + 'жанр</button>';
+  h += +s.bpm ? '<button type="button" class="h-tag" data-act="stFocus" data-v="st-bpm">' + (+s.bpm) + ' BPM</button>' : '<button type="button" class="h-tag add" data-act="stFocus" data-v="st-bpm">' + ic('plus', 13) + 'BPM</button>';
+  h += s.key ? '<button type="button" class="h-tag" data-act="stFocus" data-v="st-key">' + esc(s.key) + '</button>' : '<button type="button" class="h-tag add" data-act="stFocus" data-v="st-key">' + ic('plus', 13) + 'тональность</button>';
+  return h;
+}
+function stuTitleHTML() {
+  var s = STU;
+  return '<div class="t-row"><label class="sr" for="st-title">Название бита</label><input id="st-title" class="t-in" type="text" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Название бита" value="' + esc(s.title) + '"><span class="t-cnt">' + ic('pencil', 14) + '<span id="st-tcnt">' + s.title.length + '</span>&nbsp;/&nbsp;40</span></div>';
+}
+function stuPlayHTML(mobile) {
+  var cls = mobile ? 'ms-play' : 'h-play', sz = mobile ? 22 : 28;
+  if (STU.phase === 'ready') return '<button type="button" class="' + cls + '" data-act="play" data-id="draft" data-pp="draft" data-size="' + sz + '" aria-label="' + (isOn('draft') ? 'Пауза' : 'Слушать') + '">' + pp(isOn('draft'), sz) + '</button>';
+  return '<button type="button" class="' + cls + '" disabled aria-label="Слушать: сначала загрузи файл">' + ic('play', sz) + '</button>';
+}
+function stuWaveHTML(mobile) {
+  var s = STU, ph = s.phase;
+  if (ph === 'ready') return mobile ? heroWave(BY.draft, 70, 46) : heroWave(BY.draft);
+  var now = ph === 'uploading' || ph === 'morph' ? Math.round(s.prog * 100) + '%' : '0:00';
+  var inner = '<canvas></canvas>' + (ph === 'uploading' ? '<span class="w-line st-line" style="left:' + (s.prog * 100) + '%"></span>' : '') +
+    '<span class="w-now" id="st-now">' + now + '</span><span class="w-dur">' + (ph === 'uploading' || ph === 'morph' ? '' : '-:--') + '</span>';
+  if (ph === 'empty' || ph === 'error') return '<button type="button" class="wave js-swave drop" data-act="pickBeat" aria-label="' + (ph === 'error' ? 'Ошибка загрузки. Выбрать другой файл' : 'Загрузить файл бита') + '">' + inner + '</button>';
+  return '<div class="wave js-swave" role="progressbar" aria-label="Загрузка файла" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + Math.round(s.prog * 100) + '">' + inner + '</div>';
+}
+function stuBuyHTML() {
+  var m = stuMin();
+  return m ? '<span class="h-buy" id="st-buy" title="Так кнопка будет выглядеть для покупателей">Купить от ' + money(m) + '</span>' : '<span class="h-buy ph" id="st-buy" aria-hidden="true">Купить</span>';
+}
+function stuActsHTML(mobile) {
+  var s = STU, ph = s.phase, h = '';
+  var note = s.note ? '<span class="h-note">' + ic('alert', 16) + esc(s.note) + '</span>' : '';
+  var okIc = ic('check', 16).replace('class="i"', 'class="i ok"');
+  if (ph === 'empty') {
+    h = '<button type="button" class="h-btn on" data-act="pickBeat">' + ic('upload', 18) + 'Выбрать файл</button>' +
+      (note || '<span class="h-hint">' + (mobile ? 'WAV или MP3, до 300 МБ' : 'или перетащи на волну. WAV или MP3, до 300 МБ') + '</span>');
+  } else if (ph === 'uploading' || ph === 'morph') {
+    h = '<span class="file-chip">' + ic('file', 16) + '<b>' + esc(s.file.name) + '</b><span id="st-mb">' + mbText(s.file.size * s.prog) + ' из ' + mbText(s.file.size) + '</span><span class="up-bar" aria-hidden="true"><i id="st-bar" style="width:' + Math.round(s.prog * 100) + '%"></i></span></span>' +
+      (ph === 'uploading' ? '<button type="button" class="h-btn" data-act="stCancel">' + ic('x', 16) + 'Отменить</button>' : '');
+  } else if (ph === 'ready') {
+    var chip = '<span class="file-chip" style="flex:1 1 auto">' + okIc + '<b>' + esc(s.file.name) + '</b><span>' + mbText(s.file.size) + '</span><span>' + fmt(s.dur) + '</span></span>';
+    h = (mobile ? '<div style="display:flex;align-items:center;gap:10px;min-width:0">' + stuPlayHTML(true) + chip + '</div>' : chip) +
+      '<button type="button" class="h-btn" data-act="pickBeat">' + ic('upload', 18) + 'Заменить файл</button>' + note;
+  } else if (ph === 'error') {
+    h = '<button type="button" class="h-btn on err" data-act="pickBeat">' + ic('upload', 18) + 'Выбрать другой файл</button>' +
+      (s.prev && !s.cover ? '<button type="button" class="h-btn" data-act="stKeep">Оставить прошлый файл</button>' : '') +
+      '<div class="err-msg" role="alert">' + ic('alert', 22) + '<div><b>' + esc(s.err.name) + ' не загрузился</b><span>' + esc(s.err.text) + '</span></div></div>';
+  }
+  if (mobile) return h + (ph === 'ready' ? '<div class="ms-buy"><span>Так увидят покупатели</span>' + stuBuyHTML() + '</div>' : '');
+  return h + stuBuyHTML();
+}
+function stuCoverHTML(mobile) {
+  var s = STU, err = s.phase === 'error';
+  if (s.cover) {
+    var img = '<img src="' + s.cover + '" alt="Обложка бита">';
+    if (err) return '<div class="cv-col cv-wrap">' + img + '<div class="cv-err"><span class="cv-ic err">' + ic('alert', 44) + '</span></div></div>';
+    return '<div class="cv-col cv-wrap">' + img + '<div class="cv-tools">' + (mobile ? '' : '<span class="gl-btn"><span class="swatch" style="background:' + swatchOf(s.band) + '"></span>Цвет из обложки</span>') +
+      '<button type="button" class="gl-btn" data-act="pickCover">' + ic('image', 16) + 'Заменить</button></div></div>';
+  }
+  return '<button type="button" class="cv-col cv-ph' + (err ? ' err' : '') + '" data-act="pickCover"><span class="cv-ic' + (err ? ' err' : '') + '">' + ic(err ? 'alert' : 'image', 44) +
+    (err ? '' : '<span class="cv-plus">' + ic('plus', 20) + '</span>') + '</span><span><b>' + (mobile ? 'Обложка' : 'Добавить обложку') + '</b><small>JPG или PNG, от 1400×1400</small></span></button>';
+}
+function stuAboutHTML() {
+  var s = STU;
+  return '<div class="card ab"><div class="ab-head"><span class="av" style="width:32px;height:32px;font-size:12px">' + initial(ME) + '</span><b>' + esc(ME) + '</b><label class="h-badge" for="st-about">ОТ АВТОРА</label></div>' +
+    '<textarea id="st-about" class="ta" rows="4" maxlength="1000" placeholder="Расскажи про бит: под какой вокал, что внутри, есть ли тег в превью. Можно позвать в личку за эксклюзивом.">' + esc(s.about) + '</textarea>' +
+    '<div class="ta-foot"><span>Будет на странице бита в блоке «О бите»</span><span><span id="st-acnt">' + s.about.length + '</span>&nbsp;/&nbsp;1000</span></div></div>';
+}
+function stuSuggest(k) {
+  var all = [];
+  BEATS.forEach(function (b) { (k === 'genres' ? b.genres : b.moods).forEach(function (x) { if (all.indexOf(x) < 0 && STU[k].indexOf(x) < 0) all.push(x); }); });
+  return all.map(function (x) { return '<option value="' + esc(x) + '"></option>'; }).join('');
+}
+function stuChipsHTML(k, label, word) {
+  var list = STU[k], h = '<div class="fx w2"><span class="fx-l" id="st-l-' + k + '">' + label + '</span><div class="chips-ed" role="group" aria-labelledby="st-l-' + k + '">';
+  h += list.map(function (g, i) { return '<span class="chip-ed">' + esc(g) + '<button type="button" data-act="stDel" data-v="' + k + '" data-i="' + i + '" aria-label="Убрать ' + esc(g) + '">' + ic('x', 14) + '</button></span>'; }).join('');
+  if (STU.adding === k) h += '<label class="sr" for="st-add">Добавить ' + word + '</label><input id="st-add" class="chip-in" list="st-dl" autocomplete="off" maxlength="24" placeholder="' + word + ', Enter"><datalist id="st-dl">' + stuSuggest(k) + '</datalist>';
+  else if (list.length < 3) h += '<button type="button" class="chip-add" data-act="stAdd" data-v="' + k + '">' + ic('plus', 14) + (list.length ? 'добавить' : 'добавить ' + word) + '</button>' + (list.length ? '' : '<span class="muted" style="font-size:13px">до 3</span>');
+  return h + '</div></div>';
+}
+function stuFactsHTML() {
+  var s = STU, ready = s.phase === 'ready', auto = '<span class="auto">АВТО</span>';
+  var opts = '<option value=""' + (s.key ? '' : ' selected') + '>' + (ready ? 'Выбери' : 'Определим по файлу') + '</option>' + KEYS.map(function (k) { return '<option value="' + k + '"' + (k === s.key ? ' selected' : '') + '>' + k + '</option>'; }).join('');
+  var h = '<div class="fx-grid">';
+  h += '<div class="fx"><label class="fx-l" for="st-key">Тональность' + (s.autoKey ? auto : '') + '</label><div class="ctl"><select id="st-key" class="' + (s.key ? '' : 'ph') + '">' + opts + '</select>' + ic('down', 16) + '</div></div>';
+  h += '<div class="fx"><label class="fx-l" for="st-bpm">Темп' + (s.autoBpm ? auto : '') + '</label><div class="ctl"><input id="st-bpm" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="' + (ready ? 'не указан' : 'определим по файлу') + '" value="' + (s.bpm || '') + '"><span class="suf">BPM</span></div></div>';
+  h += '<div class="fx"><span class="fx-l">Длительность</span><div class="ctl ro">' + (ready ? '<span>' + fmt(s.dur) + '</span>' : '<span class="muted">возьмём из файла</span>') + '</div></div>';
+  h += '<div class="fx"><span class="fx-l">Выложен</span><div class="ctl ro"><span class="muted">после публикации</span></div></div>';
+  h += stuChipsHTML('genres', 'Жанр', 'жанр') + stuChipsHTML('moods', 'Настроение', 'настроение') + '</div>';
+  if (s.autoKey || s.autoBpm) h += '<p class="fx-note">' + ic('info', 16) + '<span>Темп и тональность определили по файлу. Если ошиблись, поправь.</span></p>';
+  return h;
+}
+function stuLicHTML() {
+  var s = STU, h = '<section class="card lic-ed" aria-labelledby="st-lh"><div class="lic-top"><h2 class="sec-h" id="st-lh" style="font-size:17px">Лицензии</h2><a href="#" data-act="soon">Условия</a></div>' +
+    '<p class="lic-sub">Условия одни для всех битов на basswerk. Ты выбираешь, что продавать, и ставишь цены.</p><ul class="lrows">';
+  LIC_ROWS.forEach(function (r) {
+    var l = s.lic[r[0]], hint = r[0] === 'trk' && !l.zip ? 'нужен ZIP со стемами' : r[2];
+    h += '<li class="lrow' + (l.on ? '' : ' off') + '"><button type="button" class="tgl' + (l.on ? ' on' : '') + '" role="switch" aria-checked="' + l.on + '" aria-label="Продавать ' + r[1] + '" data-act="stLic" data-v="' + r[0] + '"><i></i></button>' +
+      '<div><b>' + r[1] + '</b><small>' + hint + '</small></div>' +
+      '<div class="pr-in"><label class="sr" for="st-p-' + r[0] + '">Цена ' + r[1] + ', рублей</label><input id="st-p-' + r[0] + '" data-lic="' + r[0] + '" inputmode="numeric" maxlength="9" autocomplete="off" placeholder="цена" value="' + (l.rub ? num(l.rub) : '') + '"><span>₽</span></div>';
+    if (r[0] === 'trk' && l.on) h += l.zip ? '<div class="lr-x zip">' + ic('file', 16) + '<b>' + esc(l.zip.name) + '</b><span>' + mbText(l.zip.size) + '</span><span class="okc">' + ic('check', 16) + '</span></div>' : '<button type="button" class="lr-x btn sm" data-act="pickZip">' + ic('upload', 16) + 'Загрузить ZIP</button>';
+    if (r[0] === 'exc' && l.on) h += '<button type="button" class="lr-x chk" role="checkbox" aria-checked="' + l.offers + '" data-act="stOffers"><span class="cbox' + (l.offers ? ' on' : '') + '" aria-hidden="true">' + (l.offers ? ic('check', 14) : '') + '</span>Можно предложить свою цену</button>';
+    h += '</li>';
+  });
+  h += '<li class="lrow plain"><button type="button" class="tgl' + (s.free ? ' on' : '') + '" role="switch" aria-checked="' + s.free + '" aria-label="Бесплатный MP3 с тегом" data-act="stFree"><i></i></button><div><b>БЕСПЛАТНО</b><small>MP3 с твоим тегом можно скачать без оплаты</small></div></li></ul></section>';
+  return h;
+}
+function stuPubHTML() {
+  var s = STU, feed = s.feed && s.vis === 'all';
+  return '<section class="card pub" aria-labelledby="st-ph"><h2 class="sec-h" id="st-ph" style="font-size:17px">Публикация</h2><div class="seg-r" role="radiogroup" aria-label="Кто увидит бит">' +
+    [['all', 'Все'], ['link', 'По ссылке']].map(function (x) { var on = s.vis === x[0]; return '<button type="button" role="radio" aria-checked="' + on + '" class="' + (on ? 'on' : '') + '" data-act="stVis" data-v="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' +
+    '<button type="button" class="pub-row" role="switch" aria-checked="' + feed + '" data-act="stFeed"><span class="tgl' + (feed ? ' on' : '') + '" aria-hidden="true"><i></i></span><span><b>Показать в ленте</b><small>' + (s.vis === 'link' ? 'бит по ссылке в ленту не попадёт' : 'подписчики увидят новый бит') + '</small></span></button></section>';
+}
+function stuInputsHTML() {
+  return '<input type="file" id="st-file" class="sr" tabindex="-1" aria-hidden="true" accept="audio/*,.wav,.mp3"><input type="file" id="st-cover" class="sr" tabindex="-1" aria-hidden="true" accept="image/*"><input type="file" id="st-zip" class="sr" tabindex="-1" aria-hidden="true" accept=".zip,application/zip">';
+}
+function studioNavHTML() {
+  var soon = function (icon, t, extra) { return '<button type="button" class="st-link" data-act="soon">' + ic(icon, 18) + t + (extra || '') + '</button>'; };
+  return '<nav class="st-nav" aria-label="Студия"><div class="st-nav-in"><div class="st-me"><span class="av" style="width:40px;height:40px;font-size:15px">' + initial(ME) + '</span><span><b>' + esc(ME) + '</b><small>СТУДИЯ</small></span></div>' +
+    soon('dash', 'Обзор') + '<a href="#/studio" class="st-link on" aria-current="page">' + ic('upload', 18) + 'Загрузить бит</a>' + soon('note', 'Мои биты', '<span class="n">' + person(ME).beats + '</span>') +
+    soon('receipt', 'Продажи') + soon('wallet', 'Баланс') + '<span class="st-sep"></span>' + soon('ext', 'Мой профиль') + '</div></nav>';
+}
+function studioHTML() {
+  var s = STU, band = stuBand(), nt = stuNote(), noPub = stuMissing().length > 0;
+  var h = '<div class="page st-page">';
+  h += '<div class="st-top"><a href="#/" class="st-back" data-act="home" aria-label="На главную">' + ic('back', 20) + '</a><div><span class="st-crumb">Студия</span><h1 class="st-h">Новый бит</h1></div><div class="st-acts"><span class="st-note' + (nt.ok ? ' ok' : '') + '" id="st-note">' + nt.html + '</span>' +
+    '<button type="button" class="btn" id="st-prev" data-act="stPreview" aria-disabled="' + !stuCanPreview() + '">' + ic('eye', 18) + 'Как увидят покупатели</button><button type="button" class="btn btn-fill" id="st-pub" data-act="stPublish" aria-disabled="' + noPub + '">Опубликовать</button></div></div>';
+  h += '<section class="hero sh' + (s.phase === 'error' ? ' err' : '') + '" id="st-hero" style="--band:' + band[0] + ';--band2:' + band[1] + '" aria-label="Новый бит"><div class="hero-grid"><div class="hero-l"><div class="hero-top">' + stuPlayHTML(false) +
+    '<div style="min-width:0;flex:1"><span class="h-badge"><b>ЧЕРНОВИК</b>ВИДИШЬ ТОЛЬКО ТЫ</span>' + stuTitleHTML() + '<div class="h-meta"><span>prod. by <a href="#" data-act="soon">' + esc(ME) + '</a></span><span class="h-tags" id="st-tags">' + stuTagsHTML() + '</span><span style="font-size:14px">выйдет после публикации</span></div></div></div>' +
+    stuWaveHTML(false) + '<div class="h-actions" id="st-acts">' + stuActsHTML(false) + '</div></div>' + stuCoverHTML(false) + '</div></section>';
+  h += '<div class="cols st-cols"><div style="min-width:0"><section aria-labelledby="st-ah" style="display:flex;flex-direction:column;gap:16px"><h2 class="sec-h" id="st-ah">О бите</h2>' + stuAboutHTML() + stuFactsHTML() + '</section></div>' +
+    '<aside class="side" aria-label="Продажа и публикация">' + stuLicHTML() + stuPubHTML() + '</aside></div>';
+  return h + stuInputsHTML() + '</div>';
+}
+function mobileStudioHTML() {
+  var s = STU, band = stuBand(), nt = stuNote(), noPub = stuMissing().length > 0;
+  var h = '<div class="m">';
+  h += '<div class="m-top"><div class="ms-top"><a href="#/" class="back" data-act="home" aria-label="На главную">' + ic('back', 24) + '</a><h1>Новый бит</h1><button type="button" class="btn btn-fill ms-pub" id="st-pub" data-act="stPublish" aria-disabled="' + noPub + '">Опубликовать</button></div></div>';
+  h += '<div class="m-body"><div class="m-scroll" id="mscroll"><div class="ms-page st-page">';
+  h += '<section class="ms-hero sh' + (s.phase === 'error' ? ' err' : '') + '" id="st-hero" style="--band:' + band[0] + ';--band2:' + band[1] + '" aria-label="Новый бит">';
+  h += '<div class="ms-head"><div class="ms-cv">' + stuCoverHTML(true) + '</div><div style="min-width:0;flex:1"><span class="h-badge"><b>ЧЕРНОВИК</b></span>' + stuTitleHTML() + '<p class="ms-meta">prod. by <a href="#" data-act="soon">' + esc(ME) + '</a></p></div></div>';
+  h += '<div class="h-tags" id="st-tags">' + stuTagsHTML() + '</div>' + stuWaveHTML(true) + '<div class="ms-acts" id="st-acts">' + stuActsHTML(true) + '</div></section>';
+  h += '<section class="ms-sec" aria-labelledby="st-ah"><h2 class="sec-h" id="st-ah">О бите</h2>' + stuAboutHTML() + stuFactsHTML() + '</section>';
+  h += '<div class="ms-sec">' + stuLicHTML() + stuPubHTML() + '</div>';
+  h += '<div class="ms-final"><button type="button" class="btn btn-fill" id="st-pub2" data-act="stPublish" aria-disabled="' + noPub + '">Опубликовать</button><button type="button" class="btn" id="st-prev" data-act="stPreview" aria-disabled="' + !stuCanPreview() + '" style="height:52px;border-radius:999px;font-size:16px">' + ic('eye', 20) + 'Как увидят покупатели</button><p id="st-note">' + nt.html + '</p></div>';
+  h += stuInputsHTML() + '</div></div></div>';
+  h += miniHTML() + mNavHTML('studio') + menuSheetHTML();
+  if (st.player) h += playerHTML(cur());
+  return h + '</div>';
+}
+/* точечное обновление без перерисовки, чтобы не сбивать фокус в полях */
+function studioSync() {
+  var s = STU, nt = stuNote(), n = document.getElementById('st-note');
+  if (n) { if (n.tagName !== 'P') n.className = 'st-note' + (nt.ok ? ' ok' : ''); n.innerHTML = nt.html; }
+  var noPub = stuMissing().length > 0;
+  ['st-pub', 'st-pub2'].forEach(function (id) { var e = document.getElementById(id); if (e) e.setAttribute('aria-disabled', noPub); });
+  var p = document.getElementById('st-prev'); if (p) p.setAttribute('aria-disabled', !stuCanPreview());
+  var tc = document.getElementById('st-tcnt'); if (tc) tc.textContent = s.title.length;
+  var ac = document.getElementById('st-acnt'); if (ac) ac.textContent = s.about.length;
+  var tg = document.getElementById('st-tags'); if (tg && !tg.contains(document.activeElement)) tg.innerHTML = stuTagsHTML();
+  var by = document.getElementById('st-buy'); if (by) by.outerHTML = stuBuyHTML();
+  if (BY.draft) stuDraft();
+}
+
+/* ===== волна из букв: «ТВОЙ БИТ», загрузка, «ОШИБКА» и переход в настоящую волну ===== */
+var LET = {}, fontOK = !document.fonts;
+function ensureFont() {
+  if (fontOK) return;
+  document.fonts.load('900 48px Unbounded', 'ТВОЙ БИТОШКА').then(function () { fontOK = true; LET = {}; paintSW(); }, function () { fontOK = true; });
+}
+function hash01(i) { var v = Math.sin(i * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); }
+function mergeRuns(r) {
+  r.sort(function (a, b) { return a[0] - b[0]; });
+  var out = [];
+  r.forEach(function (x) { var l = out[out.length - 1]; if (l && x[0] <= l[1]) l[1] = Math.max(l[1], x[1]); else out.push([x[0], x[1]]); });
+  return out;
+}
+function letterCols(text, n, top) {
+  var key = text + ':' + n + ':' + top;
+  if (LET[key]) return LET[key];
+  var W = n * 3, c = document.createElement('canvas'); c.width = W; c.height = top;
+  var x = c.getContext('2d', { willReadFrequently: true }), F = 'Unbounded,"Arial Black",sans-serif';
+  /* на узкой волне (телефон) столбиков мало: больше разрядки и шире пробел, чтобы слова не слипались */
+  var narrow = n < 200, TR = narrow ? 0.17 : 0.09, SP = narrow ? 0.62 : 0.34, FILL = narrow ? 0.94 : 0.84;
+  /* раскладка по буквам с разрядкой, чтобы буквы не слипались в столбиках */
+  function lay(t, f) {
+    x.font = '900 ' + f + 'px ' + F;
+    var pos = [], w = 0, a = 0;
+    for (var i = 0; i < t.length; i++) {
+      var ch = t.charAt(i), adv;
+      if (ch === ' ') adv = f * SP;
+      else { var m = x.measureText(ch); adv = m.width; a = Math.max(a, m.actualBoundingBoxAscent || f * 0.8); pos.push([ch, w]); }
+      w += adv;
+      if (i < t.length - 1 && ch !== ' ' && t.charAt(i + 1) !== ' ') w += f * TR;
+    }
+    return { pos: pos, w: w, a: a };
+  }
+  var ref = lay('ТВОЙ БИТ', 100), fs = Math.min(100 * (top - 3) / ref.a, 100 * W * FILL / ref.w);
+  var L = lay(text, fs), x0 = (W - L.w) / 2;
+  x.fillStyle = '#fff'; x.textBaseline = 'alphabetic';
+  L.pos.forEach(function (p) { x.fillText(p[0], x0 + p[1], top); });
+  var d = x.getImageData(0, 0, W, top).data, out = [];
+  for (var i = 0; i < n; i++) {
+    var runs = [], s0 = -1;
+    for (var y = 0; y < top; y++) {
+      var o = (y * W + i * 3) * 4, al = (d[o + 3] + d[o + 7]) / 2;
+      if (al > 120) { if (s0 < 0) s0 = y; } else if (s0 >= 0) { runs.push([s0, y]); s0 = -1; }
+    }
+    if (s0 >= 0) runs.push([s0, top]);
+    var nh = 2 + Math.round(5 * (0.5 + 0.5 * Math.sin(i * 0.31) * Math.cos(i * 0.093 + 1.7)) * (0.55 + 0.45 * hash01(i)));
+    runs.push([top - nh, top]);
+    out.push(mergeRuns(runs));
+  }
+  if (fontOK) LET[key] = out;
+  return out;
+}
+function paintSW() {
+  var el = document.querySelector('.js-swave');
+  if (!el) return;
+  var cv = el.querySelector('canvas'), mob = mq.matches, top = mob ? 70 : 90, bot = mob ? 46 : 60, H = top + 1 + bot;
+  var dpr = window.devicePixelRatio || 1, w = cv.clientWidth;
+  if (!w) return;
+  if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(H * dpr); }
+  var x = cv.getContext('2d'); x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, w, H);
+  var s = STU, ph = s.phase, n = Math.max(40, Math.floor((w + 1) / 3)), xs = (w + 1) / n, k = bot / top;
+  var L = letterCols(ph === 'error' ? 'ОШИБКА' : 'ТВОЙ БИТ', n, top);
+  var IDLE = ['rgba(245,242,242,.42)', 'rgba(245,242,242,.17)'], ON = ['#FFFFFF', 'rgba(255,255,255,.42)'], ERR = ['rgba(255,91,82,.95)', 'rgba(255,91,82,.34)'], REAL = ['rgba(245,242,242,.38)', 'rgba(245,242,242,.17)'];
+  var morph = ph === 'morph' && BY.draft && BY.draft.peaks, R = morph ? bars(n, BY.draft) : null, T = s.morphT || 0;
+  var pn = ph === 'uploading' ? s.prog * n : morph ? n : -1;
+  for (var i = 0; i < n; i++) {
+    var bx = Math.round(i * xs), e = 0;
+    if (morph) { var ti = Math.min(1, Math.max(0, (T - (i / n) * 0.45) / 0.55)); e = ti < 0.5 ? 2 * ti * ti : 1 - Math.pow(-2 * ti + 2, 2) / 2; }
+    var col = ph === 'error' ? ERR : i < pn ? ON : IDLE;
+    if (e < 1) {
+      var sc = 1 - e;
+      x.globalAlpha = morph ? 1 - e * 0.5 : 1;
+      for (var j = 0; j < L[i].length; j++) {
+        var r = L[i][j], y1 = top - (top - r[0]) * sc, y2 = top - (top - r[1]) * sc;
+        if (y2 - y1 > 0.3) { x.fillStyle = col[0]; x.fillRect(bx, y1, 2, y2 - y1); }
+        var d1 = (top - r[1]) * sc * k, d2 = (top - r[0]) * sc * k;
+        if (d2 - d1 > 0.3) { x.fillStyle = col[1]; x.fillRect(bx, top + 1 + d1, 2, d2 - d1); }
+      }
+      x.globalAlpha = 1;
+    }
+    if (morph && e > 0) {
+      var t0 = Math.max(2, Math.round(2 + R[i] * (top - 2))), b0 = Math.max(1, Math.round(t0 * bot / top));
+      x.fillStyle = REAL[0]; x.fillRect(bx, top - t0 * e, 2, t0 * e);
+      x.fillStyle = REAL[1]; x.fillRect(bx, top + 1, 2, b0 * e);
+    }
+  }
+  var ln = el.querySelector('.st-line'); if (ln) ln.style.left = (s.prog * 100) + '%';
+}
+function stuProgDOM() {
+  var s = STU, pct = Math.round(s.prog * 100), wait = s.prog >= 1 && !s.decoded;
+  var a = document.getElementById('st-now'); if (a) a.textContent = pct + '%';
+  var b = document.getElementById('st-mb'); if (b) b.textContent = wait ? 'считаем волну' : mbText(s.file.size * s.prog) + ' из ' + mbText(s.file.size);
+  var c = document.getElementById('st-bar'); if (c) c.style.width = pct + '%';
+  var w = document.querySelector('.js-swave'); if (w && w.getAttribute('role') === 'progressbar') w.setAttribute('aria-valuenow', pct);
+}
+function stuLoop() { if (!stuRAF) stuRAF = requestAnimationFrame(stuStep); }
+function stuStep(t) {
+  stuRAF = 0;
+  var s = STU;
+  if (s.phase === 'uploading') {
+    s.prog = Math.min(1, (t - s.t0) / s.upMs);
+    if (s.prog >= 1 && s.decoded) {
+      s.phase = 'morph'; s.m0 = t;
+      var cb = document.querySelector('[data-act="stCancel"]'); if (cb) cb.remove();
+      var ln = document.querySelector('.st-line'); if (ln) ln.remove();
+    }
+    stuProgDOM();
+  }
+  if (s.phase === 'morph') {
+    s.morphT = Math.min(1, (t - s.m0) / 1100);
+    if (s.morphT >= 1) { s.phase = 'ready'; s.prev = null; rerenderKeep(); return; }
+  }
+  paintSW();
+  if (s.phase === 'uploading' || s.phase === 'morph') stuRAF = requestAnimationFrame(stuStep);
+}
+function mountStudio() {
+  if (st.view !== 'studio') return;
+  ensureFont(); paintSW();
+  if (STU.phase === 'uploading' || STU.phase === 'morph') stuLoop();
+  if (STU.adding) { var a = document.getElementById('st-add'); if (a) a.focus(); }
+}
+
+/* ===== студия: файлы ===== */
+function snapReady() { var s = STU; return { file: s.file, peaks: s.peaks, dur: s.dur, audio: s.audio, ver: s.ver }; }
+function pauseDraft() { if (st.playing === 'draft' && !st.paused) { st.paused = true; syncAudio(); } }
+function stuFile(f) {
+  if (!f) return;
+  var s = STU, ext = ((/\.([^.]+)$/.exec(f.name) || [])[1] || '').toLowerCase();
+  if (ext !== 'wav' && ext !== 'mp3' && ext !== 'wave') return stuError(f.name, ext ? ext.toUpperCase() + ' не принимаем. Нужен WAV или MP3 до 300 МБ.' : 'Это не аудиофайл. Нужен WAV или MP3 до 300 МБ.', ext ? 'формат ' + ext.toUpperCase() : 'это не аудиофайл');
+  if (f.size > MAXMB * 1048576) return stuError(f.name, 'Файл весит ' + mbText(f.size) + ', а можно до 300 МБ.', 'больше 300 МБ');
+  if (s.phase === 'ready') s.prev = snapReady();
+  clearTimeout(s.errT); s.err = null; s.note = '';
+  var tok = ++stuTok;
+  s.phase = 'uploading'; s.file = { name: f.name, size: f.size }; s.prog = 0; s.decoded = false; s.morphT = 0;
+  s.t0 = performance.now(); s.upMs = Math.min(6000, 1600 + f.size / 1048576 * 45);
+  if (!s.title.trim()) s.title = titleFrom(f.name);
+  pauseDraft();
+  rerenderKeep(); stuLoop();
+  var read = f.arrayBuffer ? f.arrayBuffer() : new Promise(function (ok, no) { var r = new FileReader(); r.onload = function () { ok(r.result); }; r.onerror = no; r.readAsArrayBuffer(f); });
+  read.then(function (buf) {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    return new Promise(function (ok, no) { var pr = actx.decodeAudioData(buf, ok, no); if (pr && pr.catch) pr.catch(function () { /* ошибку уже ловит no */ }); });
+  }).then(function (ab) {
+    if (tok !== stuTok) return;
+    setTimeout(function () {
+      if (tok !== stuTok) return;
+      var an = null;
+      try { an = analyse(ab); } catch (e) { an = null; }
+      s.peaks = peaksFrom(ab); s.dur = ab.duration; s.audio = URL.createObjectURL(f); s.ver++;
+      if (an) {
+        if (an.bpm && (!s.bpm || s.autoBpm)) { s.bpm = String(an.bpm); s.autoBpm = true; }
+        if (an.key && (!s.key || s.autoKey)) { s.key = an.key; s.autoKey = true; }
+      }
+      stuDraft(); ensureAud(); s.decoded = true;
+      if (st.view !== 'studio') { s.phase = 'ready'; s.prev = null; }
+    }, 30);
+  }).catch(function () {
+    if (tok !== stuTok) return;
+    stuError(f.name, 'Файл не читается, похоже, он повреждён. Пересохрани WAV или MP3 и попробуй ещё раз.', 'файл не читается');
+  });
+}
+/* ошибка: без обложки остаётся, пока не выберешь другой файл; с обложкой держится 4 секунды */
+function stuError(name, text, short) {
+  var s = STU;
+  stuTok++;
+  if (s.phase === 'ready') s.prev = snapReady();
+  s.phase = 'error'; s.err = { name: name, text: text, short: short }; s.note = '';
+  pauseDraft();
+  clearTimeout(s.errT);
+  if (s.cover) s.errT = setTimeout(stuRevert, 4000);
+  rerenderKeep();
+}
+function stuRevert() {
+  var s = STU;
+  clearTimeout(s.errT);
+  if (s.phase !== 'error') return;
+  var short = s.err ? s.err.short : '';
+  s.err = null;
+  if (s.prev) {
+    var p = s.prev;
+    s.file = p.file; s.peaks = p.peaks; s.dur = p.dur; s.audio = p.audio; s.ver = p.ver; s.phase = 'ready'; s.prev = null;
+    s.note = 'Новый файл не загрузился: ' + short + '. Оставили прошлый.';
+    stuDraft();
+  } else {
+    s.phase = 'empty'; s.file = null;
+    s.note = 'Прошлый файл не загрузился: ' + short + '. Нужен WAV или MP3 до 300 МБ.';
+  }
+  if (st.view === 'studio') rerenderKeep();
+}
+function stuCancel() {
+  var s = STU;
+  stuTok++;
+  if (s.prev) { var p = s.prev; s.file = p.file; s.peaks = p.peaks; s.dur = p.dur; s.audio = p.audio; s.ver = p.ver; s.phase = 'ready'; s.prev = null; stuDraft(); }
+  else { s.phase = 'empty'; s.file = null; }
+  rerenderKeep();
+}
+function stuCover(f) {
+  if (!f || !/^image\//.test(f.type)) { toast('Для обложки нужна картинка: JPG или PNG'); return; }
+  var url = URL.createObjectURL(f), img = new Image();
+  img.onload = function () {
+    var c = null;
+    try { c = keyColor(img); } catch (e) { c = null; }
+    var s = STU;
+    s.cover = url; s.band = c || ['#262022', '#171314'];
+    if (BY.draft || s.phase === 'ready') stuDraft();
+    if (s.phase === 'error') { clearTimeout(s.errT); s.errT = setTimeout(stuRevert, 4000); }
+    rerenderKeep();
+    if (!c) toast('В обложке почти нет цвета, полоса будет серой');
+  };
+  img.onerror = function () { toast('Не получилось открыть картинку'); };
+  img.src = url;
+}
+function stuZip(f) {
+  if (!f || !/\.zip$/i.test(f.name)) { toast('Для Track Out нужен ZIP-архив со стемами'); return; }
+  STU.lic.trk.zip = { name: f.name, size: f.size }; STU.lic.trk.on = true;
+  rerenderKeep();
+}
+function stuAddCommit(v) {
+  var s = STU, k = s.adding;
+  if (!k) return;
+  s.adding = '';
+  v = (v || '').trim().toLowerCase();
+  if (v && s[k].indexOf(v) < 0 && s[k].length < 3) s[k].push(v);
+  rerenderKeep();
+}
+function todayRu() {
+  try { return new Date().toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' }).replace(/\s*г\.?$/, ''); } catch (e) { return 'сегодня'; }
+}
+function stuPublish() {
+  var m = stuMissing();
+  if (m.length) { toast('Осталось: ' + m.join(', ')); return; }
+  var s = STU, d = stuDraft(), id = 'u' + Date.now().toString(36), b = {};
+  for (var k in d) b[k] = d[k];
+  b.id = id; b.draft = false; b.ago = 'только что'; b.date = todayRu(); b.ver = 0;
+  BY[id] = b;
+  if (s.vis === 'all') BEATS.unshift(b);
+  person(ME).beats++;
+  if (s.vis === 'all' && s.feed) FEED.unshift({ id: 'e' + id, t: 'beat', who: ME, time: 'только что', text: 'выложил новый бит', beat: id });
+  if (st.playing === 'draft') st.playing = id;
+  STU = stuNew(); delete BY.draft;
+  go('beat', id);
+  toast(s.vis === 'all' ? 'Бит опубликован' : 'Бит опубликован, он открывается по ссылке');
+}
+
+/* ===== темп и тональность по файлу: грубая оценка, поэтому в полях метка АВТО ===== */
+function analyse(ab) {
+  var step = Math.max(1, Math.round(ab.sampleRate / 11025)), sr = ab.sampleRate / step;
+  var a = ab.getChannelData(0), b2 = ab.numberOfChannels > 1 ? ab.getChannelData(1) : null;
+  var n = Math.floor(ab.length / step), x = new Float32Array(n);
+  for (var i = 0; i < n; i++) {
+    var sm = 0, o = i * step;
+    for (var j = 0; j < step; j++) { sm += a[o + j]; if (b2) sm += b2[o + j]; }
+    x[i] = sm / (step * (b2 ? 2 : 1));
+  }
+  return { bpm: detectBpm(x, sr), key: detectKey(x, sr) };
+}
+function detectBpm(x, sr) {
+  var hop = Math.max(1, Math.round(sr / 200)), nF = Math.floor(x.length / hop);
+  if (nF < 600) return 0;
+  var env = new Float32Array(nF), prev = 0;
+  for (var f = 0; f < nF; f++) {
+    var e = 0, o = f * hop;
+    for (var j = 0; j < hop; j++) { var v = x[o + j]; e += v * v; }
+    e = Math.log(1e-4 + e);
+    env[f] = f ? Math.max(0, e - prev) : 0; prev = e;
+  }
+  var fps = sr / hop, lo = Math.floor(fps * 60 / 200), hi = Math.ceil(fps * 60 / 60), sc = {}, best = -1, bl = 0;
+  for (var L = lo; L <= hi; L++) {
+    var s = 0;
+    for (var i = 0; i + L < nF; i++) s += env[i] * env[i + L];
+    s /= (nF - L);
+    var bpm = fps * 60 / L;
+    s *= Math.exp(-Math.pow(Math.log(bpm / 120) / Math.LN2, 2) * 0.7);
+    sc[L] = s;
+    if (s > best) { best = s; bl = L; }
+  }
+  if (!bl) return 0;
+  var l = bl;
+  if (sc[bl - 1] != null && sc[bl + 1] != null) { var den = sc[bl - 1] - 2 * sc[bl] + sc[bl + 1]; if (den < 0) l += 0.5 * (sc[bl - 1] - sc[bl + 1]) / den; }
+  var res = fps * 60 / l;
+  while (res < 75) res *= 2;
+  while (res > 180) res /= 2;
+  return Math.round(res);
+}
+function fft(re, im) {
+  var n = re.length, i, j = 0, k, t;
+  for (i = 1; i < n; i++) {
+    var bit = n >> 1;
+    for (; j & bit; bit >>= 1) j ^= bit;
+    j ^= bit;
+    if (i < j) { t = re[i]; re[i] = re[j]; re[j] = t; t = im[i]; im[i] = im[j]; im[j] = t; }
+  }
+  for (var len = 2; len <= n; len <<= 1) {
+    var ang = -2 * Math.PI / len, wr = Math.cos(ang), wi = Math.sin(ang), hl = len >> 1;
+    for (i = 0; i < n; i += len) {
+      var cr = 1, ci = 0;
+      for (k = 0; k < hl; k++) {
+        var a = i + k, b = a + hl, vr = re[b] * cr - im[b] * ci, vi = re[b] * ci + im[b] * cr;
+        re[b] = re[a] - vr; im[b] = im[a] - vi; re[a] += vr; im[a] += vi;
+        var nr = cr * wr - ci * wi; ci = cr * wi + ci * wr; cr = nr;
+      }
+    }
+  }
+}
+function detectKey(x, sr) {
+  var N = 4096, half = N >> 1, re = new Float64Array(N), im = new Float64Array(N), win = new Float64Array(N), pc = new Int8Array(half), ch = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  var frames = Math.min(90, Math.floor(x.length / N) - 1);
+  if (frames < 4) return '';
+  for (var i = 0; i < N; i++) win[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / (N - 1));
+  for (var k = 0; k < half; k++) {
+    var fq = k * sr / N;
+    if (fq < 55 || fq > 1760) { pc[k] = -1; continue; }
+    pc[k] = ((Math.round(69 + 12 * Math.log(fq / 440) / Math.LN2) % 12) + 12) % 12;
+  }
+  var stride = Math.floor((x.length - N) / frames);
+  for (var f = 0; f < frames; f++) {
+    var o = f * stride;
+    for (i = 0; i < N; i++) { re[i] = x[o + i] * win[i]; im[i] = 0; }
+    fft(re, im);
+    for (k = 1; k < half; k++) if (pc[k] >= 0) ch[pc[k]] += Math.sqrt(re[k] * re[k] + im[k] * im[k]);
+  }
+  var MAJ = [6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88], MIN = [6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17];
+  var NMAJ = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'], NMIN = ['Cm', 'C#m', 'Dm', 'Ebm', 'Em', 'Fm', 'F#m', 'Gm', 'G#m', 'Am', 'Bbm', 'Bm'];
+  function corr(P, r) {
+    var mx = 0, mp = 0, q;
+    for (q = 0; q < 12; q++) { mx += ch[(q + r) % 12]; mp += P[q]; }
+    mx /= 12; mp /= 12;
+    var sxy = 0, sxx = 0, syy = 0;
+    for (q = 0; q < 12; q++) { var dx = ch[(q + r) % 12] - mx, dy = P[q] - mp; sxy += dx * dy; sxx += dx * dx; syy += dy * dy; }
+    return sxx && syy ? sxy / Math.sqrt(sxx * syy) : -1;
+  }
+  var best = -2, name = '';
+  for (var r = 0; r < 12; r++) {
+    var cM = corr(MAJ, r), cm = corr(MIN, r);
+    if (cM > best) { best = cM; name = NMAJ[r]; }
+    if (cm > best) { best = cm; name = NMIN[r]; }
+  }
+  return best > 0.2 ? name : '';
+}
+
+/* ===== студия и меню: действия ===== */
+ACT.menu = function () { st.menu = !st.menu; rerenderKeep(); };
+ACT.toStudio = function () { st.menu = false; st.player = false; go('studio', null, { force: true }); };
+ACT.soon = function () { var was = st.menu; st.menu = false; if (was) rerenderKeep(); toast('Этого раздела в прототипе пока нет'); };
+ACT.home = function () { st.menu = false; if (mq.matches) { st.mTab = 'beats'; st.mView = 'catalog'; st.player = false; } go('home', null, { force: true }); };
+ACT.pickBeat = function () { var i = document.getElementById('st-file'); if (i) i.click(); };
+ACT.pickCover = function () { var i = document.getElementById('st-cover'); if (i) i.click(); };
+ACT.pickZip = function () { var i = document.getElementById('st-zip'); if (i) i.click(); };
+ACT.stCancel = function () { stuCancel(); };
+ACT.stKeep = function () { stuRevert(); };
+ACT.stLic = function (el) { var l = STU.lic[el.getAttribute('data-v')]; l.on = !l.on; rerenderKeep(); };
+ACT.stOffers = function () { STU.lic.exc.offers = !STU.lic.exc.offers; rerenderKeep(); };
+ACT.stFree = function () { STU.free = !STU.free; rerenderKeep(); };
+ACT.stVis = function (el) { STU.vis = el.getAttribute('data-v'); rerenderKeep(); };
+ACT.stFeed = function () { if (STU.vis === 'link') { toast('Бит по ссылке в ленту не попадает'); return; } STU.feed = !STU.feed; rerenderKeep(); };
+ACT.stAdd = function (el) { STU.adding = el.getAttribute('data-v'); rerenderKeep(); };
+ACT.stDel = function (el) { STU[el.getAttribute('data-v')].splice(+el.getAttribute('data-i'), 1); rerenderKeep(); };
+ACT.stFocus = function (el) {
+  var v = el.getAttribute('data-v'), t;
+  if (v === 'genres') {
+    if (STU.genres.length < 3) { STU.adding = 'genres'; rerenderKeep(); t = document.getElementById('st-add'); }
+    else t = document.getElementById('st-l-genres');
+  } else t = document.getElementById(v);
+  if (t) { if (t.focus) t.focus({ preventScroll: true }); t.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+};
+ACT.stPublish = function () { stuPublish(); };
+ACT.stPreview = function () {
+  if (!stuCanPreview()) { toast(STU.phase !== 'ready' ? 'Сначала загрузи файл' : 'Поставь цену хотя бы на одну лицензию'); return; }
+  stuDraft(); go('beat', 'draft');
+};
+
+document.addEventListener('input', function (e) {
+  var t = e.target, s = STU;
+  if (!t.id || t.id.indexOf('st-') !== 0) return;
+  if (t.id === 'st-title') s.title = t.value.slice(0, 40);
+  else if (t.id === 'st-about') s.about = t.value;
+  else if (t.id === 'st-bpm') {
+    var v = t.value.replace(/\D/g, '').slice(0, 3);
+    if (v !== t.value) t.value = v;
+    s.bpm = v; s.autoBpm = false;
+    var a = t.closest('.fx').querySelector('.auto'); if (a) a.remove();
+  } else if (t.getAttribute('data-lic')) {
+    var d = t.value.replace(/\D/g, '').slice(0, 7);
+    if (d !== t.value) t.value = d;
+    s.lic[t.getAttribute('data-lic')].rub = d ? +d : '';
+  } else return;
+  studioSync();
+});
+document.addEventListener('change', function (e) {
+  var t = e.target, s = STU;
+  if (t.id === 'st-key') {
+    s.key = t.value; s.autoKey = false; t.className = t.value ? '' : 'ph';
+    var a = t.closest('.fx').querySelector('.auto'); if (a) a.remove();
+    studioSync();
+  }
+  if (t.id === 'st-file' && t.files && t.files[0]) { var f = t.files[0]; t.value = ''; stuFile(f); }
+  if (t.id === 'st-cover' && t.files && t.files[0]) { var c = t.files[0]; t.value = ''; stuCover(c); }
+  if (t.id === 'st-zip' && t.files && t.files[0]) { var z = t.files[0]; t.value = ''; stuZip(z); }
+});
+document.addEventListener('keydown', function (e) {
+  if (e.target.id === 'st-add') {
+    if (e.key === 'Enter') { e.preventDefault(); stuAddCommit(e.target.value); }
+    else if (e.key === 'Escape') { STU.adding = ''; rerenderKeep(); }
+    return;
+  }
+  if (e.key === 'Escape' && st.menu) { st.menu = false; rerenderKeep(); }
+});
+document.addEventListener('focusout', function (e) {
+  if (e.target.getAttribute && e.target.getAttribute('data-lic') && e.target.value) e.target.value = num(e.target.value.replace(/\D/g, ''));
+  if (e.target.id === 'st-add' && STU.adding) { var v = e.target.value; setTimeout(function () { if (STU.adding) stuAddCommit(v); }, 0); }
+});
+/* перетаскивание файлов на страницу студии: звук в волну, картинка в обложку, zip в Track Out */
+document.addEventListener('dragover', function (e) {
+  if (st.view !== 'studio') return;
+  var types = e.dataTransfer && e.dataTransfer.types;
+  if (!types || Array.prototype.indexOf.call(types, 'Files') < 0) return;
+  e.preventDefault();
+  var h = document.getElementById('st-hero'); if (h) h.classList.add('is-drag');
+});
+document.addEventListener('dragleave', function (e) {
+  if (st.view !== 'studio' || e.relatedTarget) return;
+  var h = document.getElementById('st-hero'); if (h) h.classList.remove('is-drag');
+});
+document.addEventListener('drop', function (e) {
+  if (st.view !== 'studio') return;
+  e.preventDefault();
+  var h = document.getElementById('st-hero'); if (h) h.classList.remove('is-drag');
+  var fs = e.dataTransfer && e.dataTransfer.files, beat = null;
+  if (!fs) return;
+  for (var i = 0; i < fs.length; i++) {
+    var f = fs[i];
+    if (/^image\//.test(f.type)) stuCover(f);
+    else if (/\.zip$/i.test(f.name)) stuZip(f);
+    else if (!beat) beat = f;
+  }
+  if (beat) stuFile(beat);
 });
 
 (function () {
