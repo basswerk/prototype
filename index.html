@@ -37,10 +37,13 @@ svg.i{display:block;flex:none}
 .wave.is-hover .w-line,.wave.is-hover .w-tip{opacity:1}
 
 /* ---------- десктоп ---------- */
-/* весь десктоп в масштабе 80%: высоту подгоняет fitDesk() */
-.d{zoom:.8;height:125vh;display:flex;flex-direction:column;overflow:hidden}
+/* масштаб десктопа: до 1080p включительно 80%, на 1440p / 4K / ультрашироких чуть крупнее.
+   --dz считает applyDZ(), высоту подгоняет fitDesk().
+   --cap: шире этого каркас не растягивается (только 32:9 и шире), дальше центрируется */
+:root{--dz:.8;--cap:3840px}
+.d{zoom:var(--dz);height:calc(100vh / var(--dz));display:flex;flex-direction:column;overflow:hidden}
 .d-head{flex:none;border-bottom:1px solid var(--line)}
-.d-head-in{max-width:2400px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:24px}
+.d-head-in{max-width:var(--cap);margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:24px}
 .d-logo img{height:36px;width:auto;display:block}
 .d-search{flex:1 1 320px;max-width:760px;position:relative;display:flex;align-items:center}
 .d-search input{width:100%;height:44px;padding:0 16px 0 42px;border-radius:10px;border:1px solid var(--line-strong);background:var(--surface);font-size:15px}
@@ -57,7 +60,9 @@ svg.i{display:block;flex:none}
 .ticker-run b{font-weight:700}.ticker-run .plus{color:var(--ok)}
 @keyframes run{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.ticker-run{animation:none}}
-.d-shell{flex:1;min-height:0;display:flex;position:relative;max-width:2400px;width:100%;margin:0 auto}
+/* overflow:clip, чтобы спрятанная лента (.drawer) не вылезала в поля по бокам на широких экранах;
+   тени по краям видны только когда каркас уже упёрся в --cap */
+.d-shell{flex:1;min-height:0;display:flex;position:relative;max-width:var(--cap);width:100%;margin:0 auto;overflow:hidden;overflow:clip;box-shadow:-1px 0 0 var(--line),1px 0 0 var(--line)}
 .strip{width:88px;flex:none;overflow-y:auto;scrollbar-width:none;border-right:1px solid var(--line)}
 .strip::-webkit-scrollbar{display:none}
 .strip-top{position:sticky;top:0;background:var(--bg);padding:12px 0;display:flex;flex-direction:column;align-items:center;gap:6px;border-bottom:1px solid var(--line)}
@@ -70,9 +75,9 @@ svg.i{display:block;flex:none}
 .strip .ring.beat{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--text)}
 .strip small{font-family:var(--fd);font-weight:700;font-size:11px;line-height:14px;white-space:nowrap;color:var(--muted)}
 .strip small.sale{color:var(--ok)}
-.drawer{position:absolute;left:0;top:0;bottom:0;width:clamp(420px,30cqw,580px);background:var(--bg);border-right:1px solid var(--line);z-index:30;overflow-y:auto;overscroll-behavior:contain;transform:translateX(-102%);transition:transform .28s cubic-bezier(.2,.8,.2,1);box-shadow:24px 0 48px rgba(0,0,0,.5)}
+.drawer{position:absolute;left:0;top:0;bottom:0;width:clamp(420px,30cqw,580px);background:var(--bg);border-right:1px solid var(--line);z-index:30;overflow-y:auto;overscroll-behavior:contain;transform:translateX(-102%);visibility:hidden;transition:transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s linear .28s;box-shadow:24px 0 48px rgba(0,0,0,.5)}
 .scrim{position:absolute;inset:0;z-index:25;background:rgba(11,7,8,.62);opacity:0;pointer-events:none;transition:opacity .28s}
-.is-feed .drawer{transform:none}
+.is-feed .drawer{transform:none;visibility:visible;transition:transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s}
 .is-feed .scrim{opacity:1;pointer-events:auto}
 .is-feed .d-main{overflow:hidden}
 .chip{height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line-strong);font-size:13px;font-weight:500}
@@ -137,7 +142,7 @@ svg.i{display:block;flex:none}
 .pl-btn{width:40px;height:40px;flex:none;border-radius:50%;border:1px solid var(--line-strong);display:grid;place-items:center}
 .pl-btn:hover{border-color:var(--text)}
 .d-player{flex:none;background:var(--raised);border-top:1px solid var(--line)}
-.d-player-in{max-width:2400px;margin:0 auto;height:72px;padding:0 24px;display:flex;align-items:center;gap:16px}
+.d-player-in{max-width:var(--cap);margin:0 auto;height:72px;padding:0 24px;display:flex;align-items:center;gap:16px}
 .d-player img{width:48px;height:48px;border-radius:8px;object-fit:cover;flex:none}
 .pp{width:44px;height:44px;flex:none;border-radius:50%;background:var(--text);color:var(--bg);display:grid;place-items:center}
 .prog{flex:1;max-width:560px;height:4px;border-radius:999px;background:var(--line);overflow:hidden;cursor:pointer}
@@ -435,7 +440,7 @@ svg.i{display:block;flex:none}
 /* ---------- проверка на своём файле ---------- */
 .up{position:fixed;inset:0;z-index:100;background:rgba(11,7,8,.72);display:grid;place-items:center;padding:16px}
 .up[hidden]{display:none}
-@media (min-width:701px){.up-box{zoom:.85}}
+@media (min-width:701px){.up-box{zoom:calc(var(--dz) * 1.0625)}}
 .up-box{width:min(480px,100%);max-height:100%;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:12px}
 .up-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .up-head h2{margin:0;font-family:var(--fd);font-weight:700;font-size:20px;line-height:26px}
@@ -639,6 +644,13 @@ button.gl-btn:hover{background:rgba(11,7,8,.78)}
 @container (max-width:1460px){.st-page .t-in{font-size:44px;line-height:48px}}
 @container (max-width:1020px){.st-page .t-in{font-size:36px;line-height:40px}.fx-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.st-cols .side{order:0}}
 @container (max-width:720px){.st-page .hero-grid{grid-template-columns:minmax(0,1fr)}.st-page .cv-col{order:-1;max-width:320px}}
+
+/* ---------- широкие экраны (1440p, 4K, 21:9, 32:9) ----------
+   колонка контента расширяется ступенями, сетка битов сама добавляет столбцы.
+   на 1080p .d-main не шире 2312px, так что там ничего не меняется */
+@container (min-width:2400px){.home,.page{max-width:1960px}.top-grid{grid-template-columns:minmax(0,1fr) 420px}.pgrid{gap:20px}}
+@container (min-width:2900px){.home,.page{max-width:2320px}.feat{grid-template-columns:288px minmax(0,1fr)}.cols{grid-template-columns:minmax(0,1fr) 440px}.hero-grid{grid-template-columns:minmax(0,1fr) 460px}}
+@container (min-width:3400px){.home,.page{max-width:2680px}.top-grid{grid-template-columns:minmax(0,1fr) 460px}}
 
 /* ---------- студия на телефоне ---------- */
 .ms-top{height:60px;padding:0 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
@@ -965,7 +977,7 @@ Wave.prototype.fx = function (e) {
 };
 Wave.prototype.paint = function () {
   if (this.kind === 'strip') return this.paintStrip();
-  var cv = this.canvas, dpr = window.devicePixelRatio || 1, w = cv.clientWidth, hgt = this.top + 1 + this.bot;
+  var cv = this.canvas, dpr = cdpr(), w = cv.clientWidth, hgt = this.top + 1 + this.bot;
   if (!w) return;
   if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(hgt * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(hgt * dpr); }
   var x = cv.getContext('2d'); x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, w, hgt);
@@ -1121,7 +1133,16 @@ function tickerHTML() {
     var name = b ? '<button type="button" data-act="open" data-id="' + b.id + '" tabindex="-1">' + esc(b.title) + '</button>' : '<span>' + esc(t[2]) + '</span>';
     return '<span><b>' + esc(t[0]) + '</b><span class="muted">' + esc(t[1]) + '</span>' + name + '<span class="' + (plus ? 'plus' : 'muted') + '">' + esc(val) + '</span></span>';
   }).join('');
-  return '<div class="ticker"><span class="ticker-l"><i></i>СЕЙЧАС</span><div class="ticker-run">' + items + items + '</div></div>';
+  var half = new Array(TREP + 1).join(items);
+  return '<div class="ticker"><span class="ticker-l"><i></i>СЕЙЧАС</span><div class="ticker-run"' + (TREP > 1 ? ' style="animation-duration:' + 60 * TREP + 's"' : '') + '>' + half + half + '</div></div>';
+}
+/* на ультрашироких одного набора событий не хватает на ширину строки: повторяем его, скорость та же */
+var TREP = 1;
+function fitTicker() {
+  var run = document.querySelector('.ticker-run');
+  if (!run || !run.scrollWidth) return;
+  var per = run.scrollWidth / 2 / TREP, need = Math.max(1, Math.ceil(run.parentNode.clientWidth / per));
+  if (need !== TREP) { TREP = need; run.parentNode.outerHTML = tickerHTML(); }
 }
 function licHTML(b, mobile) {
   var L = licenses(b), sel = L.filter(function (l) { return l.key === st.lic; })[0] || L[1] || L[0];
@@ -1142,7 +1163,19 @@ function heroWave(b, top, bot) {
 }
 
 /* ===== десктоп: каркас ===== */
+/* масштаб десктопа. до 1920×1000 включительно ровно 80%, как задумано.
+   на экранах больше растёт плавно (степень 0.6), шаг 0.05:
+   1440p и 4K@150% → 0.95 (физически столько же, сколько 80% на 24" 1080p),
+   4K@100% → 1.2, ультраширокие считаются по высоте, поэтому как их 16:9-собратья */
 var DZ = 0.8;
+function calcDZ() {
+  var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1000);
+  return s <= 1 ? 0.8 : Math.min(1.6, Math.round(0.8 * Math.pow(s, 0.6) * 20) / 20);
+}
+function applyDZ() { DZ = calcDZ(); document.documentElement.style.setProperty('--dz', DZ); }
+applyDZ();
+/* canvas внутри zoom: clientWidth отдаёт размер без зума, поэтому при зуме > 1 добираем плотность */
+function cdpr() { return (window.devicePixelRatio || 1) * (window.innerWidth <= 700 ? 1 : Math.max(1, DZ)); }
 function wide() { return window.innerWidth / DZ >= 1360; }
 function isDock() { return st.view === 'home' && st.dock && wide(); }
 function desktopHTML() {
@@ -1490,6 +1523,7 @@ function render() {
   render.keep = true;
   st.plAnim = false;
   fitDesk();
+  fitTicker();
   mountWaves();
   mountStudio();
   tickUI();
@@ -1502,9 +1536,10 @@ function fresh() { render.keep = false; render(); }
 mq.addEventListener ? mq.addEventListener('change', fresh) : mq.addListener(fresh);
 var rT, wasWide = wide();
 window.addEventListener('resize', function () {
+  applyDZ();
   fitDesk();
   if (!mq.matches && wide() !== wasWide) { wasWide = wide(); rerenderKeep(); return; }
-  clearTimeout(rT); rT = setTimeout(function () { waves.forEach(function (w) { w.paint(); }); paintSW(); tickUI(); setupMarquee(); }, 80);
+  clearTimeout(rT); rT = setTimeout(function () { fitTicker(); waves.forEach(function (w) { w.paint(); }); paintSW(); tickUI(); setupMarquee(); }, 80);
 });
 
 /* ===== адреса: #/ главная, #/beat/id страница бита ===== */
@@ -2103,7 +2138,7 @@ function paintSW() {
   var el = document.querySelector('.js-swave');
   if (!el) return;
   var cv = el.querySelector('canvas'), mob = mq.matches, top = mob ? 70 : 90, bot = mob ? 46 : 60, H = top + 1 + bot;
-  var dpr = window.devicePixelRatio || 1, w = cv.clientWidth;
+  var dpr = cdpr(), w = cv.clientWidth;
   if (!w) return;
   if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(H * dpr); }
   var x = cv.getContext('2d'); x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, w, H);
