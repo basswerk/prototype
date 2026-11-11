@@ -1163,13 +1163,15 @@ function heroWave(b, top, bot) {
 }
 
 /* ===== десктоп: каркас ===== */
-/* масштаб десктопа. до 1920×1000 включительно ровно 80%, как задумано.
-   на экранах больше растёт плавно (степень 0.6), шаг 0.05:
+/* масштаб десктопа считается от МОНИТОРА (screen), а не от окна:
+   так зум браузера (Ctrl +/−) работает как обычно, а раскладка перестраивается по ширине окна.
+   до 1920×1080 включительно ровно 80%, как задумано; больше растёт плавно (степень 0.6), шаг 0.05:
    1440p и 4K@150% → 0.95 (физически столько же, сколько 80% на 24" 1080p),
    4K@100% → 1.2, ультраширокие считаются по высоте, поэтому как их 16:9-собратья */
 var DZ = 0.8;
 function calcDZ() {
-  var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1000);
+  var sw = window.screen && screen.width || window.innerWidth, sh = window.screen && screen.height || window.innerHeight;
+  var s = Math.min(sw / 1920, sh / 1080);
   return s <= 1 ? 0.8 : Math.min(1.6, Math.round(0.8 * Math.pow(s, 0.6) * 20) / 20);
 }
 function applyDZ() { DZ = calcDZ(); document.documentElement.style.setProperty('--dz', DZ); }
