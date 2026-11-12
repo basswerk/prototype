@@ -11,6 +11,18 @@
 <style>
 :root{--bg:#0B0708;--surface:#141011;--raised:#1C1718;--raised-2:#2A2325;--line:#2F2829;--line-strong:#655B5D;--text:#F3EFEF;--muted:#9C9092;--ok:#2DB36F;--fd:Unbounded,"Arial Black",system-ui,sans-serif;--fs:Onest,system-ui,-apple-system,"Segoe UI",sans-serif}
 *{box-sizing:border-box}
+/* скроллы: один стиль на весь сайт. Chrome/Safari рисуют через ::-webkit-scrollbar (без стрелок),
+   Firefox через стандартные свойства. Стандартные свойства в Chrome отключают ::-webkit-scrollbar, поэтому только для Firefox */
+::-webkit-scrollbar{width:12px;height:12px;background:transparent}
+::-webkit-scrollbar-track,::-webkit-scrollbar-corner{background:transparent}
+::-webkit-scrollbar-button{display:none;width:0;height:0}
+::-webkit-scrollbar-thumb{background:rgba(245,242,242,.16);background-clip:padding-box;border:3px solid transparent;border-radius:12px;min-height:40px}
+::-webkit-scrollbar-thumb:hover{background-color:rgba(245,242,242,.3)}
+::-webkit-scrollbar-thumb:active{background-color:rgba(245,242,242,.42)}
+@supports not selector(::-webkit-scrollbar){*{scrollbar-width:thin;scrollbar-color:rgba(245,242,242,.2) transparent}}
+/* окно браузера само никогда не скроллится: всё листается внутри каркаса */
+html{height:100%;overflow:hidden}
+body{height:100%;overflow:hidden;overflow:clip}
 html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--fs);font-size:16px;line-height:24px;font-variant-numeric:tabular-nums;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;cursor:pointer;background:none;border:0;padding:0}
@@ -82,7 +94,7 @@ svg.i{display:block;flex:none}
 .is-feed .d-main{overflow:hidden}
 .chip{height:32px;padding:0 12px;border-radius:999px;border:1px solid var(--line-strong);font-size:13px;font-weight:500}
 .chip.on{background:var(--text);color:var(--bg);border-color:var(--text)}
-.d-main{flex:1;min-width:0;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--line) transparent;container-type:inline-size}
+.d-main{flex:1;min-width:0;overflow-y:auto;container-type:inline-size}
 .page{max-width:1640px;margin:0 auto;padding:20px 32px 64px}
 .hero{border-radius:20px;color:#F5F2F2;background:linear-gradient(110deg,var(--band2,#1B1718) 0%,var(--band,#2A2325) 62%);transition:background .5s ease}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:48px;padding:32px}
@@ -147,6 +159,17 @@ svg.i{display:block;flex:none}
 .pp{width:44px;height:44px;flex:none;border-radius:50%;background:var(--text);color:var(--bg);display:grid;place-items:center}
 .prog{flex:1;max-width:560px;height:4px;border-radius:999px;background:var(--line);overflow:hidden;cursor:pointer}
 .prog i{display:block;height:100%;background:var(--text);width:0}
+.vol{flex:none;display:flex;align-items:center;gap:2px}
+.vol-r{-webkit-appearance:none;appearance:none;width:104px;height:20px;margin:0 8px 0 0;background:transparent;cursor:pointer;--v:80%}
+.vol-r::-webkit-slider-runnable-track{height:4px;border-radius:999px;background:linear-gradient(90deg,var(--text) var(--v),var(--line) var(--v))}
+.vol-r::-moz-range-track{height:4px;border-radius:999px;background:var(--line)}
+.vol-r::-moz-range-progress{height:4px;border-radius:999px;background:var(--text)}
+.vol-r::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;margin-top:-4px;border-radius:50%;background:var(--text);border:0;opacity:0;transition:opacity .15s}
+.vol-r::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:var(--text);border:0;opacity:0;transition:opacity .15s}
+.vol:hover .vol-r::-webkit-slider-thumb,.vol-r:focus-visible::-webkit-slider-thumb{opacity:1}
+.vol:hover .vol-r::-moz-range-thumb,.vol-r:focus-visible::-moz-range-thumb{opacity:1}
+.vol-r:focus-visible{outline:none}
+.vol-r:focus-visible::-webkit-slider-runnable-track{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--text)}
 @container (max-width:1240px){.cols{grid-template-columns:minmax(0,1fr) 360px}.hero-grid{grid-template-columns:minmax(0,1fr) 340px;gap:36px}}
 @container (max-width:1020px){.cols{grid-template-columns:minmax(0,1fr)}.side{order:-1}.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-grid{grid-template-columns:minmax(0,1fr) 240px;gap:28px;padding:24px}.h-title{font-size:40px;line-height:44px}}
 @container (max-width:720px){.hero-grid{grid-template-columns:minmax(0,1fr)}.hero-cover{display:none}}
@@ -211,7 +234,7 @@ svg.i{display:block;flex:none}
 .ev-cv{flex:none}
 .ev-cv img{display:block;width:44px;height:44px;border-radius:6px;object-fit:cover}
 .d-shell{container-type:inline-size}
-.dock{width:clamp(440px,28cqw,560px);flex:none;border-right:1px solid var(--line);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.dock{width:clamp(440px,28cqw,560px);flex:none;border-right:1px solid var(--line);overflow-y:auto;overscroll-behavior:contain}
 .strip .ring.repost{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--line-strong)}
 .ticker-run button{font:inherit;font-weight:500}
 .ticker-run button:hover{text-decoration:underline;text-underline-offset:2px}
@@ -225,6 +248,10 @@ svg.i{display:block;flex:none}
 .home{max-width:1640px;margin:0 auto;padding:22px 32px 48px}
 .top-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .ttabs{display:flex;gap:4px;margin-left:-12px}
+.top-body{display:grid}
+.top-pane{grid-area:1/1;min-width:0}
+.top-pane:not(.on){visibility:hidden;pointer-events:none}
+.top-pane>.top-grid,.top-pane>.pgrid{height:100%}
 .ttabs button{height:44px;padding:0 12px;border-radius:10px;font-family:var(--fd);font-weight:700;font-size:20px;line-height:26px;color:var(--muted)}
 .ttabs button:hover{color:var(--text)}
 .ttabs button.on{color:var(--text);box-shadow:inset 0 -2px 0 var(--text);border-radius:0}
@@ -368,6 +395,23 @@ svg.i{display:block;flex:none}
 /* бегущая строка для длинных названий */
 .mq{display:block;overflow:hidden;white-space:nowrap;min-width:0;max-width:100%}
 .mq>span{display:inline-block}
+.inq{position:relative;display:block;flex:1;min-width:0}
+.inq>input{display:block}
+.inq-mq{position:absolute;left:0;top:0;right:0;pointer-events:none;visibility:hidden}
+.inq.ovf:not(:focus-within)>.inq-mq{visibility:visible}
+.inq.ovf:not(:focus-within)>input{color:transparent}
+.t-row .inq-mq{font-family:var(--fd);font-weight:900;font-size:56px;line-height:60px;letter-spacing:-.015em;text-transform:uppercase;color:#F5F2F2}
+.ed-row .inq-mq{left:13px;right:13px;font-family:var(--fd);font-weight:900;font-size:15px;line-height:44px;text-transform:uppercase;color:var(--text)}
+.pb-t{font-family:var(--fd);font-weight:900;font-size:14px;line-height:18px;text-transform:uppercase}
+.tp-now{flex-wrap:nowrap !important}
+.tp-wv{display:flex;flex-direction:column;gap:6px;min-width:0}
+.tp-wv>.tp-now{height:26px}
+.sh .tp-wv.has-now .wave{height:119px}
+.sh .tp-wv.has-now .w-now{top:48px}
+.sh .tp-wv.has-now .w-dur{top:75px}
+.tp-now>.tp-no,.tp-now>.tp-tags,.tp-now>.tp-eq{flex:none}
+.tp-now>.tp-tags{display:inline-flex;gap:8px;margin-left:auto}
+.tp-now>.tp-nm{flex:0 1 auto;min-width:0}
 .mq.go{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 18px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 18px),transparent)}
 .mq.go>span{animation:mq var(--t,10s) ease-in-out 1.6s infinite}
 .scrolling .mq.go>span{animation:none}
@@ -505,7 +549,10 @@ svg.i{display:block;flex:none}
 .st-back:hover{border-color:var(--text)}
 .st-h{margin:0;font-family:var(--fd);font-weight:700;font-size:22px;line-height:28px}
 .st-crumb{display:block;font-size:13px;line-height:18px;color:var(--muted)}
-.st-acts{margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.st-acts{margin-left:auto;flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-wrap:nowrap}
+.st-acts>*{flex:none}
+.st-acts>.st-note{flex:0 1 auto;min-width:0;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.st-acts>.st-note svg{display:inline-block;vertical-align:-3px;margin-right:6px}
 .st-note{display:inline-flex;align-items:center;gap:8px;margin-right:8px;font-size:14px;line-height:20px;color:var(--muted)}
 .st-note.ok svg{color:var(--ok)}
 .btn[aria-disabled=true]{opacity:.38;cursor:default}
@@ -603,6 +650,8 @@ button.gl-btn:hover{background:rgba(11,7,8,.78)}
 .chip-add{height:36px;padding:0 12px 0 8px;border:1px dashed var(--line-strong);border-radius:4px;display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--muted)}
 .chip-add:hover{color:var(--text);border-color:var(--text)}
 .chip-in{height:36px;width:150px;padding:0 10px;border:1px solid var(--text);border-radius:4px;background:var(--surface);color:var(--text);font:inherit;font-size:14px;outline:0}
+.fx-alt{display:inline;padding:0;font:inherit;font-weight:600;color:var(--text);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line-strong)}
+.fx-alt:hover{text-decoration-color:var(--text)}
 .fx-note{margin:0;padding-top:12px;border-top:1px solid var(--line);display:flex;gap:8px;font-size:14px;line-height:20px;color:var(--muted)}
 .lic-ed{padding:20px}
 .lic-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
@@ -641,8 +690,8 @@ button.gl-btn:hover{background:rgba(11,7,8,.78)}
 .pub-row b{display:block;font-weight:600;font-size:15px;line-height:20px}
 .pub-row small{display:block;font-size:13px;line-height:18px;color:var(--muted)}
 .st-cols .side{min-width:0;display:flex;flex-direction:column;gap:16px}
-@container (max-width:1460px){.st-page .t-in{font-size:44px;line-height:48px}}
-@container (max-width:1020px){.st-page .t-in{font-size:36px;line-height:40px}.fx-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.st-cols .side{order:0}}
+@container (max-width:1460px){.st-page .t-in,.st-page .t-row .inq-mq{font-size:44px;line-height:48px}}
+@container (max-width:1020px){.st-page .t-in,.st-page .t-row .inq-mq{font-size:36px;line-height:40px}.fx-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.st-cols .side{order:0}}
 @container (max-width:720px){.st-page .hero-grid{grid-template-columns:minmax(0,1fr)}.st-page .cv-col{order:-1;max-width:320px}}
 
 /* ---------- широкие экраны (1440p, 4K, 21:9, 32:9) ----------
@@ -674,6 +723,7 @@ button.gl-btn:hover{background:rgba(11,7,8,.78)}
 .ms-cv .cv-err .cv-ic{width:60px;height:60px}
 .ms-head .t-row{margin-top:8px;gap:8px}
 .ms-head .t-in{font-size:21px;line-height:28px;border-bottom-width:2px;padding-bottom:4px}
+.ms-head .t-row .inq-mq{font-size:21px;line-height:28px}
 .ms-head .t-cnt{display:none}
 .ms-meta{margin-top:8px;font-size:15px;line-height:20px;color:rgba(245,242,242,.75)}
 .ms-meta a{color:#F5F2F2;font-weight:600}
@@ -708,39 +758,53 @@ button.gl-btn:hover{background:rgba(11,7,8,.78)}
 .m-nav button.on,.m-nav a.on{color:var(--text)}
 
 /* ---------- тейпы: стопка обложек (каталог, топ, страница тейпа, студия) ---------- */
-.tp{position:relative;isolation:isolate}
-.tp-l{position:absolute;inset:0;z-index:-1;border-radius:12px;overflow:hidden;pointer-events:none;transform-origin:0 100%;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+/* стопка тейпа: вся стопка влезает в тот же квадрат, что обложка бита.
+   --p: шаг стопки в процентах ширины квадрата, --k: тот же шаг в процентах размера самой карточки (для translate) */
+.tp{--p:6;--k:calc(var(--p) / (100 - var(--p) * 2) * 100%);position:relative;isolation:isolate}
+.tp-l{position:absolute;left:0;bottom:0;z-index:-1;width:calc((100 - var(--p) * 2) * 1%);height:auto;aspect-ratio:1;border-radius:12px;overflow:hidden;pointer-events:none;transform-origin:0 100%;transition:transform .45s cubic-bezier(.2,.8,.2,1)}
 .tp .tp-l img{display:block;width:100%;height:100%;aspect-ratio:auto;object-fit:cover;border-radius:0;box-shadow:none}
-.tp-l::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(245,242,242,.2)}
-.tp-l1{transform:translate(6px,-6px)}
-.tp-l1 img{filter:brightness(.62) saturate(.9)}
-.tp-l2{z-index:-2;transform:translate(12px,-12px)}
-.tp-l2 img{filter:brightness(.4) saturate(.75)}
-.tp-chip{position:absolute;left:8px;top:8px;z-index:1;height:22px;padding:0 7px;display:inline-flex;align-items:center;gap:5px;border-radius:4px;background:rgba(11,7,8,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#F5F2F2;font-family:var(--fd);font-weight:700;font-size:10px;line-height:1;letter-spacing:.06em;pointer-events:none}
-/* наведение: задние обложки веером наклоняются вправо, передняя приподнимается */
+.tp-l::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(245,242,242,.22)}
+.tp-l1{transform:translate(var(--k),calc(var(--k) * -1))}
+.tp-l1 img{filter:brightness(.6) saturate(.9)}
+.tp-l2{z-index:-2;transform:translate(calc(var(--k) * 2),calc(var(--k) * -2))}
+.tp-l2 img{filter:brightness(.38) saturate(.75)}
+.tp:not(.xl)>:not(.tp-l){margin-top:calc(var(--p) * 2%);width:calc((100 - var(--p) * 2) * 1%)}
+.cv-chips{position:absolute;left:8px;top:8px;z-index:1;display:flex;gap:4px;pointer-events:none}
+.cv-chip{height:22px;padding:0 7px;display:inline-flex;align-items:center;gap:5px;border-radius:4px;background:rgba(11,7,8,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#F5F2F2;font-family:var(--fd);font-weight:700;font-size:10px;line-height:1;letter-spacing:.06em;white-space:nowrap}
+.cv-chip.free{background:rgba(245,242,242,.92);color:#0B0708;-webkit-backdrop-filter:none;backdrop-filter:none}
+.feat-free{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 14px 0 12px;border-radius:12px;background:rgba(0,0,0,.22);border:1px solid rgba(245,242,242,.16);font-size:13px;line-height:16px;color:rgba(245,242,242,.72);white-space:nowrap}
+.feat-free b{display:block;font-size:13px;font-weight:700;color:#F5F2F2}
+.feat-more{font-size:14px;font-weight:600;color:rgba(245,242,242,.8);text-decoration:underline;text-decoration-color:rgba(245,242,242,.3);text-underline-offset:3px;white-space:nowrap}
+.feat-more:hover{color:#fff}
+.h-buy .i{margin-right:8px}
+.free-dl{margin-top:14px;padding:12px 12px 12px 14px;display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:12px}
+.free-dl>.i{flex:none;color:var(--muted)}
+.free-dl div{flex:1;min-width:0;font-size:13px;line-height:18px;color:var(--muted)}
+.free-dl b{display:block;font-size:15px;line-height:20px;color:var(--text)}
+.free-dl .btn{flex:none;height:40px}
+.lic-free .lic-price{margin-top:12px}
 .bcard.tape{position:relative;z-index:0}
 .bcard.tape:hover{z-index:2}
-.bcard.tape .bcv{transition:transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .45s}
-.bcard.tape:hover .bcv{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.5)}
-.bcard.tape:hover .tp-l1{transform:translate(5px,-10px) rotate(3deg)}
-.bcard.tape:hover .tp-l2{transform:translate(10px,-14px) rotate(6deg)}
+/* наведение: задние карточки расходятся веером вверх, передняя ведёт себя как обложка обычного бита */
+.bcard.tape:hover .tp-l1,.tp.lg:hover .tp-l1{transform:translate(calc(var(--k) * 1.5),calc(var(--k) * -1.35)) rotate(-2deg)}
+.bcard.tape:hover .tp-l2,.tp.lg:hover .tp-l2{transform:translate(calc(var(--k) * 2.7),calc(var(--k) * -2.35)) rotate(-4deg)}
 .tp.lg{align-self:start}
-.tp.lg .tp-l1{transform:translate(8px,-8px)}
-.tp.lg .tp-l2{transform:translate(16px,-16px)}
-.tp.lg:hover .tp-l1{transform:translate(6px,-12px) rotate(2.5deg)}
-.tp.lg:hover .tp-l2{transform:translate(12px,-18px) rotate(5deg)}
-.tp.xl{align-self:start}
-.tp.xl .tp-l1{transform:translate(10px,-10px)}
-.tp.xl .tp-l2{transform:translate(20px,-20px)}
-.tp.xl:hover .tp-l1{transform:translate(8px,-14px) rotate(2deg)}
-.tp.xl:hover .tp-l2{transform:translate(16px,-22px) rotate(4deg)}
-.tp.sm{width:52px;height:52px;flex:none}
-.tp.sm .tp-l{border-radius:8px}
-.tp.sm .tp-l1{transform:translate(3px,-3px)}
-.tp.sm .tp-l2{transform:translate(6px,-6px)}
-.tp.sm>img{display:block;width:52px;height:52px;border-radius:8px;object-fit:cover}
+.tp.lg>.feat-cv{align-self:auto}
+/* студия и страница тейпа: передняя обложка не двигается и не меняет размер, стопка выходит в поля */
+.tp.xl{--p:0;align-self:start}
+.tp.xl .tp-l1{transform:translate(13px,-13px)}
+.tp.xl .tp-l2{transform:translate(26px,-26px)}
+.tp.xl:hover .tp-l1{transform:translate(14px,-17px) rotate(-.6deg)}
+.tp.xl:hover .tp-l2{transform:translate(28px,-30px) rotate(-1.2deg)}
+.tp.sm{--p:8;width:52px;flex:none}
+.tp.sm .tp-l{border-radius:6px}
+.tp.sm>img{display:block;height:auto;aspect-ratio:1;border-radius:6px;object-fit:cover}
 .feat-now{min-width:0;font-family:var(--fd);font-weight:800;font-size:14px;line-height:18px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:rgba(245,242,242,.88)}
-.lseg.nums button{min-width:40px}
+.lseg.nums button{min-width:40px;flex:none}
+.feat-buy:has(.lseg.nums){flex-wrap:nowrap}
+.lseg.nums{min-width:0;flex:0 1 auto;overflow-x:auto;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 16px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 16px),transparent)}
+.lseg.nums::-webkit-scrollbar{display:none}
+.lseg.nums:not(.ovf){-webkit-mask-image:none;mask-image:none}
 .hrow-more{padding:10px 12px 4px;font-size:13px;line-height:18px;color:var(--muted)}
 .all-head .seg2{flex:none}
 .all-head .seg2 button{height:32px;padding:0 12px}
@@ -788,6 +852,9 @@ button.gl-btn:hover{background:rgba(11,7,8,.78)}
 .lic-for b{display:block;font-family:var(--fd);font-weight:800;font-size:14px;line-height:18px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .lic-for button{flex:none;height:36px;padding:0 6px;font-size:14px;font-weight:600;color:var(--muted)}
 .lic-for button:hover{color:var(--text)}
+.lic-sum{min-height:44px}
+.lic.is-sold .seg4 button{color:var(--muted);opacity:.5;cursor:not-allowed}
+.lic.is-sold .lic-price{display:flex;align-items:center;gap:10px;color:var(--muted)}
 .lic-sold{margin:16px 0 0;display:flex;gap:10px;font-size:15px;line-height:22px;color:var(--muted)}
 .bundle{padding:20px;display:flex;flex-direction:column;gap:14px}
 .bundle-top{display:flex;align-items:center;gap:14px}
@@ -796,18 +863,21 @@ button.gl-btn:hover{background:rgba(11,7,8,.78)}
 .bundle-price s{font-size:16px;color:var(--muted);white-space:nowrap}
 @container (max-width:1240px){.tl-row{grid-template-columns:32px 40px minmax(0,1fr) 120px 52px 132px 40px}.tl-tags .g{display:none}}
 @container (max-width:1020px){.tl-row{grid-template-columns:28px 40px minmax(0,1fr) 48px 120px 40px}.tl-tags{display:none}}
-@container (max-width:720px){.tp.xl{display:none}}
+@container (max-width:1020px){.tp.xl .tp-l1,.tp.xl:hover .tp-l1{transform:translate(10px,-10px)}.tp.xl .tp-l2,.tp.xl:hover .tp-l2{transform:translate(20px,-20px)}}
+@container (max-width:860px){.tp.lg{display:none}}
+@container (max-width:720px){.page:not(.st-page) .tp.xl{display:none}}
 
 /* тейп на телефоне */
-.cat-card.tape .tp-l1{transform:translate(4px,-4px)}
-.cat-card.tape .tp-l2{transform:translate(8px,-8px)}
+.tp.mt{width:150px;flex:none}
+.tp.mt .tp-l{border-radius:10px}
+.tp.mt .mp-cover img{width:100%;height:auto;aspect-ratio:1}
+.ms-cv .tp .tp-l{border-radius:10px}
+.ms-cv .tp.xl .tp-l1{transform:translate(6px,-6px)}
+.ms-cv .tp.xl .tp-l2{transform:translate(12px,-12px)}
 .m-allh{display:flex;align-items:center;gap:12px;padding:0 16px 12px}
 .m-allh .sec-h{flex:1;min-width:0}
-.m-allh .seg2 button{height:34px;padding:0 11px;font-size:13px}
-.tp.mt{width:132px;height:132px;flex:none;margin:10px 10px 0 0}
-.tp.mt .tp-l{border-radius:10px}
-.tp.mt .tp-l1{transform:translate(5px,-5px)}
-.tp.mt .tp-l2{transform:translate(10px,-10px)}
+.m-allh .seg2 button{height:34px;padding:0 10px;font-size:13px}
+.m-more{height:34px;padding:0 10px;font-size:14px;font-weight:600;color:var(--muted)}
 .m-tbadge{display:inline-flex;align-items:center;gap:8px;margin-bottom:4px;font-family:var(--fd);font-weight:700;font-size:11px;line-height:16px;letter-spacing:.06em;color:var(--muted)}
 .m-tbadge b{height:20px;padding:0 6px;display:inline-flex;align-items:center;border:1px solid var(--line-strong);border-radius:4px;color:var(--text)}
 .mtl{padding:26px 16px 0}
@@ -830,12 +900,13 @@ button.gl-btn:hover{background:rgba(11,7,8,.78)}
 .fmt button:hover{color:var(--text)}
 .fmt button.on{background:var(--raised-2);color:var(--text)}
 .st-top .fmt{margin-left:12px}
+/* заголовок студии одной ширины в обоих режимах, чтобы переключатель не ездил */
+.st-h{display:grid}
+.st-h>span{grid-area:1/1;white-space:nowrap}
+.st-h>span[aria-hidden]{visibility:hidden}
 .fmt-hint{max-width:250px;font-size:13px;line-height:18px;color:var(--muted)}
 .ms-page>.fmt{display:grid;width:100%;margin-bottom:12px}
 .ms-page>.fmt button{height:44px;font-size:15px}
-.ms-cv .tp .tp-l1{transform:translate(5px,-5px)}
-.ms-cv .tp .tp-l2{transform:translate(10px,-10px)}
-.ms-cv .tp .tp-l{border-radius:10px}
 .ed-list{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
 .ed-row{display:grid;grid-template-columns:20px 22px 40px minmax(0,1fr) 150px 100px 96px 44px 120px 44px;align-items:center;column-gap:12px;row-gap:10px;padding:10px 4px 10px 8px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer}
 .ed-row:hover{border-color:var(--line-strong)}
@@ -888,6 +959,7 @@ button.gl-btn:hover{background:rgba(11,7,8,.78)}
 .m .ed-h,.m .ed-g,.m .ed-bpm,.m .ed-key,.m .ed-dur,.m .ed-row>.ed-st{display:none}
 .m .ed-row .tl-play{width:44px;height:44px}
 .m .ed-t{height:40px;padding:0 8px;font-size:14px}
+.m .ed-row .inq-mq{left:9px;right:9px;font-size:14px;line-height:40px}
 .m .ed-sub{display:flex;grid-column:3 / 5;align-items:center;gap:10px;min-width:0;padding:0 0 0 8px;margin-top:-6px;font-size:13px;line-height:18px;color:var(--muted)}
 .m .ed-sub>span:not(.ed-mv){white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .m .ed-mv{display:flex;margin-left:auto;gap:2px;flex:none}
@@ -895,7 +967,7 @@ button.gl-btn:hover{background:rgba(11,7,8,.78)}
 .m .ed-mv button:disabled{opacity:.3}
 .m .ed-err{grid-column:1 / -1;flex-wrap:wrap}
 .m .tl-head .sec-h{flex:1}
-@media (prefers-reduced-motion:reduce){.tp-l,.bcard.tape .bcv{transition:none}.tp-eq i{animation:none;transform:scaleY(.7)}}
+@media (prefers-reduced-motion:reduce){.tp-l{transition:none}.tp-eq i{animation:none;transform:scaleY(.7)}}
 .m .ed-sub .ed-st.ok{font-size:0;gap:0}
 </style>
 </head>
@@ -930,7 +1002,7 @@ var BEATS = [
     desc: 'Медленный злой трап под зимний вайб. Сводил под низкий вокал, в куплетах оставил место под дабл. В WAV и трекауте тега нет. Если нужен эксклюзив или правки под твой куплет, пиши в личку, обсудим.' },
   { id: 'haunted', title: 'HAUNTED', producer: 'kxlteen', bpm: 140, key: 'Am', genre: 'trap', rub: 1990, dur: 151, seed: 5, ago: 'месяц назад', date: '9 октября 2026', hrs: 744, likes: 3410, comments: 128, reposts: 118, plays: '28,7 тыс.', bought: '214 раз', genres: ['trap', 'rage'], moods: ['тревожное', 'кислотное'], fb: ['#214313', '#152C0C'],
     desc: 'Кислотный синт и быстрые хэты. Вешается на ухо с первого такта, под мелодичный флоу заходит идеально.' },
-  { id: 'motel', title: 'MOTEL', producer: 'kxlteen', bpm: 128, key: 'Am', genre: 'detroit', rub: 1790, dur: 197, seed: 6, ago: '3 недели назад', date: '20 октября 2026', hrs: 504, likes: 540, comments: 14, reposts: 12, plays: '3,8 тыс.', bought: '9 раз', genres: ['detroit', 'trap'], moods: ['тёплое', 'ленивое'], fb: ['#452711', '#2D190B'],
+  { id: 'motel', free: true, title: 'MOTEL', producer: 'kxlteen', bpm: 128, key: 'Am', genre: 'detroit', rub: 1790, dur: 197, seed: 6, ago: '3 недели назад', date: '20 октября 2026', hrs: 504, likes: 540, comments: 14, reposts: 12, plays: '3,8 тыс.', bought: '9 раз', genres: ['detroit', 'trap'], moods: ['тёплое', 'ленивое'], fb: ['#452711', '#2D190B'],
     desc: 'Тёплый detroit с семплом старого соула. Медленно качает, хорошо ляжет под историю.' },
   { id: 'graveyard', title: 'GRAVEYARD SHIFT', producer: 'kxlteen', bpm: 138, key: 'Dm', genre: 'trap', rub: 2490, dur: 166, seed: 3, ago: '2 недели назад', date: '27 октября 2026', hrs: 336, likes: 862, comments: 31, reposts: 19, plays: '6,1 тыс.', bought: '21 раз', genres: ['trap', 'horrorcore'], moods: ['мрачное', 'ночное'], fb: ['#1C223B', '#121626'],
     desc: 'Ночная смена: колокола, хор на фоне и тяжёлое 808. Под злой речитатив на одном дыхании.' },
@@ -938,13 +1010,13 @@ var BEATS = [
     desc: 'Рейдж с перегруженным синтом и плотным 808. Под агрессивный флоу, в припеве есть место под крик.' },
   { id: 'bleed', title: 'BLEED', producer: 'dvrk', bpm: 144, key: 'Gm', genre: 'drill', rub: 2490, dur: 175, seed: 2, ago: '3 дня назад', date: '7 ноября 2026', hrs: 72, likes: 2890, comments: 102, reposts: 131, plays: '19,8 тыс.', bought: '76 раз', genres: ['drill', 'uk drill'], moods: ['мрачное', 'напряжённое'], fb: ['#2E1542', '#1E0D2B'],
     desc: 'Дрилл со скользящим 808 и хором на фоне. Под холодную подачу, куплет на 16 тактов.' },
-  { id: 'static', title: 'STATIC', producer: 'gxst', bpm: 130, key: 'Cm', genre: 'phonk', rub: 1490, dur: 139, seed: 4, ago: '5 дней назад', date: '5 ноября 2026', hrs: 120, likes: 1630, comments: 44, reposts: 57, plays: '11,5 тыс.', bought: '49 раз', genres: ['phonk', 'drift phonk'], moods: ['дерзкое', 'грязное'], fb: ['#453C11', '#2D270B'],
+  { id: 'static', free: true, title: 'STATIC', producer: 'gxst', bpm: 130, key: 'Cm', genre: 'phonk', rub: 1490, dur: 139, seed: 4, ago: '5 дней назад', date: '5 ноября 2026', hrs: 120, likes: 1630, comments: 44, reposts: 57, plays: '11,5 тыс.', bought: '49 раз', genres: ['phonk', 'drift phonk'], moods: ['дерзкое', 'грязное'], fb: ['#453C11', '#2D270B'],
     desc: 'Дрифт-фонк с ковбеллом и грязным 808. Короткий, под один плотный куплет.' },
   { id: 'lowend', title: 'LOWEND', producer: 'yvngcxld', bpm: 102, key: 'Ebm', genre: 'detroit', rub: 1790, dur: 188, seed: 8, ago: '9 дней назад', date: '1 ноября 2026', hrs: 216, likes: 940, comments: 26, reposts: 22, plays: '6,9 тыс.', bought: '24 раза', genres: ['detroit', 'west coast'], moods: ['тёплое', 'вечернее'], fb: ['#451F11', '#2D140B'],
     desc: 'Медленный detroit с тёплым басом и закатным пэдом. Хорошо ляжет под историю про район.' },
-  { id: 'nocturne', title: 'NOCTURNE', producer: 'morkowka', bpm: 92, key: 'Bbm', genre: 'r&b', rub: 2290, dur: 205, seed: 9, ago: '12 дней назад', date: '29 октября 2026', hrs: 288, likes: 1480, comments: 61, reposts: 48, plays: '10,3 тыс.', bought: '33 раза', genres: ['r&b', 'soul'], moods: ['ночное', 'мягкое'], fb: ['#441232', '#2C0C20'],
+  { id: 'nocturne', free: true, title: 'NOCTURNE', producer: 'morkowka', bpm: 92, key: 'Bbm', genre: 'r&b', rub: 2290, dur: 205, seed: 9, ago: '12 дней назад', date: '29 октября 2026', hrs: 288, likes: 1480, comments: 61, reposts: 48, plays: '10,3 тыс.', bought: '33 раза', genres: ['r&b', 'soul'], moods: ['ночное', 'мягкое'], fb: ['#441232', '#2C0C20'],
     desc: 'Ночной r&b с живыми клавишами и мягким басом. Под вокал, место для припева оставил.' },
-  { id: 'glasshouse', title: 'GLASSHOUSE', producer: 'nxvaa', bpm: 145, key: 'Em', genre: 'jersey', rub: 1990, dur: 133, seed: 10, ago: 'вчера', date: '9 ноября 2026', hrs: 22, likes: 760, comments: 19, reposts: 30, plays: '4,4 тыс.', bought: '12 раз', genres: ['jersey', 'club'], moods: ['лёгкое', 'танцевальное'], fb: ['#1C3B2F', '#12261F'],
+  { id: 'glasshouse', free: true, title: 'GLASSHOUSE', producer: 'nxvaa', bpm: 145, key: 'Em', genre: 'jersey', rub: 1990, dur: 133, seed: 10, ago: 'вчера', date: '9 ноября 2026', hrs: 22, likes: 760, comments: 19, reposts: 30, plays: '4,4 тыс.', bought: '12 раз', genres: ['jersey', 'club'], moods: ['лёгкое', 'танцевальное'], fb: ['#1C3B2F', '#12261F'],
     desc: 'Джерси-клаб с прыгающим киком и стеклянными колокольчиками. Под быстрый мелодичный флоу.' },
   { id: 'coldhands', title: 'COLD HANDS', producer: 'dvrk', bpm: 142, key: 'Fm', genre: 'drill', rub: 2490, dur: 171, seed: 11, ago: 'час назад', date: '10 ноября 2026', hrs: 1, likes: 310, comments: 8, reposts: 11, plays: '1,2 тыс.', bought: '3 раза', genres: ['drill', 'dark'], moods: ['холодное', 'злое'], fb: ['#112945', '#0B1A2D'],
     desc: 'Холодный дрилл: пиццикато, глухой хор и 808 со слайдами. Свежий, только залил.' },
@@ -979,7 +1051,7 @@ var TAPES = [
     likes: 980, comments: 21, reposts: 33, plays: '8,6 тыс.', bought: '19 раз', rub: 1590, disc: 25, genres: ['boom bap', 'jazz'], moods: ['спокойное', 'дорожное'],
     desc: 'Восемь битов для долгой дороги: джазовые клавиши, шуршащая пластинка и мягкий бум-бэп. Слушается подряд, как один длинный рейс.',
     tracks: ['midnight', ['lastcall', 'LAST CALL', 92, 'Dm', 'boom bap', 196, 18], ['platform9', 'PLATFORM 9', 86, 'Gm', 'jazz', 204, 19], ['smokebreak', 'SMOKE BREAK', 90, 'Cm', 'boom bap', 181, 20], ['dustyvinyl', 'DUSTY VINYL', 84, 'Fm', 'jazz', 212, 21], ['nightbus', 'NIGHT BUS', 96, 'Am', 'boom bap', 188, 22], ['rainyday', 'RAINY DAY', 88, 'Em', 'jazz', 199, 23], ['terminal', 'TERMINAL', 94, 'Bbm', 'boom bap', 176, 24]] },
-  { id: 'lowtide', title: 'LOWEND', producer: 'yvngcxld', cover: 'lowend.jpg', fb: ['#451F11', '#2D140B'], ago: '9 дней назад', date: '1 ноября 2026', hrs: 214,
+  { id: 'lowtide', free: true, title: 'LOWEND', producer: 'yvngcxld', cover: 'lowend.jpg', fb: ['#451F11', '#2D140B'], ago: '9 дней назад', date: '1 ноября 2026', hrs: 214,
     likes: 610, comments: 12, reposts: 9, plays: '4,2 тыс.', bought: '11 раз', rub: 1790, disc: 20, genres: ['detroit', 'west coast'], moods: ['тёплое', 'вечернее'],
     desc: 'Пять тёплых битов под закат: медленный detroit и west coast с жирным басом. Хорошо ложатся под истории про район.',
     tracks: ['lowend', ['sunsetblvd', 'SUNSET BLVD', 98, 'Ebm', 'west coast', 183, 25], ['cruise', 'CRUISE', 104, 'Bbm', 'detroit', 176, 26], ['lowrider', 'LOWRIDER', 100, 'Fm', 'west coast', 191, 27], ['frontporch', 'FRONT PORCH', 96, 'Ab', 'detroit', 169, 28]] }
@@ -996,12 +1068,19 @@ TAPES.forEach(function (t) {
       b.band = t.fb[0]; b.band2 = t.fb[1];
       BEATS.push(b); BY[b.id] = b;
     }
-    b.tape = t.id; b.cover = t.cover; b.rub = t.rub;
+    b.tape = t.id; b.cover = t.cover; b.rub = t.rub; if (t.free && !b.sold) b.free = true;
     return b.id;
   });
 });
 /* топ тейпов по периодам */
 var TRANK = { day: ['gshift', 'lowtide', 'midtrain'], week: ['gshift', 'midtrain', 'lowtide'], month: ['midtrain', 'gshift', 'lowtide'] };
+/* топ бесплатных: биты, у которых есть бесплатный MP3 с тегом (в том числе из бесплатных тейпов) */
+var FRANK = {
+  day: ['static', 'lowend', 'motel', 'nocturne', 'cruise', 'glasshouse'],
+  week: ['nocturne', 'static', 'sunsetblvd', 'glasshouse', 'motel', 'lowend'],
+  month: ['motel', 'nocturne', 'static', 'lowend', 'glasshouse', 'lowrider']
+};
+var FDELTA = { day: [2, 'new', 0, -1, 1, -2], week: [0, 1, 'new', -1, 2, -3], month: [1, 0, -2, 'new', 1, -1] };
 var TDELTA = { day: ['new', 1, -1], week: ['new', 0, -1], month: [0, 'new', 1] };
 var PERIOD_UP = { day: 'ЗА СУТКИ', week: 'ЗА НЕДЕЛЮ', month: 'ЗА МЕСЯЦ' };
 var PERIOD_LOW = { day: 'за сутки', week: 'за неделю', month: 'за месяц' };
@@ -1062,7 +1141,7 @@ function licName(k) { return { mp3: 'MP3-лицензию', wav: 'WAV-лицен
 
 /* ===== состояние ===== */
 var st = {
-  view: 'home', page: 'killswitch', playing: 'killswitch', pos: 0, paused: true, loop: false, started: false,
+  view: 'home', page: 'killswitch', playing: 'killswitch', pos: 0, paused: true, rep: 'off', vol: 0.8, mute: false, started: false,
   liked: {}, reposted: {}, follows: {}, lic: 'wav', terms: true,
   feed: false, dock: true, feedOff: {}, feedTab: 'foryou', fOpen: false, pliked: {}, votes: {}, att: '', draft: '',
   topTab: 'hot', period: 'week', q: '', sort: 'new', bpm: 'all', onlyLiked: false, gOpen: false, gMore: 0, homeScroll: 0,
@@ -1072,6 +1151,8 @@ var st = {
 /* ===== утилиты ===== */
 function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 function fmt(sec) { sec = Math.max(0, Math.floor(sec)); var s = sec % 60; return Math.floor(sec / 60) + ':' + (s < 10 ? '0' : '') + s; }
+function priceText(r, from) { return r > 0 ? (from ? 'от ' : '') + money(r) : 'Бесплатно'; }
+function freeChip() { return '<span class="cv-chip free">' + ic('download', 12) + 'FREE</span>'; }
 function money(r) { return String(r).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽'; }
 function num(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
 var ICON = {
@@ -1093,7 +1174,12 @@ var ICON = {
   users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
   note: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
   sort: '<path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="m21 8-4-4-4 4"/><path d="M17 4v16"/>',
+  download: '<path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/>',
   loop: '<path d="M4 10a8 8 0 1 1 8 8H4"/><path d="m8 22-4-4 4-4"/>',
+  loop1: '<path d="M4 10a8 8 0 1 1 8 8H4"/><path d="m8 22-4-4 4-4"/><path d="M10.8 8.2 12.6 7v6" stroke-width="1.8"/>',
+  vol: '<path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/>',
+  vol1: '<path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/>',
+  vol0: '<path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="m22 9-6 6"/><path d="m16 9 6 6"/>',
   filter: '<path d="M3 6h18"/><path d="M7 12h10"/><path d="M10 18h4"/>',
   bars: '<path d="M4 10v4"/><path d="M8 6v12"/><path d="M12 9v6"/><path d="M16 4v16"/><path d="M20 10v4"/>',
   home: '<path d="M3 10 12 3l9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/>', trend: '<path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/>',
@@ -1261,7 +1347,7 @@ var last = 0, aud = null, audT = -1, audStamp = 0;
 function syncAudio() {
   if (!aud) return;
   var b = cur();
-  aud.loop = !!st.loop;
+  aud.loop = st.rep === 'one'; aud.volume = st.mute ? 0 : st.vol;
   if (!b.audio) { if (!aud.paused) aud.pause(); return; }
   if (aud.getAttribute('data-src') !== b.audio) { aud.src = b.audio; aud.setAttribute('data-src', b.audio); }
   if (Math.abs((aud.currentTime || 0) - st.pos) > 0.35) { try { aud.currentTime = st.pos; } catch (e) { /* ещё не загрузился */ } }
@@ -1280,12 +1366,7 @@ function loop(t) {
     }
   } else if (last && !st.paused) {
     st.pos += Math.min(0.1, (t - last) / 1000);
-    if (st.pos >= b.dur) {
-      st.pos = 0;
-      var nx = !st.loop && nextInTape(b);
-      if (nx) { st.playing = nx; rerenderKeep(); }
-      else if (!st.loop) { st.paused = true; syncPlayButtons(); }
-    }
+    if (st.pos >= b.dur) onTrackEnd();
     tickUI();
   }
   last = t;
@@ -1311,7 +1392,7 @@ function seek(id, pos) {
   if (changed) render(); else { syncPlayButtons(); tickUI(); }
 }
 function togglePlay(id) {
-  if (st.playing !== id) { st.playing = id; st.pos = 0; st.paused = false; syncAudio(); render(); return; }
+  if (st.playing !== id) { st.playing = id; st.pos = 0; st.paused = false; followDraft(); syncAudio(); render(); return; }
   st.paused = !st.paused; syncAudio(); syncPlayButtons();
 }
 function syncPlayButtons() {
@@ -1325,6 +1406,13 @@ function syncPlayButtons() {
 
 /* ===== бегущая строка: длинное название через пару секунд покоя доезжает до конца и возвращается быстрее ===== */
 function setupMarquee() {
+  document.querySelectorAll('.inq').forEach(function (w) {
+    var i = w.querySelector('input'), focused = document.activeElement === i;
+    if (!i) return;
+    if (!focused) i.scrollLeft = 0;
+    w.classList.toggle('ovf', !!i.value && i.scrollWidth > i.clientWidth + 1);
+  });
+  document.querySelectorAll('.lseg.nums').forEach(function (el) { el.classList.toggle('ovf', el.scrollWidth > el.clientWidth + 1); });
   document.querySelectorAll('.mq').forEach(function (el) {
     var s = el.firstElementChild;
     if (!s) return;
@@ -1344,6 +1432,7 @@ document.addEventListener('scroll', function () {
   scrollT = setTimeout(function () { document.body.classList.remove('scrolling'); }, 900);
 }, true);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(setupMarquee);
+document.addEventListener('focusout', function (e) { if (e.target.closest && e.target.closest('.inq')) setTimeout(setupMarquee, 0); });
 
 /* ===== общие куски ===== */
 function initial(n) { return String(n).charAt(0).toUpperCase(); }
@@ -1377,15 +1466,33 @@ function fitTicker() {
 function licHTML(b, mobile, pre) {
   if (b.sold) return soldLicHTML(b, mobile, pre);
   var L = licenses(b), sel = L.filter(function (l) { return l.key === st.lic; })[0] || L[1] || L[0];
+  if (!sel && b.free) return freeLicHTML(b, mobile, pre);
   if (!sel) return '<section class="lic' + (mobile ? '' : ' card') + '" id="' + (mobile ? 'm-buy' : 'buy') + '"><h2 class="sec-h" style="font-size:17px">Лицензия</h2><p class="muted" style="margin:8px 0 0">Цены пока не указаны.</p></section>';
   var h = '<section class="lic' + (mobile ? '' : ' card') + '" id="' + (mobile ? 'm-buy' : 'buy') + '" aria-labelledby="lic-h">';
   h += '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px"><h2 id="lic-h" class="sec-h" style="font-size:' + (mobile ? 20 : 17) + 'px">Лицензия</h2><a href="#" class="muted" style="font-size:14px;font-weight:500">Сравнить все</a></div>' + (pre || '');
   h += '<div class="seg4" role="group" aria-label="Лицензия" style="margin-top:14px;grid-template-columns:repeat(' + L.length + ',minmax(0,1fr))">' + L.map(function (l) { return '<button type="button" data-act="lic" data-v="' + l.key + '" aria-pressed="' + (l.key === sel.key) + '" class="' + (l.key === sel.key ? 'on' : '') + '">' + l.tab + '</button>'; }).join('') + '</div>';
-  h += '<p class="lic-price">' + money(sel.rub) + '</p><p style="margin:4px 0 0;font-size:' + (mobile ? 16 : 15) + 'px;line-height:22px">' + esc(sel.sum) + '</p>';
+  h += '<p class="lic-price">' + money(sel.rub) + '</p><p class="lic-sum" style="margin:4px 0 0;font-size:' + (mobile ? 16 : 15) + 'px;line-height:22px">' + esc(sel.sum) + '</p>';
   h += '<button type="button" class="ghost" data-act="terms" aria-expanded="' + st.terms + '" style="margin:10px 0 0 -8px;align-self:flex-start;height:' + (mobile ? 40 : 30) + 'px;padding:0 8px;display:inline-flex;align-items:center;gap:4px;font-size:' + (mobile ? 15 : 14) + 'px;font-weight:600;color:var(--text)">Что входит' + ic(st.terms ? 'up' : 'down', 16) + '</button>';
   if (st.terms) h += '<dl class="terms">' + sel.terms.map(function (t) { return '<div><dt>' + t[0] + '</dt><dd>' + t[1] + '</dd></div>'; }).join('') + '</dl>';
   h += '<div style="margin-top:16px;display:flex;gap:8px"><a href="#" class="btn btn-fill" style="flex:1;height:' + (mobile ? 56 : 52) + 'px;border-radius:' + (mobile ? 999 : 12) + 'px;font-size:' + (mobile ? 17 : 16) + 'px;font-weight:700">Купить за ' + money(sel.rub) + '</a><button type="button" class="btn" aria-label="Добавить в корзину" title="В корзину" style="width:' + (mobile ? 56 : 52) + 'px;height:' + (mobile ? 56 : 52) + 'px;padding:0;border-radius:' + (mobile ? '50%' : '12px') + '">' + ic('cart', 20) + '</button></div>';
+  if (b.free) h += freeDlHTML(b);
   h += '<p class="note">' + ic('shield', 16) + '<span>Файлы и лицензия придут сразу после оплаты. Лицензию подтверждает сертификат в блокчейне. <a href="#">Условия</a></span></p></section>';
+  return h;
+}
+/* бесплатный MP3 с тегом: отдельной строкой под покупкой, платные лицензии остаются главными */
+var FREE_TERMS = [['Файлы', 'MP3 320 kbps, с тегом продюсера'], ['Стриминг', 'можно, без монетизации'], ['Клипы', 'можно, без монетизации'], ['Выступления', 'бесплатные'], ['Права на бит', 'остаются у автора']];
+function freeDlHTML(b) {
+  return '<div class="free-dl">' + ic('download', 20) + '<div><b>Бесплатно</b>MP3 с тегом, для некоммерческих треков</div><button type="button" class="btn" data-act="freeDl" data-id="' + b.id + '">Скачать</button></div>';
+}
+/* у бита только бесплатная версия, платных лицензий нет */
+function freeLicHTML(b, mobile, pre) {
+  var h = '<section class="lic lic-free' + (mobile ? '' : ' card') + '" id="' + (mobile ? 'm-buy' : 'buy') + '" aria-labelledby="lic-h">';
+  h += '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px"><h2 id="lic-h" class="sec-h" style="font-size:' + (mobile ? 20 : 17) + 'px">Лицензия</h2></div>' + (pre || '');
+  h += '<p class="lic-price">Бесплатно</p><p style="margin:4px 0 0;font-size:' + (mobile ? 16 : 15) + 'px;line-height:22px">MP3 с тегом продюсера. Выкладывать трек можно, монетизировать нельзя.</p>';
+  h += '<button type="button" class="ghost" data-act="terms" aria-expanded="' + st.terms + '" style="margin:10px 0 0 -8px;align-self:flex-start;height:' + (mobile ? 40 : 30) + 'px;padding:0 8px;display:inline-flex;align-items:center;gap:4px;font-size:' + (mobile ? 15 : 14) + 'px;font-weight:600;color:var(--text)">Что входит' + ic(st.terms ? 'up' : 'down', 16) + '</button>';
+  if (st.terms) h += '<dl class="terms">' + FREE_TERMS.map(function (t) { return '<div><dt>' + t[0] + '</dt><dd>' + t[1] + '</dd></div>'; }).join('') + '</dl>';
+  h += '<div style="margin-top:16px;display:flex;gap:8px"><button type="button" class="btn btn-fill" data-act="freeDl" data-id="' + b.id + '" style="flex:1;height:' + (mobile ? 56 : 52) + 'px;border-radius:' + (mobile ? 999 : 12) + 'px;font-size:' + (mobile ? 17 : 16) + 'px;font-weight:700">' + ic('download', 20) + 'Скачать бесплатно</button></div>';
+  h += '<p class="note">' + ic('shield', 16) + '<span>Нужен релиз с монетизацией? Напиши автору, он может открыть платные лицензии.</span></p></section>';
   return h;
 }
 function tagsHTML(list, cls) { return list.map(function (t) { return '<span class="' + (cls || 'tag') + '">' + esc(t) + '</span>'; }).join(''); }
@@ -1436,11 +1543,11 @@ function desktopHTML() {
 }
 function playerBarHTML() {
   var c = cur(), f = frac(st.playing);
-  return '<div class="d-player" role="region" aria-label="Плеер"><div class="d-player-in"><button type="button" data-act="open" data-id="' + c.id + '" aria-label="Открыть бит ' + esc(c.title) + '" style="flex:0 1 300px;min-width:0;display:flex;align-items:center;gap:12px;text-align:left"><img src="' + c.cover + '" alt=""><span style="min-width:0"><span style="display:block;font-family:var(--fd);font-weight:900;font-size:14px;line-height:18px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + esc(c.title) + '</span><span class="muted" style="display:block;margin-top:2px;font-size:13px;line-height:18px">' + playerSub(c) + '</span></span></button>' +
+  return '<div class="d-player" role="region" aria-label="Плеер"><div class="d-player-in"><button type="button" data-act="open" data-id="' + c.id + '" aria-label="Открыть бит ' + esc(c.title) + '" style="flex:0 1 300px;min-width:0;display:flex;align-items:center;gap:12px;text-align:left"><img src="' + c.cover + '" alt=""><span style="min-width:0">' + mqx(c.title, 'pb-t') + '<span class="muted" style="display:block;margin-top:2px;font-size:13px;line-height:18px">' + playerSub(c) + '</span></span></button>' +
     '<button type="button" class="icon44 ghost" data-act="like" data-id="' + c.id + '" aria-pressed="' + !!st.liked[c.id] + '" aria-label="Нравится">' + ic('heart', 18, st.liked[c.id]) + '</button>' +
-    '<div style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:10px"><button type="button" class="icon44 ghost" data-act="prev" aria-label="Предыдущий бит">' + ic('prev', 18) + '</button><button type="button" class="pp" data-act="play" data-id="' + c.id + '" data-pp="" data-size="18" aria-label="' + (isOn(c.id) ? 'Пауза' : 'Слушать') + '">' + pp(isOn(c.id), 18) + '</button><button type="button" class="icon44 ghost" data-act="next" aria-label="Следующий бит">' + ic('next', 18) + '</button><button type="button" class="icon44 ghost' + (st.loop ? ' on' : '') + '" data-act="loop" aria-pressed="' + !!st.loop + '" aria-label="Повторять бит" title="Повтор">' + ic('loop', 18) + '</button>' +
+    '<div style="flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:10px"><button type="button" class="icon44 ghost" data-act="prev" aria-label="Предыдущий бит">' + ic('prev', 18) + '</button><button type="button" class="pp" data-act="play" data-id="' + c.id + '" data-pp="" data-size="18" aria-label="' + (isOn(c.id) ? 'Пауза' : 'Слушать') + '">' + pp(isOn(c.id), 18) + '</button><button type="button" class="icon44 ghost" data-act="next" aria-label="Следующий бит">' + ic('next', 18) + '</button>' + repBtn('icon44 ghost', 18) +
     '<span class="muted js-now" style="margin-left:8px;font-size:14px">' + fmt(st.pos) + '</span><div class="prog" data-act="progSeek" role="progressbar" aria-label="Прогресс"><i class="js-prog" style="width:' + (f * 100) + '%"></i></div><span class="muted" style="font-size:14px">' + fmt(c.dur) + '</span></div>' +
-    '<a href="#buy" class="btn" data-act="toBuyCur" style="height:40px">Купить</a></div></div>';
+    volHTML() + '<a href="#buy" class="btn" data-act="toBuyCur" style="height:40px">Купить</a></div></div>';
 }
 
 /* ===== лента: шапка, новый пост, посты и события ===== */
@@ -1507,9 +1614,10 @@ function eventHTML(e) {
 /* ===== главная: топ и сетка ===== */
 function homeHTML() {
   var h = '<div class="home"><section class="top" aria-label="Топ">';
-  h += '<div class="top-head"><div class="ttabs" role="tablist" aria-label="Что в топе">' + [['hot', 'Горячие биты'], ['tapes', 'Тейпы'], ['producers', 'Продюсеры']].map(function (x) { var on = st.topTab === x[0]; return '<button type="button" role="tab" aria-selected="' + on + '" class="' + (on ? 'on' : '') + '" data-act="topTab" data-v="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' +
+  h += '<div class="top-head"><div class="ttabs" role="tablist" aria-label="Что в топе">' + [['hot', 'Горячие биты'], ['tapes', 'Тейпы'], ['free', 'Бесплатные'], ['producers', 'Продюсеры']].map(function (x) { var on = st.topTab === x[0]; return '<button type="button" role="tab" aria-selected="' + on + '" class="' + (on ? 'on' : '') + '" data-act="topTab" data-v="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div>' +
     '<div class="seg2" role="group" aria-label="Период">' + [['day', 'Сутки'], ['week', 'Неделя'], ['month', 'Месяц']].map(function (x) { var on = st.period === x[0]; return '<button type="button" data-act="period" data-v="' + x[0] + '" class="' + (on ? 'on' : '') + '" aria-pressed="' + on + '">' + x[1] + '</button>'; }).join('') + '</div></div>';
-  h += '<div class="top-body">' + (st.topTab === 'hot' ? hotHTML() : st.topTab === 'tapes' ? tapesTopHTML() : producersHTML()) + '</div></section>';
+  var panes = [['hot', function () { return hotHTML(); }], ['tapes', tapesTopHTML], ['free', function () { return hotHTML(true); }], ['producers', producersHTML]];
+  h += '<div class="top-body">' + panes.map(function (x) { var on = st.topTab === x[0]; return '<div class="top-pane' + (on ? ' on' : '') + '" role="tabpanel"' + (on ? '' : ' inert aria-hidden="true"') + '>' + x[1]() + '</div>'; }).join('') + '</div></section>';
   h += '<section class="all" aria-labelledby="all-h">' + allHeadHTML() + '<div id="gwrap">' + gridHTML() + '</div></section>';
   return h + '</div>';
 }
@@ -1518,19 +1626,21 @@ function deltaHTML(d) {
   if (!d) return '<span class="delta" aria-label="без изменений"></span>';
   return '<span class="delta' + (d > 0 ? ' rise' : '') + '" aria-label="' + (d > 0 ? 'поднялся на ' : 'опустился на ') + Math.abs(d) + '">' + ic(d > 0 ? 'up' : 'down', 13) + Math.abs(d) + '</span>';
 }
-function hotHTML() {
-  var ids = RANK[st.period], b = BY[ids[0]], L = licenses(b), sel = L.filter(function (l) { return l.key === st.lic; })[0] || L[1], liked = !!st.liked[b.id];
+function hotHTML(free) {
+  var ids = (free ? FRANK : RANK)[st.period], dl = (free ? FDELTA : DELTA)[st.period], b = BY[ids[0]], L = licenses(b), sel = L.filter(function (l) { return l.key === st.lic; })[0] || L[1], liked = !!st.liked[b.id];
   var h = '<div class="top-grid"><article class="feat" data-band="' + b.id + '" style="--band:' + b.band + ';--band2:' + b.band2 + '" aria-label="Первое место: ' + esc(b.title) + '">';
   h += '<button type="button" class="feat-cv" data-act="open" data-id="' + b.id + '" aria-label="Открыть бит ' + esc(b.title) + '"><img class="cover" src="' + b.cover + '" alt=""></button>';
-  h += '<div class="feat-r"><div class="feat-top"><button type="button" class="h-play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="24" aria-label="' + (isOn(b.id) ? 'Пауза' : 'Слушать ' + esc(b.title)) + '">' + pp(isOn(b.id), 24) + '</button><div style="min-width:0;flex:1"><span class="h-badge"><b>№1</b>В ГОРЯЧИХ ' + PERIOD_UP[st.period] + '</span><button type="button" class="feat-t" data-act="open" data-id="' + b.id + '">' + esc(b.title) + '</button>' +
+  h += '<div class="feat-r"><div class="feat-top"><button type="button" class="h-play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="24" aria-label="' + (isOn(b.id) ? 'Пауза' : 'Слушать ' + esc(b.title)) + '">' + pp(isOn(b.id), 24) + '</button><div style="min-width:0;flex:1"><span class="h-badge"><b>№1</b>' + (free ? 'СРЕДИ БЕСПЛАТНЫХ ' : 'В ГОРЯЧИХ ') + PERIOD_UP[st.period] + '</span><button type="button" class="feat-t" data-act="open" data-id="' + b.id + '">' + mqx(b.title) + '</button>' +
     '<div class="h-meta"><span>prod. by <a href="#">' + esc(b.producer) + '</a></span><span style="display:inline-flex;gap:6px">' + tagsHTML(tagList(b), 'h-tag') + '</span></div></div>' +
     '<button type="button" class="h-btn round' + (liked ? ' on' : '') + '" data-act="like" data-id="' + b.id + '" aria-pressed="' + liked + '" aria-label="Нравится">' + ic('heart', 18, liked) + '</button></div>';
   h += heroWave(b, 48, 24);
-  h += '<div class="feat-buy"><div class="lseg" role="group" aria-label="Лицензия">' + L.map(function (l) { var on = l.key === sel.key; return '<button type="button" data-act="lic" data-v="' + l.key + '" aria-pressed="' + on + '" class="' + (on ? 'on' : '') + '">' + l.tab + '</button>'; }).join('') + '</div>' +
+  if (free) h += '<div class="feat-buy"><span class="feat-free">' + ic('download', 18) + '<span><b>MP3 с тегом</b>для некоммерческих треков</span></span>' + (L.length ? '<a href="#/beat/' + b.id + '" class="feat-more" data-act="buyAt" data-id="' + b.id + '">Лицензии от ' + money(Math.min.apply(null, L.map(function (l) { return l.rub; }))) + '</a>' : '') +
+    '<span class="feat-price">Бесплатно</span><button type="button" class="h-buy" data-act="freeDl" data-id="' + b.id + '">' + ic('download', 18) + 'Скачать</button></div></div></article>';
+  else h += '<div class="feat-buy"><div class="lseg" role="group" aria-label="Лицензия">' + L.map(function (l) { var on = l.key === sel.key; return '<button type="button" data-act="lic" data-v="' + l.key + '" aria-pressed="' + on + '" class="' + (on ? 'on' : '') + '">' + l.tab + '</button>'; }).join('') + '</div>' +
     '<span class="feat-price">' + money(sel.rub) + '</span><a href="#/beat/' + b.id + '" class="h-buy" data-act="buyAt" data-id="' + b.id + '">Купить</a></div></div></article>';
-  h += '<section class="hot" aria-labelledby="hot-h2"><h3 id="hot-h2">Дальше в топе<span>' + PERIOD_LOW[st.period] + '</span></h3><ol>' + ids.slice(1).map(function (id, i) {
+  h += '<section class="hot" aria-labelledby="hot-h2' + (free ? 'f' : '') + '"><h3 id="hot-h2' + (free ? 'f' : '') + '">Дальше в топе<span>' + PERIOD_LOW[st.period] + '</span></h3><ol>' + ids.slice(1).map(function (id, i) {
     var x = BY[id];
-    return '<li class="hrow"><span class="hrank">' + (i + 2) + '</span><button type="button" class="open" data-act="open" data-id="' + id + '"><img src="' + x.cover + '" alt=""><span style="min-width:0;flex:1"><span class="ht">' + esc(x.title) + '</span><span class="hs">' + esc(x.producer) + (tapeOf(x.id) ? ', из тейпа ' + esc(tapeOf(x.id).title) : '') + '</span></span></button>' + deltaHTML(DELTA[st.period][i + 1]) +
+    return '<li class="hrow"><span class="hrank">' + (i + 2) + '</span><button type="button" class="open" data-act="open" data-id="' + id + '"><img src="' + x.cover + '" alt=""><span style="min-width:0;flex:1">' + mqx(x.title, 'ht') + '<span class="hs">' + esc(x.producer) + (tapeOf(x.id) ? ', из тейпа ' + esc(tapeOf(x.id).title) : '') + '</span></span></button>' + deltaHTML(dl[i + 1]) +
       '<button type="button" class="pl-btn" data-act="play" data-id="' + id + '" data-pp="' + id + '" data-size="14" aria-label="Слушать ' + esc(x.title) + '">' + pp(isOn(id), 14) + '</button></li>';
   }).join('') + '</ol></section></div>';
   return h;
@@ -1585,9 +1695,9 @@ function cardHTML(it) {
   var b = it.b, on = isOn(b.id), liked = !!st.liked[b.id], here = st.started && st.playing === b.id;
   return '<article class="bcard' + (here ? ' here' : '') + '"><div class="bcv"><button type="button" class="cat-open" data-act="open" data-id="' + b.id + '" tabindex="-1" aria-hidden="true"><img class="cover" src="' + b.cover + '" alt="" loading="lazy"></button>' +
     '<button type="button" class="bplay" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="22" aria-label="' + (on ? 'Пауза' : 'Слушать ' + esc(b.title)) + '">' + pp(on, 22) + '</button>' +
-    '<button type="button" class="blike' + (liked ? ' on' : '') + '" data-act="like" data-id="' + b.id + '" aria-pressed="' + liked + '" aria-label="Нравится">' + ic('heart', 18, liked) + '</button>' + (here ? '<span class="bprog"><i class="js-prog"></i></span>' : '') + '</div>' +
-    '<button type="button" class="bt" data-act="open" data-id="' + b.id + '">' + esc(b.title) + '</button><p class="bs">' + esc(b.producer) + '</p>' +
-    '<p class="brow"><span style="display:flex;gap:4px;min-width:0;overflow:hidden">' + tagsHTML(tagList(b).slice(1), 'tag sm') + '</span><span class="price">' + money(b.rub) + '</span></p></article>';
+    '<button type="button" class="blike' + (liked ? ' on' : '') + '" data-act="like" data-id="' + b.id + '" aria-pressed="' + liked + '" aria-label="Нравится">' + ic('heart', 18, liked) + '</button>' + (b.free ? '<span class="cv-chips">' + freeChip() + '</span>' : '') + (here ? '<span class="bprog"><i class="js-prog"></i></span>' : '') + '</div>' +
+    '<button type="button" class="bt" data-act="open" data-id="' + b.id + '">' + mqx(b.title) + '</button><p class="bs">' + esc(b.producer) + '</p>' +
+    '<p class="brow"><span style="display:flex;gap:4px;min-width:0;overflow:hidden">' + tagsHTML(tagList(b).slice(1), 'tag sm') + '</span><span class="price">' + priceText(b.rub) + '</span></p></article>';
 }
 function gridHTML() {
   var list = gridList(), h = '';
@@ -1628,7 +1738,7 @@ function beatHTML(b) {
   h += heroWave(b);
   h += '<div class="h-actions"><button type="button" class="h-btn' + (liked ? ' on' : '') + '" data-act="like" data-id="' + b.id + '" aria-pressed="' + liked + '">' + ic('heart', 18, liked) + '<span class="sr">Нравится, </span>' + num(b.likes + (liked ? 1 : 0)) + '</button>' +
     '<button type="button" class="h-btn' + (rep ? ' on' : '') + '" data-act="repost" data-id="' + b.id + '" aria-pressed="' + rep + '">' + ic('repost', 18) + '<span class="sr">Репост, </span>' + (b.reposts + (rep ? 1 : 0)) + '</button>' +
-    '<button type="button" class="h-btn round' + (st.loop ? ' on' : '') + '" data-act="loop" aria-pressed="' + !!st.loop + '" aria-label="Повторять бит" title="Повтор">' + ic('loop', 18) + '</button><button type="button" class="h-btn">' + ic('share', 18) + 'Поделиться</button><button type="button" class="h-btn round" aria-label="Ещё">' + ic('more', 18) + '</button>' +
+    repBtn('h-btn round', 18) + '<button type="button" class="h-btn">' + ic('share', 18) + 'Поделиться</button><button type="button" class="h-btn round" aria-label="Ещё">' + ic('more', 18) + '</button>' +
     '<a href="#buy" class="h-buy" data-act="toBuy">Купить от ' + money(b.rub) + '</a></div>';
   h += '</div><img class="cover hero-cover" src="' + b.cover + '" alt="Обложка бита ' + esc(b.title) + '"></div></section>';
   h += '<div class="cols"><div style="min-width:0;display:flex;flex-direction:column;gap:40px">';
@@ -1694,7 +1804,12 @@ function catalogHTML() {
   h += '<div class="chips" role="group" aria-label="Жанры">' + genres.map(function (g) { var on = st.genre === g; return '<button type="button" class="chip' + (on ? ' on' : '') + '" data-act="genre" data-v="' + esc(g) + '" aria-pressed="' + on + '">' + (g === 'all' ? 'Все' : esc(g)) + '</button>'; }).join('') + '</div>';
   h += '<section aria-labelledby="hot-h" style="padding-top:14px"><h2 class="sec-h" id="hot-h" style="padding:0 16px 12px">Горячие за неделю</h2><div class="hot-row">' + hot.map(function (b, i) {
     return '<article class="hot-card"><div class="cat-cv"><button type="button" class="cat-open" data-act="openPlayer" data-id="' + b.id + '" aria-label="Открыть ' + esc(b.title) + '"><img class="cover" src="' + b.cover + '" alt=""></button><span class="rank" aria-hidden="true">' + (i + 1) + '</span><button type="button" class="cat-play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="18" aria-label="Слушать ' + esc(b.title) + '">' + pp(isOn(b.id), 18) + '</button></div>' +
-      '<button type="button" class="cat-t" data-act="openPlayer" data-id="' + b.id + '">' + mqx(b.title) + '</button><p class="cat-meta">' + esc(b.producer) + '</p><p class="cat-row"><span class="price">от ' + money(b.rub) + '</span></p></article>';
+      '<button type="button" class="cat-t" data-act="openPlayer" data-id="' + b.id + '">' + mqx(b.title) + '</button><p class="cat-meta">' + esc(b.producer) + '</p><p class="cat-row"><span class="price">' + priceText(b.rub, true) + '</span></p></article>';
+  }).join('') + '</div></section>';
+  h += '<section aria-labelledby="free-h" style="padding-top:26px"><div class="m-allh" style="padding-bottom:12px"><h2 class="sec-h" id="free-h">Бесплатные</h2><button type="button" class="ghost m-more" data-act="kind" data-v="free">Все</button></div><div class="hot-row">' + FRANK.week.map(function (id) {
+    var b = BY[id];
+    return '<article class="hot-card"><div class="cat-cv"><button type="button" class="cat-open" data-act="openPlayer" data-id="' + b.id + '" aria-label="Открыть ' + esc(b.title) + '"><img class="cover" src="' + b.cover + '" alt=""></button><span class="cv-chips">' + freeChip() + '</span><button type="button" class="cat-play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="18" aria-label="Слушать ' + esc(b.title) + '">' + pp(isOn(b.id), 18) + '</button></div>' +
+      '<button type="button" class="cat-t" data-act="openPlayer" data-id="' + b.id + '">' + mqx(b.title) + '</button><p class="cat-meta">' + esc(b.producer) + (b.tape ? ', тейп ' + esc(TBY[b.tape].title) : '') + '</p><p class="cat-row"><span class="price">Бесплатно</span></p></article>';
   }).join('') + '</div></section>';
   h += '<section aria-labelledby="all-h" style="padding-top:26px"><div class="m-allh"><h2 class="sec-h" id="all-h">Каталог</h2>' + kindSegHTML() + '</div>';
   h += list.length ? '<div class="cat-grid">' + list.map(function (it) { return it.k === 'tape' ? mTapeCardHTML(it.t) : mBeatCardHTML(it.b); }).join('') + '</div>' : '<p class="muted" style="padding:0 16px">Тут пока пусто. Попробуй другой жанр.</p>';
@@ -1715,7 +1830,7 @@ function playerHTML(b) {
   h += '<div class="pl-bar"><button type="button" class="' + (liked ? 'on' : '') + '" data-act="like" data-id="' + b.id + '" aria-pressed="' + liked + '" aria-label="Нравится">' + ic('heart', 24, liked) + num(b.likes + (liked ? 1 : 0)) + '</button>' +
     '<button type="button" data-act="openCom" data-id="' + b.id + '" aria-label="Комментарии">' + ic('msg', 23) + b.comments + '</button>' +
     '<button type="button" class="' + (rep ? 'on' : '') + '" data-act="repost" data-id="' + b.id + '" aria-pressed="' + rep + '" aria-label="Репост">' + ic('repost', 23) + (b.reposts + (rep ? 1 : 0)) + '</button>' +
-    '<button type="button" class="' + (st.loop ? 'on' : '') + '" data-act="loop" aria-pressed="' + !!st.loop + '" aria-label="Повторять бит">' + ic('loop', 23) + '</button>' +
+    repBtn('', 23) +
     '<button type="button" aria-label="Поделиться">' + ic('share', 23) + '</button></div>';
   return h + '</div>';
 }
@@ -1776,10 +1891,61 @@ function layersHTML(src) { return '<span class="tp-l tp-l2" aria-hidden="true"><
 function eqHTML(id) { return '<span class="tp-eq' + (isOn(id) ? '' : ' paused') + '" data-eq="' + id + '" aria-hidden="true"><i></i><i></i><i></i></span>'; }
 function syncEq() { document.querySelectorAll('[data-eq]').forEach(function (el) { el.classList.toggle('paused', !isOn(el.getAttribute('data-eq'))); }); }
 function playerSub(c) { var t = tapeOf(c.id); return t ? esc(t.title) + ', ' + (t.tracks.indexOf(c.id) + 1) + ' из ' + t.tracks.length : 'prod. by ' + esc(c.producer); }
-function playList() { var t = tapeOf(st.playing); return t ? tTracks(t) : BEATS.filter(function (b) { return !b.tape; }); }
+function playList() { var c = cur(), L = c && autoList(c); return L ? L.map(function (id) { return BY[id]; }).filter(Boolean) : BEATS.filter(function (b) { return !b.tape && !b.draft; }); }
+/* очередь для автоперехода и кнопок ←/→: тейп, битлист черновика в студии или весь каталог */
+function autoList(b) {
+  if (b.draft && STU.mode === 'tape' && b.id !== 'draft') return rowsReady().map(function (r) { return 'dr' + r.id; }).filter(function (id) { return BY[id]; });
+  var t = tapeOf(b.id);
+  return t ? t.tracks.slice() : null;
+}
+/* повтор: off → весь тейп (или список) → один бит → off */
+var REP_NEXT = { off: 'all', all: 'one', one: 'off' };
+function repInfo() {
+  var b = cur(), L = b && autoList(b), what = L ? (b.draft ? 'битлиста' : 'тейпа') : 'списка';
+  return st.rep === 'one' ? { on: true, t: 'Повтор бита' } : st.rep === 'all' ? { on: true, t: 'Повтор ' + what } : { on: false, t: 'Повтор выключен' };
+}
+function repBtn(cls, size) {
+  var r = repInfo(), c = (cls + (r.on ? ' on' : '')).trim();
+  return '<button type="button"' + (c ? ' class="' + c + '"' : '') + ' data-act="loop" data-rep="' + st.rep + '" aria-label="' + r.t + '. Переключить повтор" title="' + r.t + '">' + ic(st.rep === 'one' ? 'loop1' : 'loop', size) + '</button>';
+}
+function nextAuto(b) {
+  if (st.rep === 'one') return b.id;
+  var L = autoList(b), i;
+  if (L) { i = L.indexOf(b.id); if (i >= 0 && i < L.length - 1) return L[i + 1]; return st.rep === 'all' && L.length ? L[0] : null; }
+  if (st.rep !== 'all') return null;
+  L = playList(); i = L.indexOf(b);
+  return L.length ? L[(i + 1) % L.length].id : null;
+}
+/* бит доиграл: повтор, следующий в очереди или стоп */
+function onTrackEnd() {
+  var b = cur(), nx = nextAuto(b);
+  st.pos = 0;
+  if (nx === b.id) { if (aud && b.audio) { try { aud.currentTime = 0; } catch (e) { /* не успел */ } } tickUI(); return; }
+  if (nx) { st.playing = nx; st.paused = false; followDraft(); syncAudio(); rerenderKeep(); return; }
+  st.paused = true; syncAudio(); syncPlayButtons(); tickUI();
+}
+/* в студии выбранная строка битлиста всегда та, что играет */
+function followDraft() {
+  var b = cur();
+  if (!b || !b.draft || STU.mode !== 'tape') return;
+  for (var i = 0; i < STU.rows.length; i++) if ('dr' + STU.rows[i].id === b.id) { STU.sel = i; return; }
+}
+/* громкость: ползунок в нижнем плеере */
+function applyVol() {
+  if (aud) aud.volume = st.mute ? 0 : st.vol;
+  var v = st.mute ? 0 : st.vol, r = document.getElementById('vol-r'), bt = document.getElementById('vol-b');
+  if (r) { r.value = Math.round(v * 100); r.style.setProperty('--v', (v * 100) + '%'); r.setAttribute('aria-valuetext', Math.round(v * 100) + '%'); }
+  if (bt) { bt.innerHTML = ic(volIc(), 18); bt.setAttribute('aria-label', st.mute || !st.vol ? 'Включить звук' : 'Выключить звук'); }
+}
+function volIc() { var v = st.mute ? 0 : st.vol; return v === 0 ? 'vol0' : v < 0.5 ? 'vol1' : 'vol'; }
+function volHTML() {
+  var v = st.mute ? 0 : st.vol;
+  return '<div class="vol"><button type="button" class="icon44 ghost" id="vol-b" data-act="vol" aria-label="' + (v ? 'Выключить звук' : 'Включить звук') + '">' + ic(volIc(), 18) + '</button>' +
+    '<input type="range" id="vol-r" class="vol-r" min="0" max="100" step="1" value="' + Math.round(v * 100) + '" style="--v:' + (v * 100) + '%" aria-label="Громкость" aria-valuetext="' + Math.round(v * 100) + '%"></div>';
+}
 function nextInTape(b) { var t = tapeOf(b.id); if (!t) return null; var i = t.tracks.indexOf(b.id); return i >= 0 && i < t.tracks.length - 1 ? t.tracks[i + 1] : null; }
 function kindSegHTML() {
-  return '<div class="seg2" role="group" aria-label="Что показывать">' + [['all', 'Всё'], ['beats', 'Биты'], ['tapes', 'Тейпы']].map(function (x) { var on = st.kind === x[0]; return '<button type="button" data-act="kind" data-v="' + x[0] + '" class="' + (on ? 'on' : '') + '" aria-pressed="' + on + '">' + x[1] + '</button>'; }).join('') + '</div>';
+  return '<div class="seg2" role="group" aria-label="Что показывать">' + [['all', 'Всё'], ['beats', 'Биты'], ['tapes', 'Тейпы'], ['free', 'Бесплатные']].map(function (x) { var on = st.kind === x[0]; return '<button type="button" data-act="kind" data-v="' + x[0] + '" class="' + (on ? 'on' : '') + '" aria-pressed="' + on + '">' + x[1] + '</button>'; }).join('') + '</div>';
 }
 
 /* главная: вкладка «Тейпы» в топе */
@@ -1787,15 +1953,15 @@ function tapesTopHTML() {
   var ids = TRANK[st.period], t = TBY[ids[0]], b = tSel(t), L = tTracks(t), k = 'tape:' + t.id, liked = !!st.liked[k], f = BY[t.tracks[0]];
   var h = '<div class="top-grid"><article class="feat" data-band="' + f.id + '" style="--band:' + f.band + ';--band2:' + f.band2 + '" aria-label="Первое место среди тейпов: ' + esc(t.title) + '">';
   h += '<div class="tp lg">' + layersHTML(t.cover) + '<button type="button" class="feat-cv" data-act="openTape" data-id="' + t.id + '" aria-label="Открыть тейп ' + esc(t.title) + '"><img class="cover" src="' + t.cover + '" alt=""></button></div>';
-  h += '<div class="feat-r"><div class="feat-top"><button type="button" class="h-play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="24" aria-label="' + (isOn(b.id) ? 'Пауза' : 'Слушать ' + esc(b.title)) + '">' + pp(isOn(b.id), 24) + '</button><div style="min-width:0;flex:1"><span class="h-badge"><b>№1</b>СРЕДИ ТЕЙПОВ ' + PERIOD_UP[st.period] + '</span><button type="button" class="feat-t" data-act="openTape" data-id="' + t.id + '">' + esc(t.title) + '</button>' +
+  h += '<div class="feat-r"><div class="feat-top"><button type="button" class="h-play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="24" aria-label="' + (isOn(b.id) ? 'Пауза' : 'Слушать ' + esc(b.title)) + '">' + pp(isOn(b.id), 24) + '</button><div style="min-width:0;flex:1"><span class="h-badge"><b>№1</b>СРЕДИ ТЕЙПОВ ' + PERIOD_UP[st.period] + '</span><button type="button" class="feat-t" data-act="openTape" data-id="' + t.id + '">' + mqx(t.title) + '</button>' +
     '<div class="h-meta"><span>prod. by <a href="#">' + esc(t.producer) + '</a></span><span style="display:inline-flex;gap:6px">' + tagsHTML([tCount(L.length), tMins(t), tBpm(t)], 'h-tag') + '</span></div></div>' +
     '<button type="button" class="h-btn round' + (liked ? ' on' : '') + '" data-act="like" data-id="' + k + '" aria-pressed="' + liked + '" aria-label="Нравится">' + ic('heart', 18, liked) + '</button></div>';
   h += heroWave(b, 48, 24);
   h += '<div class="feat-buy"><div class="lseg nums" role="group" aria-label="Бит из тейпа">' + L.map(function (x, i) { var on = x.id === b.id; return '<button type="button" data-act="tsel" data-v="' + t.id + '" data-id="' + x.id + '" aria-pressed="' + on + '" class="' + (on ? 'on' : '') + '" title="' + esc(x.title) + '">' + pad2(i + 1) + '</button>'; }).join('') + '</div>' +
     '<span class="feat-now">' + esc(b.title) + '</span><span class="feat-price">от ' + money(tMin(t)) + '</span><a href="#/tape/' + t.id + '" class="h-buy" data-act="openTape" data-id="' + t.id + '">Открыть тейп</a></div></div></article>';
-  h += '<section class="hot" aria-labelledby="hot-h2"><h3 id="hot-h2">Дальше в топе<span>' + PERIOD_LOW[st.period] + '</span></h3><ol>' + ids.slice(1).map(function (id, i) {
+  h += '<section class="hot" aria-labelledby="hot-h2t"><h3 id="hot-h2t">Дальше в топе<span>' + PERIOD_LOW[st.period] + '</span></h3><ol>' + ids.slice(1).map(function (id, i) {
     var x = TBY[id], xb = tSel(x);
-    return '<li class="hrow"><span class="hrank">' + (i + 2) + '</span><button type="button" class="open" data-act="openTape" data-id="' + id + '"><span class="tp sm">' + layersHTML(x.cover) + '<img src="' + x.cover + '" alt=""></span><span style="min-width:0;flex:1"><span class="ht">' + esc(x.title) + '</span><span class="hs">' + esc(x.producer) + ', ' + tCount(x.tracks.length) + '</span></span></button>' + deltaHTML(TDELTA[st.period][i + 1]) +
+    return '<li class="hrow"><span class="hrank">' + (i + 2) + '</span><button type="button" class="open" data-act="openTape" data-id="' + id + '"><span class="tp sm">' + layersHTML(x.cover) + '<img src="' + x.cover + '" alt=""></span><span style="min-width:0;flex:1">' + mqx(x.title, 'ht') + '<span class="hs">' + esc(x.producer) + ', ' + tCount(x.tracks.length) + '</span></span></button>' + deltaHTML(TDELTA[st.period][i + 1]) +
       '<button type="button" class="pl-btn" data-act="play" data-id="' + xb.id + '" data-pp="' + xb.id + '" data-size="14" aria-label="Слушать тейп ' + esc(x.title) + '">' + pp(isOn(xb.id), 14) + '</button></li>';
   }).join('') + (ids.length < 5 ? '<li class="hrow-more">В прототипе пока ' + ids.length + ' ' + plural(ids.length, ['тейп', 'тейпа', 'тейпов']) + '. На сайте здесь будет пятёрка.</li>' : '') + '</ol></section></div>';
   return h;
@@ -1804,49 +1970,60 @@ function tapesTopHTML() {
 /* карточка тейпа в сетке каталога: стопка обложек, при наведении задние наклоняются веером */
 function tapeCardHTML(t) {
   var b = tSel(t), on = isOn(b.id), k = 'tape:' + t.id, liked = !!st.liked[k], cb = BY[st.playing], here = st.started && cb && cb.tape === t.id;
-  return '<article class="bcard tape' + (here ? ' here' : '') + '"><div class="tp">' + layersHTML(t.cover) + '<div class="bcv"><button type="button" class="cat-open" data-act="openTape" data-id="' + t.id + '" tabindex="-1" aria-hidden="true"><img class="cover" src="' + t.cover + '" alt="" loading="lazy"></button><span class="tp-chip">' + ic('stack', 12) + 'ТЕЙП</span>' +
+  return '<article class="bcard tape' + (here ? ' here' : '') + '"><div class="tp">' + layersHTML(t.cover) + '<div class="bcv"><button type="button" class="cat-open" data-act="openTape" data-id="' + t.id + '" tabindex="-1" aria-hidden="true"><img class="cover" src="' + t.cover + '" alt="" loading="lazy"></button><span class="cv-chips"><span class="cv-chip">' + ic('stack', 12) + 'ТЕЙП</span>' + (t.free ? freeChip() : '') + '</span>' +
     '<button type="button" class="bplay" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="22" aria-label="' + (on ? 'Пауза' : 'Слушать тейп ' + esc(t.title)) + '">' + pp(on, 22) + '</button>' +
     '<button type="button" class="blike' + (liked ? ' on' : '') + '" data-act="like" data-id="' + k + '" aria-pressed="' + liked + '" aria-label="Нравится">' + ic('heart', 18, liked) + '</button>' + (here ? '<span class="bprog"><i class="js-prog"></i></span>' : '') + '</div></div>' +
-    '<button type="button" class="bt" data-act="openTape" data-id="' + t.id + '">' + esc(t.title) + '</button><p class="bs">' + esc(t.producer) + '</p>' +
-    '<p class="brow"><span style="display:flex;gap:4px;min-width:0;overflow:hidden">' + tagsHTML([tCount(t.tracks.length)], 'tag sm') + '</span><span class="price">от ' + money(tMin(t)) + '</span></p></article>';
+    '<button type="button" class="bt" data-act="openTape" data-id="' + t.id + '">' + mqx(t.title) + '</button><p class="bs">' + esc(t.producer) + '</p>' +
+    '<p class="brow"><span style="display:flex;gap:4px;min-width:0;overflow:hidden">' + tagsHTML([tCount(t.tracks.length)], 'tag sm') + '</span><span class="price">' + priceText(tMin(t), true) + '</span></p></article>';
 }
 function mTapeCardHTML(t) {
   var b = tSel(t);
-  return '<article class="cat-card tape"><div class="tp">' + layersHTML(t.cover) + '<div class="cat-cv"><button type="button" class="cat-open" data-act="openTape" data-id="' + t.id + '" aria-label="Открыть тейп ' + esc(t.title) + '"><img class="cover" src="' + t.cover + '" alt=""></button><span class="tp-chip">' + ic('stack', 12) + 'ТЕЙП</span>' +
+  return '<article class="cat-card tape"><div class="tp">' + layersHTML(t.cover) + '<div class="cat-cv"><button type="button" class="cat-open" data-act="openTape" data-id="' + t.id + '" aria-label="Открыть тейп ' + esc(t.title) + '"><img class="cover" src="' + t.cover + '" alt=""></button><span class="cv-chips"><span class="cv-chip">' + ic('stack', 12) + 'ТЕЙП</span>' + (t.free ? freeChip() : '') + '</span>' +
     '<button type="button" class="cat-play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="18" aria-label="Слушать тейп ' + esc(t.title) + '">' + pp(isOn(b.id), 18) + '</button></div></div>' +
     '<button type="button" class="cat-t" data-act="openTape" data-id="' + t.id + '">' + mqx(t.title) + '</button><p class="cat-meta">' + esc(t.producer) + '</p>' +
-    '<p class="cat-row"><span style="display:flex;gap:4px;min-width:0;overflow:hidden">' + tagsHTML([tCount(t.tracks.length)], 'tag sm') + '</span><span class="price">от ' + money(tMin(t)) + '</span></p></article>';
+    '<p class="cat-row"><span style="display:flex;gap:4px;min-width:0;overflow:hidden">' + tagsHTML([tCount(t.tracks.length)], 'tag sm') + '</span><span class="price">' + priceText(tMin(t), true) + '</span></p></article>';
 }
 function mBeatCardHTML(b) {
-  return '<article class="cat-card"><div class="cat-cv"><button type="button" class="cat-open" data-act="openPlayer" data-id="' + b.id + '" aria-label="Открыть ' + esc(b.title) + '"><img class="cover" src="' + b.cover + '" alt=""></button><button type="button" class="cat-play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="18" aria-label="Слушать ' + esc(b.title) + '">' + pp(isOn(b.id), 18) + '</button></div>' +
+  return '<article class="cat-card"><div class="cat-cv"><button type="button" class="cat-open" data-act="openPlayer" data-id="' + b.id + '" aria-label="Открыть ' + esc(b.title) + '"><img class="cover" src="' + b.cover + '" alt=""></button><button type="button" class="cat-play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="18" aria-label="Слушать ' + esc(b.title) + '">' + pp(isOn(b.id), 18) + '</button>' + (b.free ? '<span class="cv-chips">' + freeChip() + '</span>' : '') + '</div>' +
     '<button type="button" class="cat-t" data-act="openPlayer" data-id="' + b.id + '">' + mqx(b.title) + '</button><p class="cat-meta">' + esc(b.producer) + '</p>' +
-    '<p class="cat-row"><span style="display:flex;gap:4px;min-width:0;overflow:hidden">' + tagsHTML(tagList(b).slice(1), 'tag sm') + '</span><span class="price">' + money(b.rub) + '</span></p></article>';
+    '<p class="cat-row"><span style="display:flex;gap:4px;min-width:0;overflow:hidden">' + tagsHTML(tagList(b).slice(1), 'tag sm') + '</span><span class="price">' + priceText(b.rub) + '</span></p></article>';
 }
 
 /* сетка каталога: биты и тейпы вместе, тейпы не дублируются отдельными битами */
 function gridItems() {
   var items = BEATS.filter(function (b) { return !b.tape; }).map(function (b) {
     return { k: 'beat', b: b, hrs: b.hrs || 0, likes: b.likes, rub: b.rub, liked: !!st.liked[b.id], genres: b.genres, bpms: b.bpm ? [b.bpm] : [],
-      hay: (b.title + ' ' + b.producer + ' ' + b.genres.join(' ') + ' ' + (b.bpm ? b.bpm + ' bpm' : '') + ' ' + b.key).toLowerCase() };
+      free: !!b.free, hay: (b.title + ' ' + b.producer + ' ' + b.genres.join(' ') + ' ' + (b.bpm ? b.bpm + ' bpm' : '') + ' ' + b.key + (b.free ? ' бесплатно бесплатные free' : '')).toLowerCase() };
   });
   TAPES.forEach(function (t) {
     var L = tTracks(t);
     items.push({ k: 'tape', t: t, hrs: t.hrs || 0, likes: t.likes, rub: tMin(t), liked: !!st.liked['tape:' + t.id] || L.some(function (b) { return st.liked[b.id]; }), genres: tGenres(t),
-      bpms: L.map(function (b) { return b.bpm; }).filter(Boolean),
-      hay: (t.title + ' ' + t.producer + ' тейп ' + L.map(function (b) { return b.title + ' ' + b.genres.join(' ') + ' ' + (b.bpm ? b.bpm + ' bpm' : '') + ' ' + b.key; }).join(' ')).toLowerCase() });
+      bpms: L.map(function (b) { return b.bpm; }).filter(Boolean), free: !!t.free,
+      hay: (t.title + ' ' + t.producer + (t.free ? ' бесплатно бесплатные free' : '') + ' тейп ' + L.map(function (b) { return b.title + ' ' + b.genres.join(' ') + ' ' + (b.bpm ? b.bpm + ' bpm' : '') + ' ' + b.key; }).join(' ')).toLowerCase() });
   });
   return items;
 }
-function kindOk(it) { return st.kind === 'all' || (st.kind === 'beats' ? it.k === 'beat' : it.k === 'tape'); }
+function kindOk(it) { return st.kind === 'all' || (st.kind === 'free' ? it.free : st.kind === 'beats' ? it.k === 'beat' : it.k === 'tape'); }
 
 /* страница тейпа на десктопе */
 function licForHTML(t, b) {
   var n = t.tracks.indexOf(b.id) + 1;
   return '<div class="lic-for">' + eqHTML(b.id) + '<span class="t"><small>Бит ' + n + ' из ' + t.tracks.length + '</small><b>' + esc(b.title) + '</b></span><button type="button" data-act="toTl">Сменить</button></div>';
 }
+/* проданный бит: та же раскладка, что у обычной карточки, только всё неактивно, поэтому при выборе битов в битлисте ничего не прыгает */
 function soldLicHTML(b, mobile, pre) {
-  return '<section class="lic' + (mobile ? '' : ' card') + '" id="' + (mobile ? 'm-buy' : 'buy') + '" aria-labelledby="lic-h"><h2 id="lic-h" class="sec-h" style="font-size:' + (mobile ? 20 : 17) + 'px">Лицензия</h2>' + (pre || '') +
-    '<p class="lic-sold">' + ic('badge', 18) + '<span>Эксклюзив на ' + esc(b.title) + ' уже купили. Бит можно слушать, но больше он не продаётся.</span></p><button type="button" class="btn" data-act="toTl" style="margin-top:14px;height:48px;border-radius:12px">Выбрать другой бит</button></section>';
+  var L = licenses(b), t = tapeOf(b.id);
+  var h = '<section class="lic is-sold' + (mobile ? '' : ' card') + '" id="' + (mobile ? 'm-buy' : 'buy') + '" aria-labelledby="lic-h">';
+  h += '<div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px"><h2 id="lic-h" class="sec-h" style="font-size:' + (mobile ? 20 : 17) + 'px">Лицензия</h2><a href="#" class="muted" style="font-size:14px;font-weight:500">Сравнить все</a></div>' + (pre || '');
+  h += '<div class="seg4" role="group" aria-label="Лицензия" style="margin-top:14px;grid-template-columns:repeat(' + L.length + ',minmax(0,1fr))">' + L.map(function (l) { return '<button type="button" disabled>' + l.tab + '</button>'; }).join('') + '</div>';
+  h += '<p class="lic-price">' + ic('badge', mobile ? 24 : 22) + 'Продан</p><p class="lic-sum" style="margin:4px 0 0;font-size:' + (mobile ? 16 : 15) + 'px;line-height:22px">Эксклюзив на ' + esc(b.title) + ' уже купили. Слушать можно, купить нельзя.</p>';
+  var sel = L.filter(function (l) { return l.key === 'exc'; })[0] || L[L.length - 1];
+  h += '<button type="button" class="ghost" data-act="terms" aria-expanded="' + st.terms + '" style="margin:10px 0 0 -8px;align-self:flex-start;height:' + (mobile ? 40 : 30) + 'px;padding:0 8px;display:inline-flex;align-items:center;gap:4px;font-size:' + (mobile ? 15 : 14) + 'px;font-weight:600;color:var(--text)">Что получил покупатель' + ic(st.terms ? 'up' : 'down', 16) + '</button>';
+  if (st.terms && sel) h += '<dl class="terms">' + sel.terms.map(function (t) { return '<div><dt>' + t[0] + '</dt><dd>' + t[1] + '</dd></div>'; }).join('') + '</dl>';
+  h += '<div style="margin-top:16px;display:flex;gap:8px"><button type="button" class="btn btn-fill" data-act="toTl" style="flex:1;height:' + (mobile ? 56 : 52) + 'px;border-radius:' + (mobile ? 999 : 12) + 'px;font-size:' + (mobile ? 17 : 16) + 'px;font-weight:700">Выбрать другой бит</button></div>';
+  if (t && t.free) h += '<div class="free-dl" aria-hidden="true" style="visibility:hidden">' + ic('download', 20) + '<div><b>Бесплатно</b>MP3 с тегом</div><span class="btn">Скачать</span></div>';
+  h += '<p class="note">' + ic('shield', 16) + '<span>Файлы и лицензия придут сразу после оплаты. Лицензию подтверждает сертификат в блокчейне. <a href="#">Условия</a></span></p></section>';
+  return h;
 }
 function bundleHTML(t, mobile) {
   if (!t.disc || tSale(t).length < 2) return '';
@@ -1866,11 +2043,11 @@ function tapeHTML(t) {
   h += '<div class="hero-top"><button type="button" class="h-play" data-act="play" data-id="' + b.id + '" data-pp="' + b.id + '" data-size="28" aria-label="' + (isOn(b.id) ? 'Пауза' : 'Слушать') + '">' + pp(isOn(b.id), 28) + '</button><div style="min-width:0;flex:1">' +
     '<span class="h-badge"><b>ТЕЙП</b><span>' + n + ' ' + plural(n, ['БИТ', 'БИТА', 'БИТОВ']) + '</span><span>' + tMins(t).toUpperCase() + '</span></span>' +
     '<h1 class="h-title' + (t.title.length > 30 ? ' xl' : t.title.length > 18 ? ' l' : '') + '" id="bt">' + esc(t.title) + '</h1><div class="h-meta"><span>prod. by <a href="#">' + esc(t.producer) + '</a></span><span style="display:inline-flex;gap:6px">' + tagsHTML(t.genres.concat([tBpm(t)]), 'h-tag') + '</span><span style="font-size:14px">' + (t.draft ? 'ещё не выпущен' : 'выпущен ' + t.ago) + '</span></div></div></div>';
-  h += '<div class="tp-now">' + eqHTML(b.id) + '<span>Бит ' + no + ' из ' + n + '</span><b>' + esc(b.title) + '</b>' + tagsHTML(tagList(b), 'h-tag') + '</div>';
+  h += '<div class="tp-now">' + eqHTML(b.id) + '<span class="tp-no">Бит ' + no + ' из ' + n + '</span>' + mqx(b.title, 'tp-nm', 'b') + '<span class="tp-tags">' + tagsHTML(tagList(b), 'h-tag') + '</span></div>';
   h += heroWave(b);
   h += '<div class="h-actions"><button type="button" class="h-btn' + (liked ? ' on' : '') + '" data-act="like" data-id="' + k + '" aria-pressed="' + liked + '">' + ic('heart', 18, liked) + '<span class="sr">Нравится тейп, </span>' + num(t.likes + (liked ? 1 : 0)) + '</button>' +
     '<button type="button" class="h-btn' + (rep ? ' on' : '') + '" data-act="repost" data-id="' + k + '" aria-pressed="' + rep + '">' + ic('repost', 18) + '<span class="sr">Репост, </span>' + (t.reposts + (rep ? 1 : 0)) + '</button>' +
-    '<button type="button" class="h-btn round' + (st.loop ? ' on' : '') + '" data-act="loop" aria-pressed="' + !!st.loop + '" aria-label="Повторять бит" title="Повтор">' + ic('loop', 18) + '</button><button type="button" class="h-btn">' + ic('share', 18) + 'Поделиться</button><button type="button" class="h-btn round" aria-label="Ещё">' + ic('more', 18) + '</button>' +
+    repBtn('h-btn round', 18) + '<button type="button" class="h-btn">' + ic('share', 18) + 'Поделиться</button><button type="button" class="h-btn round" aria-label="Ещё">' + ic('more', 18) + '</button>' +
     (b.sold ? '<a href="#bundle" class="h-buy" data-act="toBundle">Весь тейп от ' + money(tBundle(t, 'mp3').tot) + '</a>' : '<a href="#buy" class="h-buy" data-act="toBuy">Купить бит от ' + money(b.rub) + '</a>') + '</div>';
   h += '</div><div class="tp xl">' + layersHTML(t.cover) + '<img class="cover hero-cover" src="' + t.cover + '" alt="Обложка тейпа ' + esc(t.title) + '"></div></div></section>';
   h += '<div class="cols"><div style="min-width:0;display:flex;flex-direction:column;gap:40px">';
@@ -1878,7 +2055,7 @@ function tapeHTML(t) {
     var on = x.id === b.id, pl = isOn(x.id), lk = !!st.liked[x.id];
     return '<li class="tl-row' + (on ? ' on' : '') + (x.sold ? ' sold' : '') + '"' + (on ? ' aria-current="true"' : '') + '><span class="tl-n">' + (on ? eqHTML(x.id) + '<span class="sr">' + (i + 1) + '</span>' : (i + 1)) + '</span>' +
       '<button type="button" class="tl-play" data-act="tPlay" data-v="' + t.id + '" data-id="' + x.id + '" data-pp="' + x.id + '" data-size="14" aria-label="' + (pl ? 'Пауза' : 'Слушать ' + esc(x.title)) + '">' + pp(pl, 14) + '</button>' +
-      '<button type="button" class="tl-t" data-act="tsel" data-v="' + t.id + '" data-id="' + x.id + '">' + esc(x.title) + '</button>' +
+      '<button type="button" class="tl-t" data-act="tsel" data-v="' + t.id + '" data-id="' + x.id + '">' + mqx(x.title) + '</button>' +
       '<span class="tl-tags"><span class="tag sm g">' + esc(x.genre) + '</span>' + (x.bpm ? '<span class="tag sm">' + x.bpm + ' BPM</span>' : '') + (x.key ? '<span class="tag sm">' + esc(x.key) + '</span>' : '') + '</span>' +
       '<span class="tl-dur">' + fmt(x.dur) + '</span>' +
       (x.sold ? '<span class="tl-sold" title="Эксклюзив купили: бит можно слушать, но он больше не продаётся">ЭКСКЛЮЗИВ ПРОДАН</span>' : '<span class="tl-price">от ' + money(x.rub) + '</span>') +
@@ -2014,7 +2191,9 @@ var ACT = {
   play: function (el) { st.started = true; togglePlay(el.getAttribute('data-id')); if (mq.matches && !document.querySelector('.mini')) rerenderKeep(); },
   like: function (el) { var id = el.getAttribute('data-id'); st.liked[id] = !st.liked[id]; rerenderKeep(); },
   repost: function (el) { var id = el.getAttribute('data-id'); st.reposted[id] = !st.reposted[id]; rerenderKeep(); },
-  loop: function () { st.loop = !st.loop; if (aud) aud.loop = st.loop; rerenderKeep(); },
+  freeDl: function (el) { var b = BY[el.getAttribute('data-id')]; toast('Скачиваем ' + (b ? b.title : 'бит') + ': MP3 с тегом'); },
+  loop: function () { st.rep = REP_NEXT[st.rep]; if (aud) aud.loop = st.rep === 'one'; rerenderKeep(); toast(repInfo().t); },
+  vol: function (el, e) { if (e && e.type === 'click' && e.target.closest('input')) return; st.mute = !st.mute; if (!st.mute && !st.vol) st.vol = 0.5; applyVol(); },
   follow: function () { var n = (BY[st.page] || TBY[st.page]).producer; st.follows[n] = !st.follows[n]; rerenderKeep(); },
   followP: function (el) { var n = el.getAttribute('data-v'); st.follows[n] = !st.follows[n]; rerenderKeep(); },
   lic: function (el) { st.lic = el.getAttribute('data-v'); rerenderKeep(); },
@@ -2089,6 +2268,7 @@ document.addEventListener('click', function (e) {
 });
 document.addEventListener('input', function (e) {
   if (e.target.id === 'cmp') st.draft = e.target.value;
+  if (e.target.id === 'vol-r') { st.vol = +e.target.value / 100; st.mute = false; applyVol(); }
   if (e.target.id === 'q') { st.q = e.target.value; st.gMore = 0; if (st.view === 'home') updGrid(); }
 });
 document.addEventListener('submit', function (e) {
@@ -2211,7 +2391,7 @@ document.getElementById('up-go').addEventListener('click', function () {
   BY.custom = b;
   if (!aud) {
     aud = new Audio(); aud.preload = 'auto';
-    aud.addEventListener('ended', function () { st.paused = true; st.pos = 0; syncPlayButtons(); tickUI(); });
+    aud.addEventListener('ended', onTrackEnd); aud.volume = st.mute ? 0 : st.vol;
   }
   st.playing = 'custom'; st.pos = 0; st.paused = false; st.feed = false; st.started = true;
   syncAudio();
@@ -2308,11 +2488,12 @@ function stuMissing() {
   if (s.phase !== 'ready') m.push('файл');
   if (!s.cover) m.push('обложка');
   if (!s.title.trim()) m.push('название');
-  if (!stuPriced().length) m.push('цена');
+  if (!stuPriced().length && !s.free) m.push('цена');
   if (s.lic.trk.on && !s.lic.trk.zip) m.push('ZIP для Track Out');
   return m;
 }
-function stuCanPreview() { if (STU.mode === 'tape') return rowsReady().length > 0 && stuPriced().length > 0; return STU.phase === 'ready' && stuPriced().length > 0; }
+function stuHasOffer() { return stuPriced().length > 0 || !!STU.free; }
+function stuCanPreview() { if (STU.mode === 'tape') return rowsReady().length > 0 && stuHasOffer(); return STU.phase === 'ready' && stuHasOffer(); }
 function stuNote() {
   var s = STU, m = stuMissing();
   if (s.mode === 'tape' ? rowsBusy() : (s.phase === 'uploading' || s.phase === 'morph')) return { ok: false, html: s.mode === 'tape' ? 'Биты грузятся, пока заполни остальное' : 'Файл грузится, пока заполни остальное' };
@@ -2328,7 +2509,7 @@ function stuDraft() {
   d.cover = s.cover || PH; d.band = s.band ? s.band[0] : '#262022'; d.band2 = s.band ? s.band[1] : '#171314';
   d.bpm = +s.bpm || 0; d.key = s.key; d.genres = s.genres.length ? s.genres.slice() : ['без жанра']; d.genre = d.genres[0];
   d.moods = s.moods.length ? s.moods.slice() : ['не указано']; d.desc = s.about.trim() || 'Автор пока ничего не написал.';
-  d.prices = pr; d.rub = stuMin() || 0; d.offers = s.lic.exc.offers;
+  d.prices = pr; d.rub = stuMin() || 0; d.offers = s.lic.exc.offers; d.free = !!s.free;
   d.ago = 'ещё не выложен'; d.date = 'после публикации'; d.hrs = 0; d.likes = 0; d.comments = 0; d.reposts = 0; d.plays = '0'; d.bought = '0 раз';
   BY.draft = d;
   return d;
@@ -2336,7 +2517,7 @@ function stuDraft() {
 function ensureAud() {
   if (aud) return;
   aud = new Audio(); aud.preload = 'auto';
-  aud.addEventListener('ended', function () { st.paused = true; st.pos = 0; syncPlayButtons(); tickUI(); });
+  aud.addEventListener('ended', onTrackEnd); aud.volume = st.mute ? 0 : st.vol;
 }
 
 /* ===== студия: разметка ===== */
@@ -2347,9 +2528,10 @@ function stuTagsHTML() {
   h += s.key ? '<button type="button" class="h-tag" data-act="stFocus" data-v="st-key">' + esc(s.key) + '</button>' : '<button type="button" class="h-tag add" data-act="stFocus" data-v="st-key">' + ic('plus', 13) + 'тональность</button>';
   return h;
 }
+function inqHTML(input, val) { return '<span class="inq">' + input + '<span class="mq inq-mq" aria-hidden="true"><span>' + esc(val) + '</span></span></span>'; }
 function stuTitleHTML() {
   var s = STU;
-  return '<div class="t-row"><label class="sr" for="st-title">Название бита</label><input id="st-title" class="t-in" type="text" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Название бита" value="' + esc(s.title) + '"><span class="t-cnt">' + ic('pencil', 14) + '<span id="st-tcnt">' + s.title.length + '</span>&nbsp;/&nbsp;40</span></div>';
+  return '<div class="t-row"><label class="sr" for="st-title">Название бита</label>' + inqHTML('<input id="st-title" class="t-in" type="text" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Название бита" value="' + esc(s.title) + '">', s.title) + '<span class="t-cnt">' + ic('pencil', 14) + '<span id="st-tcnt">' + s.title.length + '</span>&nbsp;/&nbsp;40</span></div>';
 }
 function stuPlayHTML(mobile) {
   var cls = mobile ? 'ms-play' : 'h-play', sz = mobile ? 22 : 28;
@@ -2367,6 +2549,7 @@ function stuWaveHTML(mobile) {
 }
 function stuBuyHTML() {
   var m = stuMin();
+  if (!m && STU.free) return '<span class="h-buy" id="st-buy" title="Так кнопка будет выглядеть для покупателей">' + ic('download', 18) + 'Скачать бесплатно</span>';
   return m ? '<span class="h-buy" id="st-buy" title="Так кнопка будет выглядеть для покупателей">Купить ' + (STU.mode === 'tape' ? 'бит ' : '') + 'от ' + money(m) + '</span>' : '<span class="h-buy ph" id="st-buy" aria-hidden="true">Купить</span>';
 }
 function stuActsHTML(mobile) {
@@ -2429,7 +2612,8 @@ function stuFactsHTML() {
   h += '<div class="fx"><span class="fx-l">Длительность</span><div class="ctl ro">' + (ready ? '<span>' + fmt(s.dur) + '</span>' : '<span class="muted">возьмём из файла</span>') + '</div></div>';
   h += '<div class="fx"><span class="fx-l">Выложен</span><div class="ctl ro"><span class="muted">после публикации</span></div></div>';
   h += stuChipsHTML('genres', 'Жанр', 'жанр') + stuChipsHTML('moods', 'Настроение', 'настроение') + '</div>';
-  if (s.autoKey || s.autoBpm) h += '<p class="fx-note">' + ic('info', 16) + '<span>Темп и тональность определили по файлу. Если ошиблись, поправь.</span></p>';
+  var alt = s.autoBpm ? bpmAlt(s.bpm) : 0;
+  if (s.autoKey || s.autoBpm) h += '<p class="fx-note">' + ic('info', 16) + '<span>Темп и тональность определили по файлу. Если ошиблись, поправь.' + (alt ? ' Темп легко спутать с вдвое ' + (alt > +s.bpm ? 'быстрым' : 'медленным') + ': <button type="button" class="fx-alt" data-act="stBpmAlt" data-v="' + alt + '">поставить ' + alt + ' BPM</button>' : '') + '</span></p>';
   return h;
 }
 function stuLicHTML() {
@@ -2462,11 +2646,18 @@ function studioNavHTML() {
     soon('dash', 'Обзор') + '<a href="#/studio" class="st-link on" aria-current="page">' + ic('upload', 18) + 'Загрузить бит</a>' + soon('note', 'Мои биты', '<span class="n">' + person(ME).beats + '</span>') +
     soon('receipt', 'Продажи') + soon('wallet', 'Баланс') + '<span class="st-sep"></span>' + soon('ext', 'Мой профиль') + '</div></nav>';
 }
+/* темп, который определили сами, раскладываем по октаве под выбранный жанр: трэп, дрилл и рейдж быстрее, бум-бэп и джаз медленнее */
+function stuRefold() {
+  var s = STU;
+  if (s.autoBpm && s.bpmRaw) s.bpm = String(foldBpm(s.bpmRaw, s.genres));
+  s.rows.forEach(function (r) { if (r.autoBpm && r.bpmRaw) r.bpm = String(foldBpm(r.bpmRaw, [r.genre || s.genres[0]])); });
+}
 function studioHTML() {
+  stuRefold();
   if (STU.mode === 'tape') return studioTapeHTML();
   var s = STU, band = stuBand(), nt = stuNote(), noPub = stuMissing().length > 0;
   var h = '<div class="page st-page">';
-  h += '<div class="st-top"><a href="#/" class="st-back" data-act="home" aria-label="На главную">' + ic('back', 20) + '</a><div><span class="st-crumb">Студия</span><h1 class="st-h">Новый бит</h1></div>' + stuModeHTML(false) + '<div class="st-acts"><span class="st-note' + (nt.ok ? ' ok' : '') + '" id="st-note">' + nt.html + '</span>' +
+  h += '<div class="st-top"><a href="#/" class="st-back" data-act="home" aria-label="На главную">' + ic('back', 20) + '</a><div class="st-ttl"><span class="st-crumb">Студия</span><h1 class="st-h"><span>Новый бит</span><span aria-hidden="true">Новый тейп</span></h1></div>' + stuModeHTML(false) + '<div class="st-acts"><span class="st-note' + (nt.ok ? ' ok' : '') + '" id="st-note">' + nt.html + '</span>' +
     '<button type="button" class="btn" id="st-prev" data-act="stPreview" aria-disabled="' + !stuCanPreview() + '">' + ic('eye', 18) + 'Как увидят покупатели</button><button type="button" class="btn btn-fill" id="st-pub" data-act="stPublish" aria-disabled="' + noPub + '">Опубликовать</button></div></div>';
   h += '<section class="hero sh' + (s.phase === 'error' ? ' err' : '') + '" id="st-hero" style="--band:' + band[0] + ';--band2:' + band[1] + '" aria-label="Новый бит"><div class="hero-grid"><div class="hero-l"><div class="hero-top">' + stuPlayHTML(false) +
     '<div style="min-width:0;flex:1"><span class="h-badge"><b>ЧЕРНОВИК</b>ВИДИШЬ ТОЛЬКО ТЫ</span>' + stuTitleHTML() + '<div class="h-meta"><span>prod. by <a href="#" data-act="soon">' + esc(ME) + '</a></span><span class="h-tags" id="st-tags">' + stuTagsHTML() + '</span><span style="font-size:14px">выйдет после публикации</span></div></div></div>' +
@@ -2476,6 +2667,7 @@ function studioHTML() {
   return h + stuInputsHTML() + '</div>';
 }
 function mobileStudioHTML() {
+  stuRefold();
   if (STU.mode === 'tape') return mobileStudioTapeHTML();
   var s = STU, band = stuBand(), nt = stuNote(), noPub = stuMissing().length > 0;
   var h = '<div class="m">';
@@ -2495,7 +2687,7 @@ function mobileStudioHTML() {
 /* точечное обновление без перерисовки, чтобы не сбивать фокус в полях */
 function studioSync() {
   var s = STU, nt = stuNote(), n = document.getElementById('st-note');
-  if (n) { if (n.tagName !== 'P') n.className = 'st-note' + (nt.ok ? ' ok' : ''); n.innerHTML = nt.html; }
+  if (n) { if (n.tagName !== 'P') n.className = 'st-note' + (nt.ok ? ' ok' : ''); n.innerHTML = nt.html; n.title = n.textContent; }
   var noPub = stuMissing().length > 0;
   ['st-pub', 'st-pub2'].forEach(function (id) { var e = document.getElementById(id); if (e) e.setAttribute('aria-disabled', noPub); });
   var p = document.getElementById('st-prev'); if (p) p.setAttribute('aria-disabled', !stuCanPreview());
@@ -2563,7 +2755,7 @@ function letterCols(text, n, top) {
 function paintSW() {
   var el = document.querySelector('.js-swave');
   if (!el) return;
-  var cv = el.querySelector('canvas'), mob = mq.matches, top = mob ? 70 : 90, bot = mob ? 46 : 60, H = top + 1 + bot;
+  var cv = el.querySelector('canvas'), mob = mq.matches, short = !mob && el.closest('.tp-wv.has-now'), top = mob ? 70 : short ? 70 : 90, bot = mob ? 46 : short ? 48 : 60, H = top + 1 + bot;
   var dpr = cdpr(), w = cv.clientWidth;
   if (!w) return;
   if (cv.width !== Math.round(w * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(w * dpr); cv.height = Math.round(H * dpr); }
@@ -2667,7 +2859,7 @@ function stuFile(f) {
       try { an = analyse(ab); } catch (e) { an = null; }
       s.peaks = peaksFrom(ab); s.dur = ab.duration; s.audio = URL.createObjectURL(f); s.ver++;
       if (an) {
-        if (an.bpm && (!s.bpm || s.autoBpm)) { s.bpm = String(an.bpm); s.autoBpm = true; }
+        if (an.bpm && (!s.bpm || s.autoBpm)) { s.bpmRaw = an.tempo; s.bpm = String(foldBpm(an.tempo, s.genres)); s.autoBpm = true; }
         if (an.key && (!s.key || s.autoKey)) { s.key = an.key; s.autoKey = true; }
       }
       stuDraft(); ensureAud(); s.decoded = true;
@@ -2782,7 +2974,7 @@ function rowBeat(r) {
   d.peaks = r.peaks; d.dur = r.dur || 150; d.audio = r.audio; d.ver = r.ver; d.seed = 7;
   d.cover = s.cover || PH; d.band = s.band ? s.band[0] : '#262022'; d.band2 = s.band ? s.band[1] : '#171314';
   d.bpm = +r.bpm || 0; d.key = r.key; d.genre = r.genre || s.genres[0] || 'без жанра'; d.genres = [d.genre]; d.moods = s.moods.length ? s.moods.slice() : ['не указано'];
-  d.desc = s.about.trim() || 'Автор пока ничего не написал.'; d.prices = pr; d.rub = stuMin() || 0; d.offers = s.lic.exc.offers;
+  d.desc = s.about.trim() || 'Автор пока ничего не написал.'; d.prices = pr; d.rub = stuMin() || 0; d.offers = s.lic.exc.offers; d.free = !!s.free;
   d.ago = 'ещё не выложен'; d.date = 'после публикации'; d.hrs = 0; d.likes = 0; d.comments = 0; d.reposts = 0; d.plays = '0'; d.bought = '0 раз';
   BY[id] = d;
   return d;
@@ -2806,7 +2998,7 @@ function rowLoad(r, f) {
       try { an = analyse(ab); } catch (e) { an = null; }
       r.peaks = peaksFrom(ab); r.dur = ab.duration; r.audio = URL.createObjectURL(f); r.ver++;
       if (an) {
-        if (an.bpm && (!r.bpm || r.autoBpm)) { r.bpm = String(an.bpm); r.autoBpm = true; }
+        if (an.bpm && (!r.bpm || r.autoBpm)) { r.bpmRaw = an.tempo; r.bpm = String(foldBpm(an.tempo, [r.genre || STU.genres[0]])); r.autoBpm = true; }
         if (an.key && (!r.key || r.autoKey)) { r.key = an.key; r.autoKey = true; }
       }
       rowBeat(r); ensureAud(); r.decoded = true;
@@ -2865,18 +3057,18 @@ function tapeMissing() {
   if (rd < 2) m.push(rd ? 'ещё бит (в тейпе от двух)' : 'биты (в тейпе от двух)');
   if (!s.cover) m.push('обложка');
   if (!s.ttitle.trim()) m.push('название тейпа');
-  if (!stuPriced().length) m.push('цена');
+  if (!stuPriced().length && !s.free) m.push('цена');
   if (s.lic.trk.on && !s.lic.trk.zip) m.push('ZIP для Track Out');
   return m;
 }
 function stuModeHTML(mobile) {
   var s = STU;
   return '<div class="fmt" role="radiogroup" aria-label="Что загружаешь">' + [['beat', 'Бит', 'square'], ['tape', 'Тейп', 'stack']].map(function (x) { var on = s.mode === x[0]; return '<button type="button" role="radio" aria-checked="' + on + '" class="' + (on ? 'on' : '') + '" data-act="stMode" data-v="' + x[0] + '">' + ic(x[2], 16) + x[1] + '</button>'; }).join('') + '</div>' +
-    (mobile ? '' : '<span class="fmt-hint">' + (s.mode === 'tape' ? 'Несколько битов одним релизом с общей обложкой' : 'Тейп: несколько битов одним релизом с общей обложкой') + '</span>');
+    (mobile ? '' : '<span class="fmt-hint">Тейп: несколько битов одним релизом с общей обложкой</span>');
 }
 function tapeTitleInHTML() {
   var s = STU;
-  return '<div class="t-row"><label class="sr" for="st-ttitle">Название тейпа</label><input id="st-ttitle" class="t-in" type="text" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Название тейпа" value="' + esc(s.ttitle) + '"><span class="t-cnt">' + ic('pencil', 14) + '<span id="st-tcnt">' + s.ttitle.length + '</span>&nbsp;/&nbsp;40</span></div>';
+  return '<div class="t-row"><label class="sr" for="st-ttitle">Название тейпа</label>' + inqHTML('<input id="st-ttitle" class="t-in" type="text" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Название тейпа" value="' + esc(s.ttitle) + '">', s.ttitle) + '<span class="t-cnt">' + ic('pencil', 14) + '<span id="st-tcnt">' + s.ttitle.length + '</span>&nbsp;/&nbsp;40</span></div>';
 }
 function tapeTagsHTML() {
   var rd = rowsReady();
@@ -2921,7 +3113,7 @@ function rowHTML(r, i) {
   var h = '<li class="ed-row' + (on ? ' on' : '') + (er ? ' err' : '') + '" data-act="stRowSel" data-i="' + i + '"' + (on ? ' aria-current="true"' : '') + '>';
   h += '<span class="ed-h" aria-hidden="true" title="Перетащи, чтобы поменять порядок">' + ic('grip', 16) + '</span><span class="ed-n">' + n + '</span>';
   h += rd ? '<button type="button" class="tl-play" data-act="play" data-id="dr' + r.id + '" data-pp="dr' + r.id + '" data-size="14" aria-label="' + (isOn('dr' + r.id) ? 'Пауза' : 'Слушать ' + esc(nm)) + '">' + pp(isOn('dr' + r.id), 14) + '</button>' : '<button type="button" class="tl-play" disabled aria-label="Слушать: файл ещё не готов">' + ic('play', 14) + '</button>';
-  h += '<label class="sr" for="st-rt-' + r.id + '">Название бита ' + n + '</label><input id="st-rt-' + r.id + '" class="ed-t" data-row="' + i + '" data-f="title" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Название бита" value="' + esc(r.title) + '">';
+  h += '<label class="sr" for="st-rt-' + r.id + '">Название бита ' + n + '</label>' + inqHTML('<input id="st-rt-' + r.id + '" class="ed-t" data-row="' + i + '" data-f="title" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Название бита" value="' + esc(r.title) + '">', r.title);
   h += '<div class="ctl ed-g"><label class="sr" for="st-rg-' + r.id + '">Жанр бита ' + n + '</label><select id="st-rg-' + r.id + '" data-row="' + i + '" data-f="genre" class="' + (r.genre ? '' : 'ph') + '"><option value="">жанр</option>' + genreOpts(r.genre) + '</select>' + ic('down', 16) + '</div>';
   h += rd ? '<div class="ctl ed-bpm"><label class="sr" for="st-rb-' + r.id + '">Темп бита ' + n + '</label><input id="st-rb-' + r.id + '" data-row="' + i + '" data-f="bpm" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="—" value="' + (r.bpm || '') + '"><span class="suf">BPM</span></div>' : '<div class="ctl wait ed-bpm"><span>' + (up ? 'темп…' : '—') + '</span></div>';
   h += rd ? '<div class="ctl ed-key"><label class="sr" for="st-rk-' + r.id + '">Тональность бита ' + n + '</label><select id="st-rk-' + r.id + '" data-row="' + i + '" data-f="key" class="' + (r.key ? '' : 'ph') + '"><option value="">тон</option>' + KEYS.map(function (k) { return '<option value="' + k + '"' + (k === r.key ? ' selected' : '') + '>' + k + '</option>'; }).join('') + '</select>' + ic('down', 16) + '</div>' : '<div class="ctl wait ed-key"><span>' + (up ? 'тон…' : '—') + '</span></div>';
@@ -2970,12 +3162,14 @@ function tapeInputsHTML() {
 function studioTapeHTML() {
   var s = STU, band = stuBand(), nt = stuNote(), noPub = stuMissing().length > 0, r = selRow(), rb = r && r.phase === 'ready' ? rowBeat(r) : null, err = r && r.phase === 'error';
   var h = '<div class="page st-page">';
-  h += '<div class="st-top"><a href="#/" class="st-back" data-act="home" aria-label="На главную">' + ic('back', 20) + '</a><div><span class="st-crumb">Студия</span><h1 class="st-h">Новый тейп</h1></div>' + stuModeHTML(false) + '<div class="st-acts"><span class="st-note' + (nt.ok ? ' ok' : '') + '" id="st-note">' + nt.html + '</span>' +
+  h += '<div class="st-top"><a href="#/" class="st-back" data-act="home" aria-label="На главную">' + ic('back', 20) + '</a><div class="st-ttl"><span class="st-crumb">Студия</span><h1 class="st-h"><span>Новый тейп</span><span aria-hidden="true">Новый бит</span></h1></div>' + stuModeHTML(false) + '<div class="st-acts"><span class="st-note' + (nt.ok ? ' ok' : '') + '" id="st-note">' + nt.html + '</span>' +
     '<button type="button" class="btn" id="st-prev" data-act="stPreview" aria-disabled="' + !stuCanPreview() + '">' + ic('eye', 18) + 'Как увидят покупатели</button><button type="button" class="btn btn-fill" id="st-pub" data-act="stPublish" aria-disabled="' + noPub + '">Опубликовать</button></div></div>';
   h += '<section class="hero sh' + (err ? ' err' : '') + '" id="st-hero" style="--band:' + band[0] + ';--band2:' + band[1] + '" aria-label="Новый тейп"><div class="hero-grid"><div class="hero-l"><div class="hero-top">' + rowPlayHTML(r, false) +
     '<div style="min-width:0;flex:1"><span class="h-badge"><b>ЧЕРНОВИК</b>ВИДИШЬ ТОЛЬКО ТЫ</span>' + tapeTitleInHTML() + '<div class="h-meta"><span>prod. by <a href="#" data-act="soon">' + esc(ME) + '</a></span><span class="h-tags" id="st-tags">' + tapeTagsHTML() + '</span><span style="font-size:14px">выйдет после публикации</span></div></div></div>';
-  if (r) h += '<div class="tp-now"><span>Бит ' + (s.sel + 1) + ' из ' + s.rows.length + '</span><b>' + esc(rowTitle(r)) + '</b>' + (rb ? tagsHTML(rowTags(r), 'h-tag') : '') + '</div>';
-  h += (rb ? heroWave(rb) : tapeWaveHTML(r)) + '<div class="h-actions" id="st-acts">' + tapeActsHTML(r, false) + '</div></div>' + stuCoverHTML(false) + '</div></section>';
+  /* строка «Бит N из M» и волна вместе занимают ровно столько, сколько волна в режиме бита: при переключении ничего не сдвигается */
+  h += '<div class="tp-wv' + (r ? ' has-now' : '') + '">';
+  if (r) h += '<div class="tp-now"><span class="tp-no">Бит ' + (s.sel + 1) + ' из ' + s.rows.length + '</span>' + mqx(rowTitle(r), 'tp-nm', 'b') + '<span class="tp-tags">' + (rb ? tagsHTML(rowTags(r), 'h-tag') : '') + '</span></div>';
+  h += (rb ? heroWave(rb, r ? 70 : 0, r ? 48 : 0) : tapeWaveHTML(r)) + '</div><div class="h-actions" id="st-acts">' + tapeActsHTML(r, false) + '</div></div>' + stuCoverHTML(false) + '</div></section>';
   h += '<div class="cols st-cols"><div style="min-width:0;display:flex;flex-direction:column;gap:40px">' + rowsHTML(false) + '<section aria-labelledby="st-ah" style="display:flex;flex-direction:column;gap:16px"><h2 class="sec-h" id="st-ah">О тейпе</h2>' + stuAboutHTML() + tapeFactsHTML() + '</section></div>' +
     '<aside class="side" aria-label="Продажа и публикация">' + stuLicHTML() + stuBundleHTML() + stuPubHTML() + '</aside></div>';
   return h + tapeInputsHTML() + '</div>';
@@ -2988,7 +3182,7 @@ function mobileStudioTapeHTML() {
   h += '<section class="ms-hero sh' + (err ? ' err' : '') + '" id="st-hero" style="--band:' + band[0] + ';--band2:' + band[1] + '" aria-label="Новый тейп">';
   h += '<div class="ms-head"><div class="ms-cv">' + stuCoverHTML(true) + '</div><div style="min-width:0;flex:1"><span class="h-badge"><b>ЧЕРНОВИК</b></span>' + tapeTitleInHTML() + '<p class="ms-meta">prod. by <a href="#" data-act="soon">' + esc(ME) + '</a></p></div></div>';
   h += '<div class="h-tags" id="st-tags">' + tapeTagsHTML() + '</div>';
-  if (r) h += '<div class="tp-now"><span>Бит ' + (s.sel + 1) + ' из ' + s.rows.length + '</span><b>' + esc(rowTitle(r)) + '</b></div>';
+  if (r) h += '<div class="tp-now"><span class="tp-no">Бит ' + (s.sel + 1) + ' из ' + s.rows.length + '</span>' + mqx(rowTitle(r), 'tp-nm', 'b') + '</div>';
   h += (rb ? heroWave(rb, 70, 46) : tapeWaveHTML(r)) + '<div class="ms-acts" id="st-acts">' + tapeActsHTML(r, true) + '</div></section>';
   h += '<div class="ms-sec">' + rowsHTML(true) + '</div>';
   h += '<section class="ms-sec" aria-labelledby="st-ah"><h2 class="sec-h" id="st-ah">О тейпе</h2>' + stuAboutHTML() + tapeFactsHTML() + '</section>';
@@ -3003,7 +3197,7 @@ function stuTapeDraft() {
   var s = STU, band = s.band || ['#262022', '#171314'], t = TBY.draft || {};
   t.id = 'draft'; t.draft = true; t.title = (s.ttitle.trim() || 'Твой тейп').toUpperCase(); t.producer = ME; t.cover = s.cover || PH; t.fb = band;
   t.ago = 'ещё не выпущен'; t.date = 'после публикации'; t.hrs = 0; t.likes = 0; t.comments = 0; t.reposts = 0; t.plays = '0'; t.bought = '0 раз';
-  t.rub = stuMin(); t.disc = s.disc.on ? Math.min(90, +s.disc.pct || 0) : 0;
+  t.rub = stuMin(); t.disc = s.disc.on ? Math.min(90, +s.disc.pct || 0) : 0; t.free = !!s.free;
   t.genres = s.genres.length ? s.genres.slice() : ['без жанра']; t.moods = s.moods.length ? s.moods.slice() : ['не указано'];
   t.desc = s.about.trim() || 'Автор пока ничего не написал.';
   t.tracks = rowsReady().map(function (r) { var d = rowBeat(r); d.tape = 'draft'; return d.id; });
@@ -3018,7 +3212,7 @@ function stuPublishTape() {
   var g = s.genres.slice();
   rows.forEach(function (r) { if (r.genre && g.indexOf(r.genre) < 0 && g.length < 3) g.push(r.genre); });
   var t = { id: tid, title: s.ttitle.trim().toUpperCase(), producer: ME, cover: s.cover, fb: band, ago: 'только что', date: todayRu(), hrs: 0, likes: 0, comments: 0, reposts: 0, plays: '0', bought: '0 раз',
-    rub: stuMin(), disc: s.disc.on ? Math.min(90, +s.disc.pct || 0) : 0, genres: g.length ? g : ['без жанра'], moods: s.moods.length ? s.moods.slice() : ['не указано'],
+    rub: stuMin(), disc: s.disc.on ? Math.min(90, +s.disc.pct || 0) : 0, free: !!s.free, genres: g.length ? g : ['без жанра'], moods: s.moods.length ? s.moods.slice() : ['не указано'],
     desc: s.about.trim() || 'Автор пока ничего не написал.', tracks: [] };
   rows.forEach(function (r, i) {
     var d = rowBeat(r), id = tid + '-' + (i + 1), b = {};
@@ -3038,8 +3232,9 @@ function stuPublishTape() {
   toast(s.vis === 'all' ? 'Тейп опубликован' : 'Тейп опубликован, он открывается по ссылке');
 }
 
-/* ===== темп и тональность по файлу: грубая оценка, поэтому в полях метка АВТО ===== */
-function analyse(ab) {
+/* ===== темп и тональность по файлу: оценка, поэтому в полях метка АВТО и подсказка «или вдвое» ===== */
+/* берём середину трека (до 100 с): вступления и концовки часто без барабанов */
+function anMono(ab) {
   var step = Math.max(1, Math.round(ab.sampleRate / 11025)), sr = ab.sampleRate / step;
   var a = ab.getChannelData(0), b2 = ab.numberOfChannels > 1 ? ab.getChannelData(1) : null;
   var n = Math.floor(ab.length / step), x = new Float32Array(n);
@@ -3048,36 +3243,75 @@ function analyse(ab) {
     for (var j = 0; j < step; j++) { sm += a[o + j]; if (b2) sm += b2[o + j]; }
     x[i] = sm / (step * (b2 ? 2 : 1));
   }
-  return { bpm: detectBpm(x, sr), key: detectKey(x, sr) };
+  return { x: x, sr: sr };
 }
-function detectBpm(x, sr) {
-  var hop = Math.max(1, Math.round(sr / 200)), nF = Math.floor(x.length / hop);
-  if (nF < 600) return 0;
-  var env = new Float32Array(nF), prev = 0;
+function analyse(ab) { var m = anMono(ab); return analyseMono(m.x, m.sr); }
+function analyseMono(x, sr) {
+  var n = Math.min(x.length, Math.round(100 * sr)), o = Math.max(0, Math.floor((x.length - n) / 2)), y = x.subarray(o, o + n);
+  var t = detectTempo(y, sr);
+  return { bpm: t ? foldBpm(t) : 0, tempo: t, key: detectKey(y, sr) };
+}
+function hannWin(N) { var w = new Float64Array(N); for (var i = 0; i < N; i++) w[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / (N - 1)); return w; }
+/* сила атак: спектральный поток по логарифму амплитуд (так ловятся и бочка, и хэты, и аккорды) */
+function onsetEnv(x, sr) {
+  var N = 512, hop = 128, half = N >> 1, nF = Math.floor((x.length - N) / hop);
+  if (nF < 400) return null;
+  var re = new Float64Array(N), im = new Float64Array(N), win = hannWin(N), prev = new Float64Array(half), env = new Float32Array(nF);
   for (var f = 0; f < nF; f++) {
-    var e = 0, o = f * hop;
-    for (var j = 0; j < hop; j++) { var v = x[o + j]; e += v * v; }
-    e = Math.log(1e-4 + e);
-    env[f] = f ? Math.max(0, e - prev) : 0; prev = e;
+    var o = f * hop, fl = 0;
+    for (var i = 0; i < N; i++) { re[i] = x[o + i] * win[i]; im[i] = 0; }
+    fft(re, im);
+    for (var k = 1; k < half; k++) {
+      var m = Math.log(1 + 1000 * Math.sqrt(re[k] * re[k] + im[k] * im[k]));
+      if (f) { var d = m - prev[k]; if (d > 0) fl += d; }
+      prev[k] = m;
+    }
+    env[f] = fl;
   }
-  var fps = sr / hop, lo = Math.floor(fps * 60 / 200), hi = Math.ceil(fps * 60 / 60), sc = {}, best = -1, bl = 0;
-  for (var L = lo; L <= hi; L++) {
-    var s = 0;
-    for (var i = 0; i + L < nF; i++) s += env[i] * env[i + L];
-    s /= (nF - L);
-    var bpm = fps * 60 / L;
-    s *= Math.exp(-Math.pow(Math.log(bpm / 120) / Math.LN2, 2) * 0.7);
-    sc[L] = s;
-    if (s > best) { best = s; bl = L; }
-  }
-  if (!bl) return 0;
-  var l = bl;
-  if (sc[bl - 1] != null && sc[bl + 1] != null) { var den = sc[bl - 1] - 2 * sc[bl] + sc[bl + 1]; if (den < 0) l += 0.5 * (sc[bl - 1] - sc[bl + 1]) / den; }
-  var res = fps * 60 / l;
-  while (res < 75) res *= 2;
-  while (res > 180) res /= 2;
-  return Math.round(res);
+  /* убираем медленный дрейф громкости: из каждого кадра вычитаем среднее за ~0.4 с */
+  var w = Math.max(4, Math.round(sr / hop * 0.4)), ps = new Float64Array(nF + 1), e = new Float32Array(nF);
+  for (f = 0; f < nF; f++) ps[f + 1] = ps[f] + env[f];
+  for (f = 0; f < nF; f++) { var a = Math.max(0, f - w), b = Math.min(nF, f + w + 1); e[f] = Math.max(0, env[f] - (ps[b] - ps[a]) / (b - a)); }
+  return { e: e, fps: sr / hop };
 }
+function detectTempo(x, sr) {
+  var on = onsetEnv(x, sr);
+  if (!on) return 0;
+  var e = on.e, fps = on.fps, n = e.length, maxLag = Math.min(n - 2, Math.ceil(fps * 60 / 50 * 4) + 2), ac = new Float64Array(maxLag + 2), L, i;
+  for (L = 0; L <= maxLag + 1 && L < n; L++) { var s = 0; for (i = 0; i + L < n; i++) s += e[i] * e[i + L]; ac[L] = s / (n - L); }
+  if (!ac[0]) return 0;
+  function acAt(l) { var a = Math.floor(l), f = l - a; return a + 1 > maxLag ? 0 : ac[a] * (1 - f) + ac[a + 1] * f; }
+  /* оценка темпа: автокорреляция в периоде удара и его кратных (такт, два такта) */
+  function score(T, K) { var p = fps * 60 / T, s = 0; for (var k = 1; k <= K; k++) s += acAt(k * p) / Math.sqrt(k); return s; }
+  var best = 0, bT = 0;
+  for (var T = 50; T <= 220; T += 0.5) {
+    var pr = Math.exp(-0.5 * Math.pow(Math.log(T / 120) / Math.LN2, 2));
+    var sc = score(T, 4) * (0.6 + 0.4 * pr);
+    if (sc > best) { best = sc; bT = T; }
+  }
+  if (!bT) return 0;
+  /* уточняем до десятых: дальние кратные периода очень чувствительны к точному темпу */
+  var fb = 0, fT = bT;
+  for (T = bT * 0.97; T <= bT * 1.03; T += 0.02) { var s2 = score(T, 8); if (s2 > fb) { fb = s2; fT = T; } }
+  return Math.round(fT * 10) / 10;
+}
+/* в какую октаву положить темп: по жанру, если он уже выбран; иначе 75–180 */
+var FAST_G = ['trap', 'dark trap', 'rage', 'drill', 'uk drill', 'phonk', 'drift phonk', 'horrorcore', 'jersey', 'plugg', 'hyperpop', 'memphis'];
+var SLOW_G = ['boom bap', 'jazz', 'lo-fi', 'lofi', 'r&b', 'soul', 'west coast'];
+function bpmRange(genres) {
+  var g = (genres || []).filter(Boolean)[0];
+  if (g && FAST_G.indexOf(g) >= 0) return [100, 200];
+  if (g && SLOW_G.indexOf(g) >= 0) return [64, 128];
+  return [75, 180];
+}
+function foldBpm(t, genres) {
+  if (!t) return 0;
+  var r = bpmRange(genres);
+  while (t < r[0]) t *= 2;
+  while (t >= r[1]) t /= 2;
+  return Math.round(t);
+}
+function bpmAlt(bpm) { bpm = +bpm; if (!bpm) return 0; var h = Math.round(bpm / 2), d = bpm * 2; return d <= 200 ? d : h >= 60 ? h : 0; }
 function fft(re, im) {
   var n = re.length, i, j = 0, k, t;
   for (i = 1; i < n; i++) {
@@ -3098,40 +3332,57 @@ function fft(re, im) {
     }
   }
 }
+/* тональность: хрома только по спектральным пикам (шум и хэты не размазывают ноты), от 28 Гц, чтобы видеть основной тон 808,
+   до 1 кГц, чтобы верхние обертоны пилы и перегруза не выдавали себя за терцию. Бас отдельно: самый сильный пик ниже 220 Гц в каждом окне.
+   Профили под современный минор (натуральный, с b7). В битах минор встречается намного чаще, поэтому у мажора небольшой штраф */
 function detectKey(x, sr) {
-  var N = 4096, half = N >> 1, re = new Float64Array(N), im = new Float64Array(N), win = new Float64Array(N), pc = new Int8Array(half), ch = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  var frames = Math.min(90, Math.floor(x.length / N) - 1);
-  if (frames < 4) return '';
-  for (var i = 0; i < N; i++) win[i] = 0.5 - 0.5 * Math.cos(2 * Math.PI * i / (N - 1));
-  for (var k = 0; k < half; k++) {
-    var fq = k * sr / N;
-    if (fq < 55 || fq > 1760) { pc[k] = -1; continue; }
-    pc[k] = ((Math.round(69 + 12 * Math.log(fq / 440) / Math.LN2) % 12) + 12) % 12;
-  }
-  var stride = Math.floor((x.length - N) / frames);
-  for (var f = 0; f < frames; f++) {
-    var o = f * stride;
+  var N = 8192, half = N >> 1, frames = Math.floor((x.length - N) / (N >> 1));
+  if (frames < 6) return '';
+  var hop = Math.floor((x.length - N) / Math.min(frames, 240));
+  var re = new Float64Array(N), im = new Float64Array(N), win = hannWin(N), mag = new Float64Array(half), ch = new Float64Array(12), bs = new Float64Array(12), fc = new Float64Array(12), i, k, nfr = 0;
+  var kLo = Math.ceil(28 * N / sr), kHi = Math.min(half - 2, Math.floor(1000 * N / sr)), kBass = Math.floor(220 * N / sr);
+  for (var o = 0; o + N <= x.length; o += hop) {
     for (i = 0; i < N; i++) { re[i] = x[o + i] * win[i]; im[i] = 0; }
     fft(re, im);
-    for (k = 1; k < half; k++) if (pc[k] >= 0) ch[pc[k]] += Math.sqrt(re[k] * re[k] + im[k] * im[k]);
+    var mx = 0;
+    for (k = kLo - 1; k <= kHi + 1; k++) { mag[k] = Math.sqrt(re[k] * re[k] + im[k] * im[k]); if (mag[k] > mx) mx = mag[k]; }
+    if (mx < 1e-6) continue;
+    nfr++;
+    for (i = 0; i < 12; i++) fc[i] = 0;
+    var bm = 0, bpc = -1, sc = 0;
+    for (k = kLo; k <= kHi; k++) {
+      var m = mag[k];
+      if (m < mx * 0.02 || m < mag[k - 1] || m < mag[k + 1]) continue;
+      var den = mag[k - 1] - 2 * m + mag[k + 1], dk = den < 0 ? 0.5 * (mag[k - 1] - mag[k + 1]) / den : 0;
+      var fq = (k + dk) * sr / N, midi = 69 + 12 * Math.log(fq / 440) / Math.LN2, nn = Math.round(midi);
+      if (Math.abs(midi - nn) > 0.4) continue;
+      var pc = ((nn % 12) + 12) % 12, w = Math.log(1 + 20 * m / mx);
+      fc[pc] += w; sc += w;
+      if (k <= kBass && m > bm) { bm = m; bpc = pc; }
+    }
+    if (sc) for (i = 0; i < 12; i++) ch[i] += fc[i] / sc;
+    if (bpc >= 0) bs[bpc] += 1;
   }
-  var MAJ = [6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88], MIN = [6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17];
+  var v = [], tb = 0;
+  for (i = 0; i < 12; i++) tb += bs[i];
+  for (i = 0; i < 12; i++) v[i] = ch[i] + (tb ? 0.5 * bs[i] / tb * nfr : 0);
+  var MAJ = [1, 0.1, 0.5, 0.12, 0.8, 0.55, 0.1, 0.85, 0.15, 0.5, 0.28, 0.35], MIN = [1, 0.15, 0.45, 0.8, 0.12, 0.55, 0.15, 0.8, 0.55, 0.15, 0.55, 0.15];
   var NMAJ = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B'], NMIN = ['Cm', 'C#m', 'Dm', 'Ebm', 'Em', 'Fm', 'F#m', 'Gm', 'G#m', 'Am', 'Bbm', 'Bm'];
   function corr(P, r) {
-    var mx = 0, mp = 0, q;
-    for (q = 0; q < 12; q++) { mx += ch[(q + r) % 12]; mp += P[q]; }
-    mx /= 12; mp /= 12;
+    var mx2 = 0, mp = 0, q;
+    for (q = 0; q < 12; q++) { mx2 += v[(q + r) % 12]; mp += P[q]; }
+    mx2 /= 12; mp /= 12;
     var sxy = 0, sxx = 0, syy = 0;
-    for (q = 0; q < 12; q++) { var dx = ch[(q + r) % 12] - mx, dy = P[q] - mp; sxy += dx * dy; sxx += dx * dx; syy += dy * dy; }
+    for (q = 0; q < 12; q++) { var dx = v[(q + r) % 12] - mx2, dy = P[q] - mp; sxy += dx * dy; sxx += dx * dx; syy += dy * dy; }
     return sxx && syy ? sxy / Math.sqrt(sxx * syy) : -1;
   }
   var best = -2, name = '';
   for (var r = 0; r < 12; r++) {
-    var cM = corr(MAJ, r), cm = corr(MIN, r);
+    var cM = corr(MAJ, r) - 0.12, cm = corr(MIN, r);
     if (cM > best) { best = cM; name = NMAJ[r]; }
     if (cm > best) { best = cm; name = NMIN[r]; }
   }
-  return best > 0.2 ? name : '';
+  return best > 0.3 ? name : '';
 }
 
 /* ===== студия и меню: действия ===== */
@@ -3146,6 +3397,7 @@ ACT.stCancel = function () { stuCancel(); };
 ACT.stKeep = function () { stuRevert(); };
 ACT.stLic = function (el) { var l = STU.lic[el.getAttribute('data-v')]; l.on = !l.on; rerenderKeep(); };
 ACT.stOffers = function () { STU.lic.exc.offers = !STU.lic.exc.offers; rerenderKeep(); };
+ACT.stBpmAlt = function (el) { STU.bpm = el.getAttribute('data-v'); STU.autoBpm = false; STU.bpmRaw = 0; rerenderKeep(); };
 ACT.stFree = function () { STU.free = !STU.free; rerenderKeep(); };
 ACT.stVis = function (el) { STU.vis = el.getAttribute('data-v'); rerenderKeep(); };
 ACT.stFeed = function () { if (STU.vis === 'link') { toast('Бит по ссылке в ленту не попадает'); return; } STU.feed = !STU.feed; rerenderKeep(); };
@@ -3172,13 +3424,14 @@ ACT.stPreview = function () {
 document.addEventListener('input', function (e) {
   var t = e.target, s = STU;
   if (!t.id || t.id.indexOf('st-') !== 0) return;
+  var iq = t.closest && t.closest('.inq'); if (iq) iq.querySelector('.inq-mq>span').textContent = t.value;
   if (t.id === 'st-title') s.title = t.value.slice(0, 40);
   else if (t.id === 'st-ttitle') s.ttitle = t.value.slice(0, 40);
   else if (t.id === 'st-disc') { var dv = t.value.replace(/\D/g, '').slice(0, 2); if (dv !== t.value) t.value = dv; s.disc.pct = dv ? +dv : 0; }
   else if (t.getAttribute('data-row') != null && t.tagName === 'INPUT') {
     var ri = +t.getAttribute('data-row'), rw = s.rows[ri], fl = t.getAttribute('data-f');
     if (!rw) return;
-    if (fl === 'title') { rw.title = t.value.slice(0, 40); var nb = document.querySelector('.tp-now b'); if (nb && ri === s.sel) nb.textContent = rowTitle(rw); }
+    if (fl === 'title') { rw.title = t.value.slice(0, 40); var nb = document.querySelector('.tp-now .tp-nm>span'); if (nb && ri === s.sel) { nb.textContent = rowTitle(rw); setupMarquee(); } }
     else if (fl === 'bpm') { var bv = t.value.replace(/\D/g, '').slice(0, 3); if (bv !== t.value) t.value = bv; rw.bpm = bv; rw.autoBpm = false; }
     if (rw.phase === 'ready') rowBeat(rw);
   }
@@ -3270,7 +3523,7 @@ ACT.tPlayAll = function (el) {
   var t = TBY[el.getAttribute('data-v')];
   st.tsel[t.id] = t.tracks[0]; st.started = true; st.playing = t.tracks[0]; st.pos = 0; st.paused = false; syncAudio(); rerenderKeep();
 };
-ACT.kind = function (el) { st.kind = el.getAttribute('data-v'); gridChanged(); };
+ACT.kind = function (el) { st.kind = el.getAttribute('data-v'); gridChanged(); if (el.classList.contains('m-more')) scrollToId('all-h', true); };
 ACT.toTl = function () { scrollToId(mq.matches ? 'mtl-h' : 'tl-h', true); };
 ACT.toBundle = function (el, e) { if (e) e.preventDefault(); scrollToId(mq.matches ? 'm-bundle' : 'bundle', true); };
 
@@ -3281,7 +3534,7 @@ ACT.stMode = function (el) {
   /* если бит уже загружен, а потом решил делать тейп, он становится первым в битлисте */
   if (v === 'tape' && !s.rows.length && s.phase === 'ready' && s.file) {
     var r = newRow({ name: s.file.name, size: s.file.size });
-    r.title = s.title; r.peaks = s.peaks; r.dur = s.dur; r.audio = s.audio; r.ver = s.ver; r.bpm = s.bpm; r.key = s.key; r.autoBpm = s.autoBpm; r.autoKey = s.autoKey;
+    r.title = s.title; r.peaks = s.peaks; r.dur = s.dur; r.audio = s.audio; r.ver = s.ver; r.bpm = s.bpm; r.key = s.key; r.autoBpm = s.autoBpm; r.bpmRaw = s.bpmRaw; r.autoKey = s.autoKey;
     r.genre = s.genres[0] || ''; r.phase = 'ready'; r.prog = 1; r.decoded = true;
     s.rows.push(r); s.sel = 0; rowBeat(r);
   }
@@ -3291,9 +3544,12 @@ ACT.pickTape = function () { var i = document.getElementById('st-files'); if (i)
 ACT.stRowPick = function (el) { rowPick = +el.getAttribute('data-i'); var i = document.getElementById('st-rowfile'); if (i) i.click(); };
 ACT.stRowSel = function (el, e) {
   if (e && e.target.closest && e.target.closest('input,select,textarea,label')) return;
-  var i = +el.getAttribute('data-i');
+  var i = +el.getAttribute('data-i'), r = STU.rows[i], c = cur();
   if (STU.sel === i) return;
-  STU.sel = i; rerenderKeep();
+  STU.sel = i;
+  /* если сейчас слушаешь черновик, переключаемся на выбранный бит: сверху и в плеере всегда одно и то же */
+  if (r && r.phase === 'ready' && c && c.draft) { rowBeat(r); st.playing = 'dr' + r.id; st.pos = 0; syncAudio(); }
+  rerenderKeep();
 };
 ACT.stRowDel = function (el) {
   var s = STU, i = +el.getAttribute('data-i'), r = s.rows[i];
